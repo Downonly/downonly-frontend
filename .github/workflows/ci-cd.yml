@@ -1,6 +1,9 @@
 name: CI/CD
 on: [push, pull_request]
 
+env:
+  MODE: 'gh_pages'
+
 jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
