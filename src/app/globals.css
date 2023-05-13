@@ -1,0 +1,19 @@
+:root {
+	--col-bg: #f2f2f2;
+	--col-text: #191919;
+	color-scheme: light dark;
+}
+
+html,
+body {
+	height: 100%;
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+
+.container {
+	width: min(70rem, 90vw);
+	max-width: calc(100% - 2rem);
+	margin-inline: auto;
+	margin-block: 3rem;
+}
