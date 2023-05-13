@@ -6,6 +6,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: Deploy to GitHub pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout
