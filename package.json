@@ -1,5 +1,6 @@
 {
   "name": "downonly",
+  "homepage": "https://borisdiakur.github.io/downonly/",
   "version": "0.0.0",
   "private": true,
   "scripts": {
