@@ -8,7 +8,7 @@
     "dev:next": "next dev",
     "dev:unocss": "unocss --watch",
     "build": "run-s build:unocss build:next",
-    "build:next": "next build",
+    "build:next": "next build && touch ./dist/.nojekyll",
     "build:unocss": "unocss",
     "preview": "serve dist",
     "start": "next start",
