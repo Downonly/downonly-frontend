@@ -9,6 +9,7 @@
     "build": "run-s build:unocss build:next",
     "build:next": "next build",
     "build:unocss": "unocss",
+    "preview": "serve dist",
     "start": "next start",
     "lint": "next lint"
   },
@@ -30,6 +31,7 @@
     "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "serve": "^14.2.0",
     "typescript": "5.0.4",
     "unocss": "^0.51.12"
   }
