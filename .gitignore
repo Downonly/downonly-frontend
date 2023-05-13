@@ -35,5 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 resources
-
+.env
 src/app/uno.css
