@@ -3,7 +3,7 @@ const nextConfig = {
 	output: 'export',
 	trailingSlash: true,
 	distDir: 'dist',
-	basePath: process.env.MODE === 'local' ? '' : '/downonly',
+	basePath: process.env.MODE === 'gh_pages' ? '/downonly' : '',
 }
 
 module.exports = nextConfig

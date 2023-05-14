@@ -9,6 +9,8 @@ jobs:
     permissions:
       contents: 'write'
       id-token: 'write'
+    env:
+      MODE: 'gh_pages'
 
     steps:
       - name: Checkout
