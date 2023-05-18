@@ -1,7 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-	--col-bg: #f2f2f2;
-	--col-text: #191919;
+	--col-white: '#ffffff';
+	--col-black: '#000000';
+	--col-cole: '#191919';
+	--col-carbon: '#282828';
+	--col-snow: '#f2f2f2';
+	--col-iron: '#c0c0c0';
 	color-scheme: light dark;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.interactive {
+		@apply relative hover:z-10 hover:scale-105 focus-visible:z-10 focus-visible:scale-105 active:scale-100;
+	}
 }
 
 html,

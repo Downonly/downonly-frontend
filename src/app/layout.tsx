@@ -1,6 +1,3 @@
-import '@unocss/reset/sanitize/sanitize.css'
-import '@unocss/reset/sanitize/assets.css'
-import './uno.css'
 import './globals.css'
 import localFont from 'next/font/local'
 import { Montserrat } from 'next/font/google'
@@ -24,7 +21,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${fontDisplay.variable} ${fontBody.variable} ${fontBody.className} bg-white dark:bg-black text-black dark:text-white`}
+			className={`${fontDisplay.variable} ${fontBody.variable} bg-snow font-body text-carbon dark:bg-cole dark:text-snow`}
 		>
 			<body>{children}</body>
 		</html>
