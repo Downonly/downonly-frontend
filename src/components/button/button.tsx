@@ -1,4 +1,3 @@
-import type { Properties } from 'csstype'
 import { roundedRectClipPath } from '@/utils/shape'
 
 export default function Button({
@@ -17,7 +16,7 @@ export default function Button({
 				size === 'lg' ? 'px-8 pb-2 pt-2.5' : 'px-6 pb-0.5 pt-1 text-sm'
 			} ${mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'}`}
 			style={
-				{ '-webkit-tap-highlight-color': 'transparent' } as Properties<string>
+				{ '-webkit-tap-highlight-color': 'transparent' } as unknown as undefined
 			}
 		>
 			{children}
