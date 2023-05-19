@@ -9,6 +9,7 @@ module.exports = {
 			carbon: '#282828',
 			snow: '#f2f2f2',
 			iron: '#c0c0c0',
+			tomato: 'tomato',
 			current: 'currentColor',
 			inherit: 'inherit',
 		},
