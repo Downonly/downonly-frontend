@@ -21,7 +21,7 @@ export default function Button({
 		>
 			{children}
 			<div
-				className="absolute inset-0 -z-10 h-full w-full bg-carbon dark:bg-snow"
+				className="absolute inset-0 -z-10 h-full w-full bg-cole dark:bg-snow"
 				style={{
 					clipPath,
 				}}
@@ -29,7 +29,7 @@ export default function Button({
 			{mode === 'secondary' && (
 				<div className="absolute inset-0 -z-10 h-full w-full p-0.5">
 					<div
-						className="h-full w-full bg-snow dark:bg-carbon"
+						className="h-full w-full bg-snow dark:bg-cole"
 						style={{
 							clipPath,
 						}}
