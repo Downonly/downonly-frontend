@@ -1,6 +1,7 @@
 import './globals.css'
 import localFont from 'next/font/local'
 import { Montserrat } from 'next/font/google'
+import Nav from '@/components/nav/nav'
 
 const fontDisplay = localFont({
 	src: './jegelskerdig.woff2',
@@ -23,7 +24,16 @@ export default function RootLayout({
 			lang="en"
 			className={`${fontDisplay.variable} ${fontBody.variable} bg-snow font-body text-carbon dark:bg-cole dark:text-snow`}
 		>
-			<body>{children}</body>
+			<body>
+				<div className="container flex flex-col items-start gap-6">
+					<Nav />
+				</div>
+				<main>
+					<div className="container flex flex-col items-start gap-6">
+						{children}
+					</div>
+				</main>
+			</body>
 		</html>
 	)
 }
