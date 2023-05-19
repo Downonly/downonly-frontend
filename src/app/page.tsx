@@ -15,6 +15,9 @@ export default function Home() {
 				<Button>Bottun</Button>
 				<Button size="lg">Larger botton</Button>
 				<Button mode="secondary">Secondary</Button>
+				<Button size="lg" mode="secondary">
+					Large secondary botton
+				</Button>
 			</div>
 		</main>
 	)

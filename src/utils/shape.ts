@@ -1,26 +1,39 @@
-// min and max included
-const randBetween = (min: number, max: number) =>
-	Math.floor(Math.random() * (max - min + 1) + min)
-const getCornerX = () => randBetween(2, 4)
-const getCornerY = () => randBetween(14, 18)
+export function roundedRectClipPath(cornerSize = 30) {
+	const csy = cornerSize
+	const csx = csy * 0.5
+	const randBetween = (min: number, max: number) =>
+		Math.floor(Math.random() * (max - min + 1) + min) // min and max included
+	const randLX = () => randBetween(csx * 0.75, csx)
+	const randMX = () => randBetween(csx * 0.3, csx * 0.4)
+	const randSX = () => randBetween(1, csx * 0.1)
+	const randLY = () => randBetween(csx * 0.75, csx)
+	const randMY = () => randBetween(csx * 0.3, csx * 0.4)
+	const randSY = () => randBetween(1, csx * 0.1)
 
-export function getRoundedRectPathD(svgSize = 100, strokeWidth?: number) {
-	if (strokeWidth === undefined) strokeWidth = Math.round(svgSize / 4)
-	const topLeftLeftX = Math.round(strokeWidth + Math.random())
-	const topLeftLeftY = Math.round(strokeWidth + Math.random())
-	const topTopLeftX = topLeftLeftX + getCornerX()
-	const topTopLeftY = topLeftLeftY - getCornerY()
-	const topRightRightX = Math.round(svgSize - Math.random() - strokeWidth)
-	const topRightRightY = Math.round(strokeWidth + Math.random())
-	const topTopRightX = topRightRightX - getCornerX()
-	const topTopRightY = topRightRightY - getCornerY()
-	const bottomRightRightX = Math.round(svgSize - Math.random() - strokeWidth)
-	const bottomRightRightY = Math.round(svgSize - Math.random() - strokeWidth)
-	const bottomBottomRightX = bottomRightRightX - getCornerX()
-	const bottomBottomRightY = bottomRightRightY + getCornerY()
-	const bottomLeftLeftX = Math.round(strokeWidth + Math.random())
-	const bottomLeftLeftY = Math.round(svgSize - Math.random() - strokeWidth)
-	const bottomBottomLeftX = bottomLeftLeftX + getCornerX()
-	const bottomBottomLeftY = bottomLeftLeftY + getCornerY()
-	return `M ${topLeftLeftX} ${topLeftLeftY} L ${topTopLeftX} ${topTopLeftY} L ${topTopRightX} ${topTopRightY} L ${topRightRightX} ${topRightRightY} L ${bottomRightRightX} ${bottomRightRightY} L ${bottomBottomRightX} ${bottomBottomRightY} L ${bottomBottomLeftX} ${bottomBottomLeftY} L ${bottomLeftLeftX} ${bottomLeftLeftY} Z`
+	//        x  <-- We start here and go clock wise and end here.
+	//    x
+	//   /
+	//  x
+	//  |
+	//  |
+	//  |
+	//  x
+
+	const start = { x: `${randLX()}px`, y: `${randSY()}px` }
+	const points = [
+		start,
+		{ x: `calc(100% - ${randLX()}px)`, y: `${randSY()}px` },
+		{ x: `calc(100% - ${randMX()}px)`, y: `${randMY()}px` },
+		{ x: `calc(100% - ${randSX()}px)`, y: `${randLY()}px` },
+		{ x: `calc(100% - ${randSX()}px)`, y: `calc(100% - ${randLY()}px)` },
+		{ x: `calc(100% - ${randMX()}px)`, y: `calc(100% - ${randMY()}px)` },
+		{ x: `calc(100% - ${randLX()}px)`, y: `calc(100% - ${randSY()}px)` },
+		{ x: `${randLX()}px`, y: `calc(100% - ${randSY()}px)` },
+		{ x: `${randMX()}px`, y: `calc(100% - ${randMY()}px)` },
+		{ x: `${randSX()}px`, y: `calc(100% - ${randLY()}px)` },
+		{ x: `${randSX()}px`, y: `${randLY()}px` },
+		{ x: `${randMX()}px`, y: `${randMY()}px` },
+		start,
+	]
+	return `polygon(${points.map((p) => p.x + ' ' + p.y).join(', ')})`
 }

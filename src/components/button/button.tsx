@@ -1,5 +1,5 @@
 import type { Properties } from 'csstype'
-import { getRoundedRectPathD } from '@/utils/shape'
+import { roundedRectClipPath } from '@/utils/shape'
 
 export default function Button({
 	children,
@@ -10,45 +10,33 @@ export default function Button({
 	size?: 'lg'
 	mode?: 'secondary'
 }) {
-	const svgSize = 100
-	const strokeWidth = Math.round(svgSize / 4)
-	const pathD = getRoundedRectPathD()
-
+	const clipPath = roundedRectClipPath(size === 'lg' ? 30 : 20)
 	return (
 		<button
 			className={`interactive inline-flex touch-manipulation select-none rounded-full border-current font-display uppercase ${
-				size === 'lg' ? 'px-8 pb-1.5 pt-2' : 'px-6 pb-0.5 pt-1 text-sm'
+				size === 'lg' ? 'px-8 pb-2 pt-2.5' : 'px-6 pb-0.5 pt-1 text-sm'
 			} ${mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'}`}
 			style={
 				{ '-webkit-tap-highlight-color': 'transparent' } as Properties<string>
 			}
 		>
 			{children}
-			<svg
-				preserveAspectRatio="none"
-				className={`absolute left-1/2 top-1/2 -z-10 inline-grid h-full w-full -translate-x-1/2 -translate-y-1/2 scale-x-110 scale-y-105 transform `}
-				viewBox={`0 0 ${svgSize} ${svgSize}`}
-			>
-				<path
-					className="fill-carbon stroke-carbon dark:fill-snow dark:stroke-snow"
-					style={{
-						strokeWidth,
-						strokeLinejoin: 'bevel',
-					}}
-					d={pathD}
-				/>
-				{mode === 'secondary' && (
-					<path
-						className="origin-center fill-snow stroke-snow dark:fill-carbon dark:stroke-carbon"
+			<div
+				className="absolute inset-0 -z-10 h-full w-full bg-carbon dark:bg-snow"
+				style={{
+					clipPath,
+				}}
+			/>
+			{mode === 'secondary' && (
+				<div className="absolute inset-0 -z-10 h-full w-full p-0.5">
+					<div
+						className="h-full w-full bg-snow dark:bg-carbon"
 						style={{
-							transform: 'scaleX(0.97) scaleY(0.8)',
-							strokeWidth: strokeWidth,
-							strokeLinejoin: 'bevel',
+							clipPath,
 						}}
-						d={pathD}
 					/>
-				)}
-			</svg>
+				</div>
+			)}
 		</button>
 	)
 }
