@@ -1,5 +1,4 @@
 import Card from '@/components/card/card'
-import Circle from '@/components/circle/circle'
 
 export default function Home() {
 	return (
