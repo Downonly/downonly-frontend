@@ -18,7 +18,7 @@
 
 @layer components {
 	.interactive {
-		@apply relative hover:z-10 hover:scale-105 focus-visible:z-10 focus-visible:scale-105 active:scale-100;
+		@apply relative inline-flex hover:z-10 hover:scale-105 focus-visible:z-10 focus-visible:scale-105 active:scale-100;
 	}
 }
 
@@ -27,6 +27,10 @@ body {
 	height: 100%;
 	max-width: 100vw;
 	overflow-x: hidden;
+}
+
+.text-display {
+	@apply font-display uppercase;
 }
 
 .container {

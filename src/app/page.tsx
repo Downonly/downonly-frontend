@@ -8,7 +8,7 @@ export default function Home() {
 				<div className="flex items-center justify-center p-6 lg:w-1/2">
 					<div className="text-center">
 						<p className="mb-2">👮‍🏥🪑</p>
-						<p className="mb-2 font-display uppercase">
+						<p className="text-display mb-2">
 							Mint #52
 							<br />
 							cop-hostital-chair-fall
@@ -25,7 +25,10 @@ export default function Home() {
 			</div>
 
 			<Card className="w-full">
-				<h1 className="mb-4 font-display text-5xl">Hi</h1>
+				<header className="text-display mb-4 text-4xl">
+					<h1>Mint your own fall</h1>
+					<p>choose now</p>
+				</header>
 				<p>This site is under deconstruction.</p>
 			</Card>
 		</>
