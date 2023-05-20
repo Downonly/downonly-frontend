@@ -9,7 +9,7 @@ export default function Footer(props: {
 	return (
 		<footer
 			id={props.id}
-			className={`mt-12 bg-cole pt-32 text-snow dark:bg-snow dark:text-cole ${
+			className={`mt-32 bg-cole pt-32 text-snow dark:bg-snow dark:text-cole ${
 				props.className || ''
 			}`}
 			style={props.style}
