@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Logo from '@/components/logo/logo'
 
 export default function Footer(props: {
 	className?: string
@@ -14,8 +15,8 @@ export default function Footer(props: {
 			}`}
 			style={props.style}
 		>
-			<div className="container grid grid-cols-2 text-sm sm:grid-cols-4">
-				<div className="col-span-2 sm:col-span-1"></div>
+			<div className="container grid grid-cols-2 gap-6 text-sm sm:grid-cols-4">
+				<Logo className="-mt-12 mb-12 w-44 max-w-[75%]" />
 				<div className="mb-12">
 					<p className="text-display mb-12">Social</p>
 					<ul className="list-none">
@@ -66,7 +67,7 @@ export default function Footer(props: {
 					<ul className="list-none">
 						<li>
 							<Link className="interactive" href="/">
-								Start
+								Home
 							</Link>
 						</li>
 						<li>

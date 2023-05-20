@@ -3,7 +3,7 @@ import Card from '@/components/card/card'
 export default function Home() {
 	return (
 		<>
-			<div className="flex w-full flex-col justify-end lg:flex-row">
+			<div className="-mt-36 flex w-full flex-col justify-end sm:-mt-32 lg:flex-row">
 				<div className="ms-[calc(-1*(50vw-min(35rem,45vw)))] aspect-4/3 w-screen justify-self-end bg-tomato lg:w-[50vw] lg:max-w-[40rem]" />
 				<div className="flex items-center justify-center p-6 lg:w-1/2">
 					<div className="text-center">
