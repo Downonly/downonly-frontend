@@ -33,5 +33,4 @@ body {
 	width: min(70rem, 90vw);
 	max-width: calc(100% - 2rem);
 	margin-inline: auto;
-	margin-block: 3rem;
 }

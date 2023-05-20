@@ -17,6 +17,11 @@ module.exports = {
 			display: ['var(--font-display)', 'system-ui', 'sans-serif'],
 			body: ['var(--font-body)', 'system-ui', 'sans-serif'],
 		},
+		extend: {
+			aspectRatio: {
+				'4/3': '4/3',
+			},
+		},
 	},
 	plugins: [],
 }

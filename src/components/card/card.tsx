@@ -1,11 +1,17 @@
 import { roundedRectClipPath } from '@/utils/shape'
 
-export default function Card({ children }: { children: React.ReactNode }) {
+export default function Card(props: {
+	className?: string
+	style?: React.CSSProperties
+	id?: string
+	children?: React.ReactNode
+}): JSX.Element {
+	const cl = `relative z-0 p-6 ${props.className}`
 	return (
-		<div className="relative z-0 inline-flex p-6">
-			{children}
+		<div className={cl}>
+			{props.children}
 			<div
-				className="dark:bg-carbon absolute inset-0 -z-10 h-full w-full bg-white"
+				className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-carbon"
 				style={{
 					clipPath: roundedRectClipPath(),
 				}}

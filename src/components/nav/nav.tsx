@@ -6,37 +6,34 @@ export default function Nav(props: {
 	style?: React.CSSProperties
 	id?: string
 }): JSX.Element {
-	const cl = `inline-flex flex-wrap grid-cols-4 gap-4 list-none ${props.className}`
 	return (
-		<nav id={props.id} className={cl} style={props.style}>
-			<li>
-				<Link href="/">
-					<Button tag="span" mode="secondary">
-						Start
-					</Button>
-				</Link>
-			</li>
-			<li>
-				<Link href="/team/">
-					<Button tag="span" mode="secondary">
-						Team
-					</Button>
-				</Link>
-			</li>
-			<li>
-				<Link href="/traits/">
-					<Button tag="span" mode="secondary">
-						Traits
-					</Button>
-				</Link>
-			</li>
-			<li>
-				<Link href="/playground/">
-					<Button tag="span" mode="secondary">
-						Playground
-					</Button>
-				</Link>
-			</li>
+		<nav
+			id={props.id}
+			className={`flex flex-wrap items-end justify-end gap-4 ${
+				props.className || ''
+			}`}
+			style={props.style}
+		>
+			<Link href="/">
+				<Button tag="span" mode="secondary">
+					Start
+				</Button>
+			</Link>
+			<Link href="/team/">
+				<Button tag="span" mode="secondary">
+					Team
+				</Button>
+			</Link>
+			<Link href="/traits/">
+				<Button tag="span" mode="secondary">
+					Traits
+				</Button>
+			</Link>
+			<Link href="/playground/">
+				<Button tag="span" mode="secondary">
+					Playground
+				</Button>
+			</Link>
 		</nav>
 	)
 }
