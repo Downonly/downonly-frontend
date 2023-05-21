@@ -12,7 +12,7 @@ export default function Minted(props: {
 			className={`${props.className || ''}`}
 			style={props.style}
 		>
-			<h2 className="text-display mb-12 pl-6 text-4xl">
+			<h2 className="text-display mb-12 px-6 text-4xl">
 				Currently
 				<br />
 				Minted
