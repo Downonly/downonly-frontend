@@ -15,7 +15,7 @@ export default function Footer(props: {
 			}`}
 			style={props.style}
 		>
-			<div className="container grid grid-cols-2 gap-6 text-sm sm:grid-cols-4">
+			<div className="gap-x container grid grid-cols-2 px-6 text-sm sm:grid-cols-4">
 				<Link className="interactive origin-[30%_50%]" href="/">
 					<Logo className="-mt-12 mb-12 w-44 max-w-[75%]" />
 				</Link>

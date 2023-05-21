@@ -4,11 +4,13 @@ module.exports = {
 	theme: {
 		colors: {
 			white: '#ffffff',
-			black: '#000000',
-			cole: '#191919',
-			carbon: '#282828',
+			dew: '#fafafa',
 			snow: '#f2f2f2',
 			iron: '#c0c0c0',
+			nickel: '#2f2f2f',
+			carbon: '#282828',
+			cole: '#191919',
+			black: '#000000',
 			tomato: 'tomato',
 			current: 'currentColor',
 			inherit: 'inherit',

@@ -5,20 +5,29 @@ export default function Circle(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	return (
-		<svg
+		<div
 			id={props.id}
-			viewBox="0 0 158 158"
-			className={`origin-center ${props.className || ''}`}
-			style={{
-				transform: `rotate(${Math.random()}turn)`,
-				...(props.style ?? {}),
-			}}
+			className={`relative inline-flex aspect-square w-8 items-center justify-center ${
+				props.className || ''
+			}`}
+			style={props.style}
 		>
-			<path
-				d="m202 242-28-10-16-27-7-48 8-32 26-21h40l43 15 14 31v42l-20 42-26 12-34-4Z"
-				style={{ fill: 'currentColor' }}
-				transform="matrix(1.2 0 0 1.11 -181 -115)"
-			/>
-		</svg>
+			<svg
+				className="absolute inset-0 origin-center"
+				viewBox="0 0 158 158"
+				style={{
+					transform: `rotate(${Math.random()}turn)`,
+				}}
+			>
+				<path
+					d="m202 242-28-10-16-27-7-48 8-32 26-21h40l43 15 14 31v42l-20 42-26 12-34-4Z"
+					style={{ fill: 'currentColor' }}
+					transform="matrix(1.2 0 0 1.11 -181 -115)"
+				/>
+			</svg>
+			<span className="text-display relative text-2xl text-snow dark:text-carbon">
+				{props.children}
+			</span>
+		</div>
 	)
 }

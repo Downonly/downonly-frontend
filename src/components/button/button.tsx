@@ -11,8 +11,8 @@ export default function Button(props: {
 	const Tag = (props.tag ?? 'button') as keyof JSX.IntrinsicElements
 	return (
 		<Tag
-			className={`interactive text-display inline-flex touch-manipulation select-none rounded-full border-current ${
-				props.size === 'lg' ? 'px-8 pb-2 pt-2.5' : 'px-6 pb-0.5 pt-1 text-sm'
+			className={`interactive text-display inline-flex touch-manipulation select-none rounded-full border-current leading-tight ${
+				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
 			} ${props.className || ''}`}
