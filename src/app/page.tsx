@@ -1,5 +1,5 @@
-import Card from '@/components/card/card'
 import MintYourFall from '@/components/mintYourFall/mintYourFall'
+import Minted from '@/components/minted/minted'
 
 export default function Home() {
 	return (
@@ -26,6 +26,8 @@ export default function Home() {
 			</div>
 
 			<MintYourFall />
+
+			<Minted />
 		</>
 	)
 }

@@ -11,7 +11,7 @@ export default function MintYourFall(props: {
 	return (
 		<Card
 			id={props.id}
-			className={`w-full ${props.className || ''}`}
+			className={`${props.className || ''}`}
 			style={props.style}
 		>
 			<header className="text-display mb-12 text-4xl">

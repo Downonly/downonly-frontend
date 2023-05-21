@@ -27,7 +27,7 @@ export default function RootLayout(props: {
 			<body className="grid grid-rows-[auto_1fr_auto]">
 				<Nav className="container relative z-10 my-10 w-full" />
 				<main>
-					<div className="container flex flex-col items-start gap-12">
+					<div className="container flex flex-col items-stretch gap-28">
 						{props.children}
 					</div>
 				</main>
