@@ -1,4 +1,4 @@
-export function roundedRectClipPath(cornerSize = 30) {
+export function roundedRectClipPath(cornerSize = 40) {
 	const csy = cornerSize
 	const csx = csy * 0.5
 	const randBetween = (min: number, max: number) =>

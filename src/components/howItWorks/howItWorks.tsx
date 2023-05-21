@@ -9,7 +9,7 @@ export default function HowItWorks(props: {
 			id={props.id}
 			className={`${
 				props.className || ''
-			} relative left-1/2 w-screen -translate-x-1/2 bg-white py-28 dark:bg-carbon`}
+			} relative left-1/2 w-screen -translate-x-1/2 bg-white pb-14 pt-28 dark:bg-carbon`}
 			style={props.style}
 		>
 			<div className="container">

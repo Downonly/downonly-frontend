@@ -30,7 +30,7 @@ export default function Step(props: {
 			<Circle className="relative z-10 translate-y-1/2 text-white dark:text-carbon" />
 			<Card
 				className="aspect-square"
-				bgClassName="bg-gradient-to-r from-dew to-dew dark:from-nickel dark:to-nickel"
+				bgClassName="bg-gradient-to-r from-snow to-snow dark:from-nickel dark:to-nickel"
 			>
 				{props.children}
 			</Card>

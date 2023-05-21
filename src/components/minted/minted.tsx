@@ -30,7 +30,7 @@ export default function Minted(props: {
 						</span>
 					}
 				>
-					<div className="aspect-square bg-dew dark:bg-nickel" />
+					<div className="aspect-square bg-snow dark:bg-nickel" />
 				</Polaroid>
 
 				<Polaroid
@@ -44,7 +44,7 @@ export default function Minted(props: {
 						</span>
 					}
 				>
-					<div className="aspect-square bg-dew dark:bg-nickel" />
+					<div className="aspect-square bg-snow dark:bg-nickel" />
 				</Polaroid>
 
 				<Polaroid
@@ -58,7 +58,7 @@ export default function Minted(props: {
 						</span>
 					}
 				>
-					<div className="aspect-square bg-dew dark:bg-nickel" />
+					<div className="aspect-square bg-snow dark:bg-nickel" />
 				</Polaroid>
 			</div>
 		</div>

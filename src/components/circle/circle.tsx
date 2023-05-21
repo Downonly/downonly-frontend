@@ -3,13 +3,14 @@ export default function Circle(props: {
 	style?: React.CSSProperties
 	id?: string
 	children?: React.ReactNode
+	size?: 'lg'
 }): JSX.Element {
 	return (
 		<div
 			id={props.id}
-			className={`relative inline-flex aspect-square w-8 items-center justify-center ${
+			className={`relative inline-flex aspect-square items-center justify-center ${
 				props.className || ''
-			}`}
+			} ${props.size === 'lg' ? 'w-14 text-3xl' : 'w-8 text-2xl'}`}
 			style={props.style}
 		>
 			<svg
@@ -25,7 +26,7 @@ export default function Circle(props: {
 					transform="matrix(1.2 0 0 1.11 -181 -115)"
 				/>
 			</svg>
-			<span className="text-display relative text-2xl text-snow dark:text-carbon">
+			<span className="text-display relative text-snow dark:text-carbon">
 				{props.children}
 			</span>
 		</div>

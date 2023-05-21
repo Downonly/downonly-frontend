@@ -4,10 +4,9 @@ module.exports = {
 	theme: {
 		colors: {
 			white: '#ffffff',
-			dew: '#fafafa',
 			snow: '#f2f2f2',
 			iron: '#c0c0c0',
-			nickel: '#2f2f2f',
+			nickel: '#3a3a3a',
 			carbon: '#282828',
 			cole: '#191919',
 			black: '#000000',
