@@ -1,6 +1,7 @@
 import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
-import Button from '@/components/button/button'
+// import { deposit } from '@/services/ether'
+import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -25,19 +26,7 @@ export default function MintYourFall(props: {
 				<Step num="3" label="Obstacle" operator="+" />
 				<Step num="4" label="Push down" operator="=">
 					<div className="grid h-full grid-rows-[1fr_auto] text-center">
-						<div className="pt-8">
-							<p className="text-display mb-2 text-sm">Dutch Auction</p>
-							<p className="text-sm text-carbon dark:text-iron">
-								Time: 23:55:04
-								<br />
-								Price: 4.7 Eth
-							</p>
-						</div>
-						<div>
-							<Button className="relative z-10" size="lg">
-								Mint fall
-							</Button>
-						</div>
+						<MintCTA />
 					</div>
 				</Step>
 			</div>

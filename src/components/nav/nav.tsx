@@ -19,17 +19,17 @@ export default function Nav(props: {
 				<Logo className="-mb-24 w-44" />
 			</Link>
 			<Link href="/team/">
-				<Button tag="span" mode="secondary">
+				<Button salt={'banana'} tag="span" mode="secondary">
 					Team
 				</Button>
 			</Link>
 			<Link href="/traits/">
-				<Button tag="span" mode="secondary">
+				<Button salt={'tomato'} tag="span" mode="secondary">
 					Traits
 				</Button>
 			</Link>
 			<Link href="/playground/">
-				<Button tag="span" mode="secondary">
+				<Button salt={'apple'} tag="span" mode="secondary">
 					Playground
 				</Button>
 			</Link>

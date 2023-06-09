@@ -1,13 +1,20 @@
+'use client'
+
 import { roundedRectClipPath } from '@/utils/shape'
 
 export default function Button(props: {
 	children: React.ReactNode
+	onClick?: () => void
 	className?: string
 	size?: 'lg'
 	mode?: 'secondary'
 	tag?: string
+	salt: string
 }) {
-	const clipPath = roundedRectClipPath(props.size === 'lg' ? 30 : 20)
+	const clipPath = roundedRectClipPath(
+		props.size === 'lg' ? 30 : 20,
+		props.salt
+	)
 	const Tag = (props.tag ?? 'button') as keyof JSX.IntrinsicElements
 	return (
 		<Tag
@@ -16,6 +23,7 @@ export default function Button(props: {
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
 			} ${props.className || ''}`}
+			onClick={props.onClick}
 			style={{ WebkitTapHighlightColor: 'transparent' }}
 		>
 			{props.children}
