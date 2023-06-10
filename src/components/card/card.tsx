@@ -7,6 +7,7 @@ export default function Card(props: {
 	id?: string
 	children?: React.ReactNode
 	mode?: 'secondary'
+	salt: string
 }): JSX.Element {
 	return (
 		<div className={`relative z-0 p-6 ${props.className}`}>
@@ -18,7 +19,7 @@ export default function Card(props: {
 						: 'bg-white dark:bg-carbon'
 				}`}
 				style={{
-					clipPath: roundedRectClipPath(),
+					clipPath: roundedRectClipPath(40, props.salt),
 				}}
 			/>
 		</div>

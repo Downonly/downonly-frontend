@@ -20,6 +20,7 @@ export default function Minted(props: {
 
 			<div className="gap-x grid gap-y-6 md:grid-cols-3">
 				<Polaroid
+					salt="watermelon"
 					emoji="👮‍🏥🪑"
 					label="Label"
 					description={
@@ -34,6 +35,7 @@ export default function Minted(props: {
 				</Polaroid>
 
 				<Polaroid
+					salt="honeymelon"
 					emoji="👮‍🏥🪑"
 					label="Label"
 					description={
@@ -48,6 +50,7 @@ export default function Minted(props: {
 				</Polaroid>
 
 				<Polaroid
+					salt="grapes"
 					emoji="👮‍🏥🪑"
 					label="Label"
 					description={

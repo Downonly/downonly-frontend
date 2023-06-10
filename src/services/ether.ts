@@ -1,5 +1,5 @@
 import {
-	InfuraProvider,
+	// InfuraProvider,
 	BrowserProvider,
 	Contract,
 	type Eip1193Provider,
@@ -9,6 +9,7 @@ import {
 	type JsonRpcApiProvider,
 	formatEther,
 	parseUnits,
+	getDefaultProvider,
 } from 'ethers'
 
 declare const window: Window &
@@ -30,8 +31,11 @@ async function initContract() {
 		// If MetaMask is not installed, we use the default provider,
 		// which is backed by a variety of third-party services (such
 		// as INFURA). They do not have private keys installed and
-		// only have read-only access
-		provider = new InfuraProvider('goerli', 'b782095ddbde41128ce524c730e2a506')
+		// only have read-only access.
+		provider = getDefaultProvider('goerli') as JsonRpcApiProvider
+
+		// Alternatively we can use the InfuraProvider.
+		// provider = new InfuraProvider('goerli', 'b782095ddbde41128ce524c730e2a506')
 	} else {
 		// Connect to the MetaMask EIP-1193 object. This is a standard
 		// protocol that allows Ethers access to make all read-only

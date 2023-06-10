@@ -7,10 +7,12 @@ export default function Polaroid(props: {
 	children?: React.ReactNode
 	emoji?: string
 	label?: string
+	salt: string
 	description?: React.ReactNode
 }): JSX.Element {
 	return (
 		<Card
+			salt={props.salt}
 			id={props.id}
 			className={`text-center text-sm ${props.className || ''}`}
 			style={props.style}

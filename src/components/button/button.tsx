@@ -6,6 +6,7 @@ export default function Button(props: {
 	children: React.ReactNode
 	onClick?: () => void
 	className?: string
+	style?: React.CSSProperties
 	size?: 'lg'
 	mode?: 'secondary'
 	tag?: string
@@ -24,14 +25,12 @@ export default function Button(props: {
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
 			} ${props.className || ''}`}
 			onClick={props.onClick}
-			style={{ WebkitTapHighlightColor: 'transparent' }}
+			style={{ ...props.style, WebkitTapHighlightColor: 'transparent' }}
 		>
 			{props.children}
 			<div
 				className="absolute inset-0 -z-10 h-full w-full bg-cole dark:bg-snow"
-				style={{
-					clipPath,
-				}}
+				style={{ clipPath }}
 			/>
 			{props.mode === 'secondary' && (
 				<div className="absolute inset-0 -z-10 h-full w-full p-0.5">

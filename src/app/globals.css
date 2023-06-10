@@ -32,6 +32,14 @@ body {
 	@apply font-display uppercase;
 }
 
+.link {
+	@apply font-bold underline decoration-solid decoration-2 underline-offset-4 hover:no-underline focus-visible:no-underline;
+
+	&[target='_blank']::after {
+		content: '\00a0↗';
+	}
+}
+
 .container {
 	width: min(70rem, 90vw);
 	max-width: calc(100% - 2rem);

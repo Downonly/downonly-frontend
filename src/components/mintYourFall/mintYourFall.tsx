@@ -14,6 +14,7 @@ export default function MintYourFall(props: {
 			id={props.id}
 			className={`${props.className || ''}`}
 			style={props.style}
+			salt="cherry"
 		>
 			<header className="text-display mb-12 text-4xl">
 				<h1>Mint your own fall</h1>

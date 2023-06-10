@@ -13,6 +13,7 @@ module.exports = {
 			tomato: 'tomato',
 			current: 'currentColor',
 			inherit: 'inherit',
+			transparent: 'transparent',
 		},
 		fontFamily: {
 			display: ['var(--font-display)', 'system-ui', 'sans-serif'],

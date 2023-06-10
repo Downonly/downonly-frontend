@@ -27,11 +27,15 @@ export default function Step(props: {
 			<Circle className="mb-2">{props.num}</Circle>
 			<p className="text-display mb-6 text-sm">{props.label}</p>
 
-			<Circle className="relative z-10 translate-y-1/2 text-white dark:text-carbon" />
 			<Card
-				className="aspect-square"
+				salt="blueberry"
+				className="relative aspect-square"
 				bgClassName="bg-gradient-to-r from-snow to-snow dark:from-nickel dark:to-nickel"
 			>
+				<Circle
+					style={{ position: 'absolute' }}
+					className="top-0 -translate-x-1/2 -translate-y-1/2 text-white dark:text-carbon"
+				/>
 				{props.children}
 			</Card>
 		</div>
