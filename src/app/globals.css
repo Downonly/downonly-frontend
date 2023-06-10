@@ -33,7 +33,7 @@ body {
 }
 
 .link {
-	@apply font-bold underline decoration-solid decoration-2 underline-offset-4 hover:no-underline focus-visible:no-underline;
+	@apply whitespace-nowrap border-b-2 font-bold after:inline-block after:transition-transform hover:border-transparent hover:after:-translate-y-0.5 focus-visible:border-transparent focus-visible:after:-translate-y-0.5;
 
 	&[target='_blank']::after {
 		content: '\00a0↗';

@@ -25,7 +25,7 @@ export default function MintCTA(props: {
 			<p className="text-display mb-2">
 				Mint #52
 				<br />
-				cop-hostital-chair-fall
+				cop-hospital-chair-fall
 			</p>
 			<p className="text-carbon dark:text-iron">
 				Mint date: 01.01.2023

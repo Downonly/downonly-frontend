@@ -9,21 +9,29 @@
 }
 
 @keyframes do-modal-out {
-	from {
+	0% {
 		transform: scale(1);
 	}
 
-	to {
+	30% {
+		transform: scale(1.04);
+	}
+
+	100% {
 		transform: scale(0.9);
 	}
 }
 
 @keyframes do-modal-out-mobile {
-	from {
+	0% {
 		transform: translateY(0);
 	}
 
-	to {
+	40% {
+		transform: translateY(-1rem);
+	}
+
+	100% {
 		transform: translateY(2rem);
 	}
 }

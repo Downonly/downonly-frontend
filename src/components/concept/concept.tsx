@@ -37,7 +37,7 @@ export default function Concept(props: {
 								Current State
 							</h3>
 
-							<p className="text-sm text-carbon dark:text-iron">
+							<p className="text-sm leading-relaxed text-carbon dark:text-iron">
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris

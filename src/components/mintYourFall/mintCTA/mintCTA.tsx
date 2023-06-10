@@ -40,7 +40,7 @@ export default function MintCTA(): JSX.Element {
 					<br />
 					don&apos;t have a wallet
 				</strong>
-				<p className="mb-4">
+				<p className="mb-4 leading-relaxed">
 					In order to perform transactions on the Ethereum network safely, you
 					need a wallet, such as{' '}
 					<a
@@ -60,7 +60,7 @@ export default function MintCTA(): JSX.Element {
 					>
 						Trust Wallet
 					</a>{' '}
-					(if you are on mobile).
+					(for mobile).
 				</p>
 				<Button
 					style={{ display: 'block' }}
