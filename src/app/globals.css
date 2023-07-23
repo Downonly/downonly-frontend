@@ -14,6 +14,14 @@
 	.interactive {
 		@apply relative inline-flex hover:z-10 hover:scale-105 focus-visible:z-10 focus-visible:scale-105 active:scale-100;
 	}
+
+	.link {
+		@apply whitespace-nowrap border-b-2 font-bold after:inline-block hover:border-transparent hover:after:-translate-y-0.5 focus-visible:border-transparent focus-visible:after:-translate-y-0.5;
+
+		&[target='_blank']::after {
+			content: '\00a0↗';
+		}
+	}
 }
 @layer utilities {
 	.gap-x {
@@ -30,14 +38,6 @@ body {
 
 .text-display {
 	@apply font-display uppercase;
-}
-
-.link {
-	@apply whitespace-nowrap border-b-2 font-bold after:inline-block after:transition-transform hover:border-transparent hover:after:-translate-y-0.5 focus-visible:border-transparent focus-visible:after:-translate-y-0.5;
-
-	&[target='_blank']::after {
-		content: '\00a0↗';
-	}
 }
 
 .container {

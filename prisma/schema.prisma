@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model mints {
+  id       Int     @unique(map: "id") @default(autoincrement())
+  jobState String? @db.VarChar(255)
+  surface  String? @db.VarChar(255)
+  obstacle String? @db.VarChar(255)
+  figure   String? @db.VarChar(255)
+  ipfs     String? @db.VarChar(255)
+  openSea  String? @db.VarChar(255)
+}

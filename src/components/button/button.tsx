@@ -9,15 +9,16 @@ export default function Button(props: {
 	style?: React.CSSProperties
 	size?: 'lg'
 	mode?: 'secondary'
-	tag?: string
+	tag?: keyof JSX.IntrinsicElements
 	salt: string
 }) {
 	const clipPath = roundedRectClipPath(
 		props.size === 'lg' ? 30 : 20,
 		props.salt
 	)
-	const Tag = (props.tag ?? 'button') as keyof JSX.IntrinsicElements
+	const Tag = props.tag ?? 'button'
 	return (
+		// @ts-ignore
 		<Tag
 			className={`interactive text-display inline-flex touch-manipulation select-none rounded-full border-current leading-tight ${
 				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
