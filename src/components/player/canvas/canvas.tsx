@@ -1,6 +1,6 @@
 'use client'
 
-import { Canvas as FiverCanvas } from '@react-three/fiber'
+import { Canvas as FiberCanvas } from '@react-three/fiber'
 
 export default function Canvas(props: {
 	className?: string
@@ -11,10 +11,11 @@ export default function Canvas(props: {
 	const gl = {
 		// antialias: false,
 		// toneMapping: ACESFilmicToneMapping, // default
+		logarithmicDepthBuffer: true,
 	}
 
 	return (
-		<FiverCanvas
+		<FiberCanvas
 			dpr={[1, 2]}
 			id={props.id}
 			className={`h-full w-full ${props.className || ''}`}
@@ -23,6 +24,6 @@ export default function Canvas(props: {
 			gl={gl}
 		>
 			{props.children}
-		</FiverCanvas>
+		</FiberCanvas>
 	)
 }
