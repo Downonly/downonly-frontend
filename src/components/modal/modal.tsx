@@ -39,7 +39,7 @@ export default function Modal(props: {
 				handleClick(ev as unknown as MouseEvent)
 			}}
 			className={`${
-				props.className || ''
+				props.className ?? ''
 			} do-modal fixed inset-0 z-50 m-auto block overflow-visible border-0 bg-transparent p-0 text-left before:fixed before:inset-0 before:-z-10 before:bg-carbon before:opacity-50 before:content-['_']`}
 			id={props.id}
 			ref={dialogRef}

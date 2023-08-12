@@ -9,7 +9,7 @@ export default function Minted(props: {
 	return (
 		<div
 			id={props.id}
-			className={`${props.className || ''}`}
+			className={`${props.className ?? ''}`}
 			style={props.style}
 		>
 			<h2 className="text-display mb-12 px-6 text-4xl">

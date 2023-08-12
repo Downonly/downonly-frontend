@@ -12,7 +12,7 @@ export default function MintCTA(props: {
 	const [price, setPrice] = useState<number>()
 
 	useEffect(() => {
-		;(async () => {
+		void (async () => {
 			setPrice(await getPrice())
 		})()
 	}, [])
@@ -20,7 +20,7 @@ export default function MintCTA(props: {
 	return (
 		<div
 			id={props.id}
-			className={`${props.className || ''}`}
+			className={`${props.className ?? ''}`}
 			style={props.style}
 		>
 			<p className="mb-2">👮‍🏥🪑</p>

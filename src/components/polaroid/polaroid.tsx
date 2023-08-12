@@ -14,7 +14,7 @@ export default function Polaroid(props: {
 		<Card
 			salt={props.salt}
 			id={props.id}
-			className={`text-center text-sm ${props.className || ''}`}
+			className={`text-center text-sm ${props.className ?? ''}`}
 			style={props.style}
 		>
 			<div className="mb-4">{props.children}</div>

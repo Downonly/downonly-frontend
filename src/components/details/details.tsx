@@ -13,7 +13,7 @@ export default function Details(props: {
 		<details
 			id={props.id}
 			className={`relative [&[open]>summary>div>div:last-child]:rotate-180 ${
-				props.className || ''
+				props.className ?? ''
 			}`}
 			style={props.style}
 		>

@@ -23,10 +23,13 @@ export default function MintCTA(): JSX.Element {
 			</div>
 			<div>
 				<Button
-					onClick={async () => {
-						// await deposit(1)
-						setModalOpen(true)
-					}}
+					onClick={
+						// async
+						() => {
+							// await deposit(1)
+							setModalOpen(true)
+						}
+					}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"

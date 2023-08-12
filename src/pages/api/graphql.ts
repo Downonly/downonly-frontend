@@ -5,12 +5,13 @@ import { prisma } from '@/services/db'
 import { typeDefs } from '@/graphql/schema'
 import { resolvers } from '@/graphql/resolvers'
 
-export type Context = {
+export interface Context {
 	prisma: PrismaClient
 }
 
 const apolloServer = new ApolloServer<Context>({ typeDefs, resolvers })
 
 export default startServerAndCreateNextHandler(apolloServer, {
+	// eslint-disable-next-line @typescript-eslint/require-await
 	context: async (req, res) => ({ req, res, prisma }),
 })

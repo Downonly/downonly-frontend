@@ -10,6 +10,7 @@ import {
 	formatEther,
 	parseUnits,
 	getDefaultProvider,
+	TransactionResponse,
 } from 'ethers'
 
 declare const window: Window &
@@ -78,7 +79,7 @@ async function initContract() {
 export async function getPrice() {
 	await initContract()
 
-	const balance = await contract.getBalance()
+	const balance = (await contract.getBalance()) as number
 	const balanceEther = formatEther(balance)
 
 	console.info('balance', balance)
@@ -95,12 +96,12 @@ export async function deposit(wei: number) {
 	try {
 		const contractWithSigner = contract.connect(signer)
 
-		contract.deposit()
+		await contract.deposit()
 
 		// Call the deposit function on the contract
-		const depositTx = await (contractWithSigner as MyContract).deposit({
+		const depositTx = (await (contractWithSigner as MyContract).deposit({
 			value: parseUnits(wei.toString(), -18),
-		})
+		})) as TransactionResponse
 
 		// Wait for the transaction to be mined
 		await depositTx.wait()

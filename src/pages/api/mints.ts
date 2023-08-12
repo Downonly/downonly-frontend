@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '@/services/prisma'
+import { prisma } from '@/services/db'
 
 async function allMints() {
 	const allMints = await prisma.mints.findMany()

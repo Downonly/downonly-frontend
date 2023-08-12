@@ -12,7 +12,7 @@ export default function MintYourFall(props: {
 	return (
 		<Card
 			id={props.id}
-			className={`${props.className || ''}`}
+			className={`${props.className ?? ''}`}
 			style={props.style}
 			salt="cherry"
 		>

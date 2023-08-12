@@ -11,7 +11,7 @@ export default function Footer(props: {
 		<footer
 			id={props.id}
 			className={`bg-cole pt-32 text-snow dark:bg-snow dark:text-cole ${
-				props.className || ''
+				props.className ?? ''
 			}`}
 			style={props.style}
 		>

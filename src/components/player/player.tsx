@@ -12,7 +12,7 @@ export default function Player(props: {
 		<div
 			id={props.id}
 			className={`gap-x -mt-36 flex w-full flex-col justify-end sm:-mt-32 lg:flex-row ${
-				props.className || ''
+				props.className ?? ''
 			}`}
 			style={props.style}
 		>

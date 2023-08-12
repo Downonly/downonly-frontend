@@ -11,7 +11,7 @@ export default function Nav(props: {
 		<nav
 			id={props.id}
 			className={`mb-44 flex flex-col flex-wrap items-end justify-end gap-4 sm:flex-row sm:items-start ${
-				props.className || ''
+				props.className ?? ''
 			}`}
 			style={props.style}
 		>

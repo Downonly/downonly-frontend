@@ -11,7 +11,7 @@ export default function Concept(props: {
 		<div
 			id={props.id}
 			className={`${
-				props.className || ''
+				props.className ?? ''
 			} relative left-1/2 w-screen -translate-x-1/2 bg-white py-14 dark:bg-carbon`}
 			style={props.style}
 		>

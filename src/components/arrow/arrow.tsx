@@ -8,7 +8,7 @@ export default function Arrow(props: {
 		<svg
 			id={props.id}
 			className={`aspect-square w-4 origin-center transform ${
-				props.className || ''
+				props.className ?? ''
 			}`}
 			style={props.style}
 			viewBox="0 0 110 110"

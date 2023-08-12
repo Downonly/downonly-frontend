@@ -8,7 +8,7 @@ export default function Logo(props: {
 		<svg
 			id={props.id}
 			viewBox="0 0 800 661"
-			className={`${props.className || ''}`}
+			className={`${props.className ?? ''}`}
 			style={props.style}
 		>
 			<path

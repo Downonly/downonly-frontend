@@ -9,7 +9,7 @@ export default function Circle(props: {
 		<div
 			id={props.id}
 			className={`relative inline-flex aspect-square items-center justify-center ${
-				props.className || ''
+				props.className ?? ''
 			} ${props.size === 'lg' ? 'w-14 text-3xl' : 'w-8 text-2xl'}`}
 			style={props.style}
 		>

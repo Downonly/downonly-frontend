@@ -16,17 +16,21 @@ export default function Button(props: {
 		props.size === 'lg' ? 30 : 20,
 		props.salt
 	)
-	const Tag = props.tag ?? 'button'
+	const Tag = (props.tag ??
+		'button') as unknown as React.ComponentClass<JSX.IntrinsicElements>
 	return (
-		// @ts-ignore
 		<Tag
 			className={`interactive text-display inline-flex touch-manipulation select-none rounded-full border-current leading-tight ${
 				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
-			} ${props.className || ''}`}
+			} ${props.className ?? ''}`}
 			onClick={props.onClick}
-			style={{ ...props.style, WebkitTapHighlightColor: 'transparent' }}
+			style={{
+				...props.style,
+				// @ts-ignore
+				WebkitTapHighlightColor: 'transparent',
+			}}
 		>
 			{props.children}
 			<div

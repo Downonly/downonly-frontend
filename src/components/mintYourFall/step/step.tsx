@@ -13,7 +13,7 @@ export default function Step(props: {
 	return (
 		<div
 			id={props.id}
-			className={`relative text-center ${props.className || ''}`}
+			className={`relative text-center ${props.className ?? ''}`}
 			style={props.style}
 		>
 			{props.operator && (
