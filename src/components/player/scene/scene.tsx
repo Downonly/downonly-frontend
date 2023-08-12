@@ -15,7 +15,8 @@ export default function Scene(): JSX.Element {
 
 	const model = useLoader(
 		GLTFLoader,
-		'/QmVHsPUUoxmWvP4yogUf9GnnKXoPMjBVRsipyzLUYEvEPc'
+		// '/QmVHsPUUoxmWvP4yogUf9GnnKXoPMjBVRsipyzLUYEvEPc'
+		'/WireframeTestFall_230718.glb'
 	)
 
 	// const spherePositionXVal = 2
