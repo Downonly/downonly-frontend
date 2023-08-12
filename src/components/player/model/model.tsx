@@ -1,12 +1,24 @@
-import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { useAnimations, useGLTF } from '@react-three/drei'
+import { useEffect } from 'react'
+import { LoopOnce } from 'three'
+// import { LoopRepeat } from 'three'
 
 export default function Model() {
-	const model = useLoader(
-		GLTFLoader,
+	const { scene, animations } = useGLTF(
 		// '/QmVHsPUUoxmWvP4yogUf9GnnKXoPMjBVRsipyzLUYEvEPc'
 		'/WireframeTestFall_230718.glb'
 	)
+	const { mixer, actions } = useAnimations(animations, scene)
+	const action = actions[0]
 
-	return <primitive object={model.scene} />
+	useEffect(() => {
+		const action = mixer.clipAction(animations[0])
+		action.setLoop(LoopOnce, 0)
+		// action.setEffectiveTimeScale(mixerSettings.actionTimeScale)
+		action.play()
+	}, [action, animations, mixer])
+
+	return <primitive object={scene} />
 }
+
+// useGLTF.preload('/WireframeTestFall_230718.glb')

@@ -12,6 +12,21 @@ export default function Fallback() {
 		}
 	})
 
+	// const spherePositionXVal = 2
+	// const { spherePositionX } = isDebug()
+	// 	? // eslint-disable-next-line react-hooks/rules-of-hooks
+	// 	  useControls({
+	// 			spherePositionX: {
+	// 				value: spherePositionXVal,
+	// 				min: -2,
+	// 				max: 2,
+	// 				step: 0.01,
+	// 			},
+	// 	  })
+	// 	: {
+	// 			spherePositionX: spherePositionXVal,
+	// 	  }
+
 	return (
 		<>
 			<mesh scale={1.5} ref={cubeRef}>
