@@ -1,17 +1,17 @@
 'use client'
 
 import { isPerf } from '@/utils/debug'
-import { OrbitControls } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 import Model from '@/components/player/model/model'
 import Fallback from '@/components/player/fallback/fallback'
+import Orbit from './orbit'
 
 export default function Scene(): JSX.Element {
 	return (
 		<>
 			{isPerf() && <Perf position="top-left" />}
-			<OrbitControls makeDefault />
+			<Orbit />
 
 			<ambientLight />
 			{/*<pointLight position={[10, 10, 10]} />*/}

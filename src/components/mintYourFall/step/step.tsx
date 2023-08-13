@@ -25,7 +25,7 @@ export default function Step(props: {
 				</span>
 			)}
 			<Circle className="mb-2">{props.num}</Circle>
-			<p className="text-display mb-6 text-sm">{props.label}</p>
+			<p className="text-display mb-10 text-sm">{props.label}</p>
 
 			<Card
 				salt="blueberry"

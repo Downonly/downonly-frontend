@@ -20,7 +20,7 @@ export default function Button(props: {
 		'button') as unknown as React.ComponentClass<JSX.IntrinsicElements>
 	return (
 		<Tag
-			className={`interactive text-display inline-flex touch-manipulation select-none rounded-full border-current leading-tight ${
+			className={`interactive text-display inline-flex rounded-full border-current leading-tight ${
 				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'

@@ -22,7 +22,8 @@
         "plugin:@typescript-eslint/recommended-type-checked",
         "plugin:@typescript-eslint/stylistic-type-checked",
         "plugin:prettier/recommended",
-        "next/core-web-vitals"
+        "next/core-web-vitals",
+        "plugin:tailwindcss/recommended"
       ],
       "rules": {
         "@typescript-eslint/ban-ts-comment": "off",

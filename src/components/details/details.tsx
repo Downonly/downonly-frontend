@@ -12,7 +12,7 @@ export default function Details(props: {
 	return (
 		<details
 			id={props.id}
-			className={`relative [&[open]>summary>div>div:last-child]:rotate-180 ${
+			className={`relative [&[open]>summary>div>div:last-child]:rotate-90 ${
 				props.className ?? ''
 			}`}
 			style={props.style}
@@ -21,7 +21,7 @@ export default function Details(props: {
 				<div className="flex items-center">
 					<span className="mr-auto pr-6">{props.summary}</span>
 					<Circle className="shrink-0 text-snow dark:text-nickel">
-						<Arrow className="arrow rotate-90 text-carbon dark:text-snow" />
+						<Arrow className="rotate-90 text-carbon dark:text-snow" />
 					</Circle>
 				</div>
 				<div

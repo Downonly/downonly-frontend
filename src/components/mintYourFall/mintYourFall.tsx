@@ -1,7 +1,7 @@
 import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
-// import { deposit } from '@/services/ether'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
+import Picker from '@/components/mintYourFall/step/picker'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -22,10 +22,25 @@ export default function MintYourFall(props: {
 			</header>
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-				<Step num="1" label="Setting" />
-				<Step num="2" label="Character" operator="+" />
-				<Step num="3" label="Obstacle" operator="+" />
+				<Step num="1" label="Setting">
+					<Picker
+						options={[{ emoji: '🏥' }, { emoji: '🏭' }, { emoji: '💒' }]}
+					/>
+				</Step>
+				<Step num="2" label="Character" operator="+">
+					<Picker
+						options={[{ emoji: '👮‍♂️' }, { emoji: '👷🏻‍♂️' }, { emoji: '👨🏿‍🚒' }]}
+					/>
+				</Step>
+				<Step num="3" label="Obstacle" operator="+">
+					<Picker
+						options={[{ emoji: '🛴' }, { emoji: '🛢️' }, { emoji: '🧹' }]}
+					/>
+				</Step>
 				<Step num="4" label="Push down" operator="=">
+					<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
+						☝️
+					</div>
 					<div className="grid h-full grid-rows-[1fr_auto] text-center">
 						<MintCTA />
 					</div>

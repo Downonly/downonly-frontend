@@ -49,7 +49,7 @@ export default function Modal(props: {
 				style={{
 					clipPath: roundedRectClipPath(40, 'pineapple'),
 				}}
-				className="do-modal__content bg-white p-6 text-cole dark:bg-cole dark:text-white"
+				className="bg-white p-6 text-cole dark:bg-cole dark:text-white"
 			>
 				<button
 					style={{ WebkitTapHighlightColor: 'transparent' }}
