@@ -1,6 +1,7 @@
 'use client'
 
 import Progress from './progress'
+import { useEffect, useState } from 'react'
 
 export default function Controls(props: {
 	className?: string
@@ -8,10 +9,43 @@ export default function Controls(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const [isFullScreen, setIsFullScreen] = useState(false)
+
+	const onFullScreenChange = () => {
+		setIsFullScreen(document.fullscreenElement !== null)
+	}
+
+	useEffect(() => {
+		document
+			.getElementById('full-screen-container')
+			?.addEventListener('fullscreenchange', onFullScreenChange)
+		return () => {
+			document
+				.getElementById('full-screen-container')
+				?.removeEventListener('fullscreenchange', onFullScreenChange)
+		}
+	}, [])
+
+	const toggleFullScreen = () => {
+		const elem = document.getElementById('full-screen-container')
+
+		if (!document.fullscreenElement) {
+			elem?.requestFullscreen().catch((err) => {
+				console.error(err)
+			})
+		} else {
+			void document.exitFullscreen()
+		}
+	}
+
 	return (
 		<div
 			id={props.id}
-			className={`${props.className ?? ''}`}
+			className={`${props.className ?? ''}${
+				isFullScreen
+					? ' mx-auto w-[calc(100vw-2rem)] lg:mx-auto lg:me-auto 2xl:mx-auto'
+					: ''
+			}`}
 			style={props.style}
 		>
 			<Progress className="mb-3" progress={0.3} />
@@ -41,7 +75,7 @@ export default function Controls(props: {
 					</svg>
 				</button>
 
-				<button className="interactive ms-auto">
+				<button className="interactive ms-auto" onClick={toggleFullScreen}>
 					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
 						<path d="M37.4 430.7h64.1l-2.2 277.2 227.4-.1.6 60.5-288.7-1.6-1.2-336Zm658.6-10 66.8-1-6.4 347.6-335.6 2 2.4-63.5 266.6 1.2 6.2-286.3ZM38.4 350.3l57.1 1-1.2-257.2 232.4-1.9.6-60.5-290.7 1.6 1.8 317Zm660.6-21 60.8 1 3.6-295.6-348.6-3 4.4 58.5L697.8 93l1.2 236.3Z" />
 					</svg>
