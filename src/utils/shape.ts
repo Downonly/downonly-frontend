@@ -1,4 +1,4 @@
-function randBetween(min: number, max: number, salt: string) {
+export function randBetween(min: number, max: number, salt: string) {
 	// Combine the parameters to create a unique seed
 	const seed = `${min}-${max}-${salt}`
 

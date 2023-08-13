@@ -35,7 +35,10 @@ export default function Picker(props: {
 					)
 				}
 			>
-				<Circle className="rotate-180 scale-75 text-nickel dark:text-snow">
+				<Circle
+					salt="sugarcane"
+					className="rotate-180 scale-75 text-nickel dark:text-snow"
+				>
 					<Arrow className="text-snow dark:text-carbon">Previous</Arrow>
 				</Circle>
 			</button>
@@ -48,7 +51,7 @@ export default function Picker(props: {
 					)
 				}
 			>
-				<Circle className="scale-75 text-nickel dark:text-snow">
+				<Circle salt="bean" className="scale-75 text-nickel dark:text-snow">
 					<Arrow className="text-snow dark:text-carbon">Next</Arrow>
 				</Circle>
 			</button>

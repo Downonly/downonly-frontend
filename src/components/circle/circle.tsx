@@ -1,9 +1,12 @@
+import { randBetween } from '@/utils/shape'
+
 export default function Circle(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
 	children?: React.ReactNode
 	size?: 'lg'
+	salt?: string
 }): JSX.Element {
 	return (
 		<div
@@ -17,7 +20,9 @@ export default function Circle(props: {
 				className="absolute inset-0 origin-center"
 				viewBox="0 0 158 158"
 				style={{
-					transform: `rotate(${Math.random()}turn)`,
+					transform: `rotate(${
+						props.salt ? randBetween(0, 1, props.salt) : Math.random()
+					}turn)`,
 				}}
 			>
 				<path
