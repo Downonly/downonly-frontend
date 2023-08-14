@@ -3,6 +3,7 @@
 import Circle from '@/components/circle/circle'
 import Arrow from '@/components/arrow/arrow'
 import { useState } from 'react'
+import Loading from '@/components/loading/loading'
 
 export default function Picker(props: {
 	className?: string
@@ -20,12 +21,15 @@ export default function Picker(props: {
 	return (
 		<div
 			id={props.id}
-			className={`h-full ${props.className ?? ''}`}
+			className={`grid h-full place-items-center ${props.className ?? ''}`}
 			style={props.style}
 		>
 			<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
 				{options[currentPick]?.emoji}
 			</div>
+
+			<Loading className="-translate-y-3" />
+
 			<button
 				disabled={options.length <= 1}
 				className="interactive absolute left-4 top-1/2 -translate-y-1/2"
