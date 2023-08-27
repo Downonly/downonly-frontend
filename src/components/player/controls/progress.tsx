@@ -16,7 +16,7 @@ export default function Progress(props: {
 				Progress
 			</span>
 			<div
-				className="h-1 overflow-hidden rounded-full bg-iron dark:bg-nickel"
+				className="h-1 overflow-hidden rounded-full bg-cole/20 dark:bg-snow/20"
 				aria-labelledby={progressLabelId}
 				aria-valuenow={Math.floor((props.progress ?? 0) * 100)}
 				role="progressbar"

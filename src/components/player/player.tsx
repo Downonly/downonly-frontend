@@ -22,10 +22,10 @@ export default function Player(props: {
 					id="full-screen-container"
 					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 				>
-					<Canvas className="mb-4 aspect-square max-h-[calc(100%-3rem)] bg-tomato">
+					<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 						<Scene />
 					</Canvas>
-					<Controls className="mx-[calc((50vw-min(35rem,45vw)))] mb-4 lg:me-0 2xl:mx-0" />
+					<Controls className="mx-[calc((50vw-min(35rem,45vw)))] lg:me-0 2xl:mx-0" />
 				</div>
 				<div className="flex items-center justify-center p-6 lg:w-1/2">
 					<MintCTA />

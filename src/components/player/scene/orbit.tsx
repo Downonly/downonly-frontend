@@ -5,6 +5,12 @@ import { isDebug } from '@/utils/debug'
 import { useControls } from 'leva'
 
 export default function Orbit(): JSX.Element {
+	const onOrbitChange = (isOrbiting: boolean) => {
+		const canvas = document.getElementById('canvas')
+		if (!canvas) return
+		canvas.style.cursor = isOrbiting ? 'grabbing' : 'grab'
+	}
+
 	const minDistanceVal = 0
 	const maxDistanceVal = 20
 	const { minDistance, maxDistance, enableZoom, enablePan } = isDebug()
@@ -44,11 +50,13 @@ export default function Orbit(): JSX.Element {
 
 	return (
 		<OrbitControls
-			makeDefault
-			minDistance={minDistance}
-			maxDistance={maxDistance}
 			enableZoom={enableZoom}
 			enablePan={enablePan}
+			makeDefault
+			maxDistance={maxDistance}
+			minDistance={minDistance}
+			onEnd={() => onOrbitChange(false)}
+			onStart={() => onOrbitChange(true)}
 		/>
 	)
 }

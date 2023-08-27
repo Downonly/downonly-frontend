@@ -1,7 +1,10 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
+import { isTouchDevice } from '@/utils/device'
 import Progress from './progress'
-import { useEffect, useState } from 'react'
+
+let timeoutToHide: number
 
 export default function Controls(props: {
 	className?: string
@@ -9,11 +12,57 @@ export default function Controls(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const controlsRef = useRef<HTMLDivElement>(null)
 	const [isFullScreen, setIsFullScreen] = useState(false)
+	const [mouseAtBottom, setMouseAtBottom] = useState(false)
+	const [controlsHidden, setControlsHidden] = useState(false)
 
 	const onFullScreenChange = () => {
 		setIsFullScreen(document.fullscreenElement !== null)
 	}
+
+	const onMouseMove = (ev: MouseEvent) => {
+		setMouseAtBottom(
+			!(
+				ev.clientY <
+				window.innerHeight - (controlsRef.current?.clientHeight ?? 0)
+			)
+		)
+	}
+
+	const hideAfterTimeout = () => {
+		window.clearTimeout(timeoutToHide)
+		timeoutToHide = window.setTimeout(() => {
+			setControlsHidden(true)
+		}, 2000)
+	}
+
+	useEffect(() => {
+		if (isTouchDevice()) return
+
+		if (isFullScreen) {
+			window[isFullScreen ? 'addEventListener' : 'removeEventListener'](
+				'mousemove',
+				onMouseMove as (ev: Event) => void
+			)
+			hideAfterTimeout()
+		} else {
+			window.clearTimeout(timeoutToHide)
+			setControlsHidden(false)
+		}
+	}, [isFullScreen])
+
+	useEffect(() => {
+		if (isTouchDevice()) return
+		if (!isFullScreen) return
+
+		if (mouseAtBottom) {
+			window.clearTimeout(timeoutToHide)
+			setControlsHidden(false)
+		} else {
+			hideAfterTimeout()
+		}
+	}, [mouseAtBottom, isFullScreen])
 
 	useEffect(() => {
 		document
@@ -41,11 +90,12 @@ export default function Controls(props: {
 	return (
 		<div
 			id={props.id}
-			className={`${props.className ?? ''}${
+			className={`${props.className ?? ''} ${
 				isFullScreen
-					? ' mx-auto w-[calc(100vw-2rem)] lg:mx-auto lg:me-auto 2xl:mx-auto'
-					: ''
-			}`}
+					? 'absolute bottom-0 mx-auto w-full origin-top-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
+					: 'my-4'
+			}${controlsHidden ? ' translate-y-full rotate-6' : ''}`}
+			ref={controlsRef}
 			style={props.style}
 		>
 			<Progress className="mb-3" progress={0.3} />
