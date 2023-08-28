@@ -27,6 +27,16 @@
 	.gap-x {
 		@apply gap-x-6;
 	}
+
+	.container {
+		width: min(70rem, 90vw);
+		max-width: calc(100% - 2rem);
+		margin-inline: auto;
+	}
+	.container-half {
+		width: min(35rem, 45vw);
+		max-width: calc(100% - 1rem);
+	}
 }
 
 html,
@@ -40,8 +50,36 @@ body {
 	@apply font-display uppercase;
 }
 
-.container {
-	width: min(70rem, 90vw);
-	max-width: calc(100% - 2rem);
-	margin-inline: auto;
+/* View transtitions */
+@keyframes down-old {
+	0% {
+		transform: none;
+		opacity: 1;
+	}
+
+	100% {
+		transform: translateY(2rem) rotate(0.1turn);
+		opacity: 0;
+	}
+}
+
+/* View transtitions */
+@keyframes down-new {
+	0% {
+		transform: translateY(-2rem) rotate(-0.1turn);
+		opacity: 0;
+	}
+
+	100% {
+		transform: none;
+		opacity: 1;
+	}
+}
+
+::view-transition-old(root) {
+	animation: 0.2s ease-in both down-old;
+}
+
+::view-transition-new(root) {
+	animation: 0.2s 0.2s ease-out both down-new;
 }

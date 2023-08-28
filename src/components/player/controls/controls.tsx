@@ -93,7 +93,7 @@ export default function Controls(props: {
 			className={`${props.className ?? ''} ${
 				isFullScreen
 					? 'absolute bottom-0 mx-auto w-full origin-top-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
-					: 'my-4'
+					: 'lg:container-half container mx-auto my-4 lg:me-0'
 			}${controlsHidden ? ' translate-y-full rotate-6' : ''}`}
 			ref={controlsRef}
 			style={props.style}

@@ -13,7 +13,7 @@ export default function Player(props: {
 		<>
 			<div
 				id={props.id}
-				className={`gap-x -mt-36 flex w-full flex-col justify-end sm:-mt-32 lg:flex-row ${
+				className={`-mt-36 flex w-full flex-col justify-end sm:-mt-32 lg:flex-row ${
 					props.className ?? ''
 				}`}
 				style={props.style}
@@ -25,7 +25,7 @@ export default function Player(props: {
 					<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 						<Scene />
 					</Canvas>
-					<Controls className="mx-[calc((50vw-min(35rem,45vw)))] lg:me-0 2xl:mx-0" />
+					<Controls />
 				</div>
 				<div className="flex items-center justify-center p-6 lg:w-1/2">
 					<MintCTA />

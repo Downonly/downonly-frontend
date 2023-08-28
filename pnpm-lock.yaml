@@ -18,7 +18,7 @@ dependencies:
     version: 8.13.7(react-dom@18.2.0)(react@18.2.0)(three@0.155.0)
   ethers:
     specifier: ^6.7.1
-    version: 6.7.1(bufferutil@4.0.7)(utf-8-validate@6.0.3)
+    version: 6.7.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
   graphql:
     specifier: ^16.8.0
     version: 16.8.0
@@ -115,8 +115,8 @@ devDependencies:
     specifier: ^5.2.2
     version: 5.2.2
   utf-8-validate:
-    specifier: ^6.0.3
-    version: 6.0.3
+    specifier: ^5.0.10
+    version: 5.0.10
 
 packages:
 
@@ -3232,7 +3232,7 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /ethers@6.7.1(bufferutil@4.0.7)(utf-8-validate@6.0.3):
+  /ethers@6.7.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
     resolution: {integrity: sha512-qX5kxIFMfg1i+epfgb0xF4WM7IqapIIu50pOJ17aebkxxa4BacW5jFrQRmCJpDEg2ZK2oNtR5QjrQ1WDBF29dA==}
     engines: {node: '>=14.0.0'}
     dependencies:
@@ -3242,7 +3242,7 @@ packages:
       '@types/node': 18.15.13
       aes-js: 4.0.0-beta.5
       tslib: 2.4.0
-      ws: 8.5.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
+      ws: 8.5.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6033,8 +6033,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /utf-8-validate@6.0.3:
-    resolution: {integrity: sha512-uIuGf9TWQ/y+0Lp+KGZCMuJWc3N9BHA+l/UmHd/oUHwJJDeysyTRxNQVkbzsIWfGFbRe3OcgML/i0mvVRPOyDA==}
+  /utf-8-validate@5.0.10:
+    resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
     engines: {node: '>=6.14.2'}
     requiresBuild: true
     dependencies:
@@ -6179,7 +6179,7 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
-  /ws@8.5.0(bufferutil@4.0.7)(utf-8-validate@6.0.3):
+  /ws@8.5.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
     resolution: {integrity: sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -6192,7 +6192,7 @@ packages:
         optional: true
     dependencies:
       bufferutil: 4.0.7
-      utf-8-validate: 6.0.3
+      utf-8-validate: 5.0.10
     dev: false
 
   /yallist@4.0.0:
