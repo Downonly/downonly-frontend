@@ -23,6 +23,7 @@
 		}
 	}
 }
+
 @layer utilities {
 	.gap-x {
 		@apply gap-x-6;
@@ -33,6 +34,7 @@
 		max-width: calc(100% - 2rem);
 		margin-inline: auto;
 	}
+
 	.container-half {
 		width: min(35rem, 45vw);
 		max-width: calc(100% - 1rem);
