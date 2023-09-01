@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/link/link'
 import Button from '@/components/button/button'
 import Logo from '@/components/logo/logo'
 

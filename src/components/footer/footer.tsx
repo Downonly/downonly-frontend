@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/link/link'
 import Logo from '@/components/logo/logo'
 
 export default function Footer(props: {
