@@ -1,4 +1,4 @@
-import { randBetween } from '@/utils/shape'
+import { randBetweenDeterm } from '@/utils/random'
 
 export default function Circle(props: {
 	className?: string
@@ -21,7 +21,7 @@ export default function Circle(props: {
 				viewBox="0 0 158 158"
 				style={{
 					transform: `rotate(${
-						props.salt ? randBetween(0, 1, props.salt) : Math.random()
+						props.salt ? randBetweenDeterm(0, 1, props.salt) : Math.random()
 					}turn)`,
 				}}
 			>

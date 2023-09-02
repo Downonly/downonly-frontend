@@ -29,6 +29,10 @@
 		@apply gap-x-6;
 	}
 
+	.do-fall {
+		/* yolo */
+	}
+
 	.container {
 		width: min(70rem, 90vw);
 		max-width: calc(100% - 2rem);
@@ -52,7 +56,6 @@ body {
 	@apply font-display uppercase;
 }
 
-/* View transtitions */
 @keyframes down-old {
 	0% {
 		transform: none;
@@ -65,7 +68,6 @@ body {
 	}
 }
 
-/* View transtitions */
 @keyframes down-new {
 	0% {
 		transform: translateY(-20rem) rotate(-0.01turn);

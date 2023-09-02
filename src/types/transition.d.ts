@@ -7,3 +7,7 @@ interface ViewTransition {
 interface Document {
 	startViewTransition(setupPromise: () => Promise<void> | void): ViewTransition
 }
+
+interface CSSStyleDeclaration {
+	viewTransitionName?: string
+}
