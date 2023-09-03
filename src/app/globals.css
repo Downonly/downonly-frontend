@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-	--do-view-transition-duration-ms: 800ms;
+	--do-view-transition-duration-ms: 600ms;
 
 	color-scheme: light dark;
 }
@@ -88,7 +88,7 @@ body {
 
 	html.page-transition & {
 		animation-name: down-old;
-		animation-timing-function: ease-in;
+		animation-timing-function: cubic-bezier(0.11, 0, 0.5, 0);
 	}
 }
 

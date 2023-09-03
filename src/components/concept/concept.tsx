@@ -16,7 +16,11 @@ export default function Concept(props: {
 			style={props.style}
 		>
 			<div className="container">
-				<Card mode="secondary" className="py-12" salt="orange">
+				<Card
+					mode="secondary"
+					className="do-fall do-fall-8 py-12"
+					salt="orange"
+				>
 					<header className="flex items-start">
 						<h2 className="text-display mb-12 mr-auto text-4xl">
 							The

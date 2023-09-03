@@ -13,13 +13,13 @@ export default function HowItWorks(props: {
 			style={props.style}
 		>
 			<div className="container">
-				<h2 className="text-display mb-12 px-6 text-4xl">
+				<h2 className="text-display do-fall do-fall-2 mb-12 px-6 text-4xl">
 					How all
 					<br />
 					of this works
 				</h2>
 
-				<div className="aspect-video bg-tomato" />
+				<div className="do-fall do-fall-0 aspect-video bg-tomato" />
 			</div>
 		</div>
 	)
