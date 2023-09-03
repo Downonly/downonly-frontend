@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { isTouchDevice } from '@/utils/device'
 import Progress from './progress'
 
-let timeoutToHide: number
+let timeoutToHide: NodeJS.Timeout
 
 export default function Controls(props: {
 	className?: string
@@ -32,8 +32,8 @@ export default function Controls(props: {
 	}
 
 	const hideAfterTimeout = () => {
-		window.clearTimeout(timeoutToHide)
-		timeoutToHide = window.setTimeout(() => {
+		clearTimeout(timeoutToHide)
+		timeoutToHide = setTimeout(() => {
 			setControlsHidden(true)
 		}, 2000)
 	}
@@ -48,7 +48,7 @@ export default function Controls(props: {
 			)
 			hideAfterTimeout()
 		} else {
-			window.clearTimeout(timeoutToHide)
+			clearTimeout(timeoutToHide)
 			setControlsHidden(false)
 		}
 	}, [isFullScreen])
@@ -58,7 +58,7 @@ export default function Controls(props: {
 		if (!isFullScreen) return
 
 		if (mouseAtBottom) {
-			window.clearTimeout(timeoutToHide)
+			clearTimeout(timeoutToHide)
 			setControlsHidden(false)
 		} else {
 			hideAfterTimeout()

@@ -2,7 +2,7 @@
 
 import './modal.css'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { roundedRectClipPath } from '@/utils/shape'
 import { createPortal } from 'react-dom'
 
@@ -15,6 +15,8 @@ export default function Modal(props: {
 	onDismiss?: () => void
 }): JSX.Element {
 	const dialogRef = useRef<HTMLDialogElement>(null)
+
+	const [isClient, setIsClient] = useState(false)
 
 	const dismiss = () => {
 		if (props.onDismiss) props.onDismiss()
@@ -33,6 +35,12 @@ export default function Modal(props: {
 			dialogRef.current?.close()
 		}
 	}, [props.open])
+
+	useEffect(() => {
+		setIsClient(true)
+	}, [])
+
+	if (!isClient) return <></>
 
 	return createPortal(
 		<dialog
