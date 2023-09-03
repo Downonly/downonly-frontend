@@ -16,6 +16,7 @@ export default function Controls(props: {
 	const [isFullScreen, setIsFullScreen] = useState(false)
 	const [mouseAtBottom, setMouseAtBottom] = useState(false)
 	const [controlsHidden, setControlsHidden] = useState(false)
+	const [canFullscreen, setCanFullscreen] = useState(false)
 
 	const onFullScreenChange = () => {
 		setIsFullScreen(document.fullscreenElement !== null)
@@ -65,9 +66,15 @@ export default function Controls(props: {
 	}, [mouseAtBottom, isFullScreen])
 
 	useEffect(() => {
-		document
-			.getElementById('full-screen-container')
-			?.addEventListener('fullscreenchange', onFullScreenChange)
+		const fullscreenContainer = document.getElementById('full-screen-container')
+		fullscreenContainer?.addEventListener(
+			'fullscreenchange',
+			onFullScreenChange
+		)
+
+		if (fullscreenContainer) {
+			setCanFullscreen('requestFullscreen' in fullscreenContainer)
+		}
 		return () => {
 			document
 				.getElementById('full-screen-container')
@@ -125,11 +132,18 @@ export default function Controls(props: {
 					</svg>
 				</button>
 
-				<button className="interactive ms-auto" onClick={toggleFullScreen}>
-					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
-						<path d="M37.4 430.7h64.1l-2.2 277.2 227.4-.1.6 60.5-288.7-1.6-1.2-336Zm658.6-10 66.8-1-6.4 347.6-335.6 2 2.4-63.5 266.6 1.2 6.2-286.3ZM38.4 350.3l57.1 1-1.2-257.2 232.4-1.9.6-60.5-290.7 1.6 1.8 317Zm660.6-21 60.8 1 3.6-295.6-348.6-3 4.4 58.5L697.8 93l1.2 236.3Z" />
-					</svg>
-				</button>
+				{canFullscreen && (
+					<button className="interactive ms-auto" onClick={toggleFullScreen}>
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 800 800"
+							fill="currentColor"
+						>
+							<path d="M37.4 430.7h64.1l-2.2 277.2 227.4-.1.6 60.5-288.7-1.6-1.2-336Zm658.6-10 66.8-1-6.4 347.6-335.6 2 2.4-63.5 266.6 1.2 6.2-286.3ZM38.4 350.3l57.1 1-1.2-257.2 232.4-1.9.6-60.5-290.7 1.6 1.8 317Zm660.6-21 60.8 1 3.6-295.6-348.6-3 4.4 58.5L697.8 93l1.2 236.3Z" />
+						</svg>
+					</button>
+				)}
 			</div>
 		</div>
 	)

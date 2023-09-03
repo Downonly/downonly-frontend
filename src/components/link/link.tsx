@@ -1,9 +1,9 @@
 'use client'
 
+import { type UrlObject } from 'url'
 import NextLink from 'next/link'
 import useViewTransition from '@/hooks/useViewTransition'
 import { useRouter } from 'next/navigation'
-import { type UrlObject } from 'url'
 
 type Url = string | UrlObject
 
@@ -23,9 +23,7 @@ export default function Link(props: {
 		const path = (ev.target as HTMLElement).closest('a')?.href
 		if (path === location.href) return
 
-		startViewTransition({
-			classNames: ['page-transition'],
-		})
+		startViewTransition()
 			.then(() => {
 				if (path) {
 					router.push(path, { scroll: props.scroll ?? true })

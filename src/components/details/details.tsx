@@ -17,7 +17,7 @@ export default function Details(props: {
 			}`}
 			style={props.style}
 		>
-			<summary className="text-display cursor-pointer select-none list-none py-6 text-xl [&::marker]:hidden">
+			<summary className="text-display cursor-pointer select-none list-none py-6 text-xl [&::-webkit-details-marker]:hidden [&::marker]:hidden">
 				<div className="flex items-center">
 					<span className="mr-auto pr-6">{props.summary}</span>
 					<Circle className="shrink-0 text-snow dark:text-nickel">

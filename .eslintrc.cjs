@@ -32,6 +32,12 @@ module.exports = {
 				'@typescript-eslint/strict-boolean-expressions': 'off',
 				'@typescript-eslint/triple-slash-reference': 'off',
 				'prettier/prettier': 'off',
+				'tailwindcss/no-custom-classname': [
+					'error',
+					{
+						whitelist: ['do\\-.+'],
+					},
+				],
 			},
 		},
 	],

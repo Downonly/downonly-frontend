@@ -22,12 +22,14 @@ export default function Player(props: {
 					id="full-screen-container"
 					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 				>
-					<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
-						<Scene />
-					</Canvas>
-					<Controls />
+					<div className="do-fall do-fall-4">
+						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
+							<Scene />
+						</Canvas>
+					</div>
+					<Controls className="do-fall do-fall-0" />
 				</div>
-				<div className="flex items-center justify-center p-6 lg:w-1/2">
+				<div className="do-fall do-fall-3 flex items-center justify-center p-6 lg:w-1/2">
 					<MintCTA />
 				</div>
 			</div>

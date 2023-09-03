@@ -4,6 +4,7 @@ import './modal.css'
 
 import { useEffect, useRef } from 'react'
 import { roundedRectClipPath } from '@/utils/shape'
+import { createPortal } from 'react-dom'
 
 export default function Modal(props: {
 	children?: React.ReactNode
@@ -33,7 +34,7 @@ export default function Modal(props: {
 		}
 	}, [props.open])
 
-	return (
+	return createPortal(
 		<dialog
 			onClick={(ev) => {
 				handleClick(ev as unknown as MouseEvent)
@@ -61,6 +62,7 @@ export default function Modal(props: {
 				</button>
 				{props.children}
 			</div>
-		</dialog>
+		</dialog>,
+		document.body
 	)
 }

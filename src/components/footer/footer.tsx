@@ -1,5 +1,8 @@
+'use client'
+
 import Link from '@/components/link/link'
 import Logo from '@/components/logo/logo'
+import { usePathname } from 'next/navigation'
 
 export default function Footer(props: {
 	className?: string
@@ -7,12 +10,15 @@ export default function Footer(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const pathname = usePathname()
+
 	return (
 		<footer
-			id={props.id}
-			className={`bg-cole pt-32 text-snow dark:bg-snow dark:text-cole ${
+			className={`do-fall do-fall-0 bg-cole pt-32 text-snow dark:bg-snow dark:text-cole ${
 				props.className ?? ''
 			}`}
+			id={props.id}
+			key={pathname}
 			style={props.style}
 		>
 			<div className="gap-x container grid grid-cols-2 px-6 text-sm lg:grid-cols-4">

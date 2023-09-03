@@ -12,7 +12,7 @@ export default function Minted(props: {
 			className={`${props.className ?? ''}`}
 			style={props.style}
 		>
-			<h2 className="text-display mb-12 px-6 text-4xl">
+			<h2 className="do-fall do-fall-6 text-display mb-12 px-6 text-4xl">
 				Currently
 				<br />
 				Minted
@@ -20,6 +20,7 @@ export default function Minted(props: {
 
 			<div className="gap-x grid gap-y-6 md:grid-cols-3">
 				<Polaroid
+					className="do-fall do-fall-3"
 					salt="olives"
 					emoji="👮‍🏥🪑"
 					label="Label"
@@ -35,6 +36,7 @@ export default function Minted(props: {
 				</Polaroid>
 
 				<Polaroid
+					className="do-fall do-fall-7"
 					salt="honeymelon"
 					emoji="👮‍🏥🪑"
 					label="Label"
@@ -50,6 +52,7 @@ export default function Minted(props: {
 				</Polaroid>
 
 				<Polaroid
+					className="do-fall do-fall-0"
 					salt="grapes"
 					emoji="👮‍🏥🪑"
 					label="Label"

@@ -3,7 +3,6 @@ import localFont from 'next/font/local'
 import { Montserrat } from 'next/font/google'
 import Nav from '@/components/nav/nav'
 import Footer from '@/components/footer/footer'
-import Transition from '@/components/transition/transition'
 
 const fontDisplay = localFont({
 	src: './jegelskerdig.woff2',
@@ -25,7 +24,6 @@ export default function RootLayout(props: {
 			lang="en"
 			className={`${fontDisplay.variable} ${fontBody.variable} bg-snow font-body text-carbon dark:bg-cole dark:text-snow`}
 		>
-			<Transition />
 			<body className="grid grid-rows-[auto_1fr_auto]">
 				<Nav className="container relative z-10 my-10 w-full" />
 				<main>

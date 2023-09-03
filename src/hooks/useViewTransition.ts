@@ -1,55 +1,19 @@
-import { useRef, useLayoutEffect } from 'react'
+let timeout: number
+export default function useViewTransition() {
+	const bodyStyles = window.getComputedStyle(document.body)
+	const transitionDuration = parseFloat(
+		bodyStyles.getPropertyValue('--do-view-transition-duration-ms')
+	)
 
-interface UseViewTransitionArg<DataType> {
-	beforeChange?(data: DataType, transition: ViewTransition): void
-	afterChange?(data: DataType, transition: ViewTransition): void
-	done?(data: DataType): void
-}
-
-interface StartTransitionOptions<DataType> {
-	classNames?: string[]
-	data?: DataType
-}
-
-export default function useViewTransition<DataType = undefined>({
-	beforeChange,
-	afterChange,
-	done,
-}: UseViewTransitionArg<DataType> = {}) {
-	const startResolverRef = useRef<(value?: unknown) => void>()
-	const beforeChangeRef = useRef(beforeChange)
-	const afterChangeRef = useRef(afterChange)
-	const doneRef = useRef(done)
-	const dataRef = useRef<DataType>()
-	const transitionRef = useRef<ViewTransition>()
-
-	useLayoutEffect(() => {
-		if (startResolverRef.current === undefined) return
-
-		afterChangeRef.current?.(dataRef.current!, transitionRef.current!)
-		startResolverRef.current()
-		startResolverRef.current = undefined
-	})
-
-	return async ({
-		classNames = [],
-		data,
-	}: StartTransitionOptions<DataType> = {}): Promise<void> => {
-		if (!('startViewTransition' in document)) return
-
+	return () => {
 		return new Promise<void>((resolve) => {
-			dataRef.current = data
-			document.documentElement.classList.add(...classNames)
+			document.documentElement.classList.add('page-transition')
 
-			const transition = document.startViewTransition(resolve)
-
-			transitionRef.current = transition
-			beforeChangeRef.current?.(data!, transition)
-
-			void transition.finished.finally(() => {
-				document.documentElement.classList.remove(...classNames)
-				doneRef.current?.(data!)
-			})
+			window.clearTimeout(timeout)
+			timeout = window.setTimeout(() => {
+				resolve()
+				document.documentElement.classList.remove('page-transition')
+			}, transitionDuration)
 		})
 	}
 }

@@ -40,9 +40,7 @@
 	--do-modal-max-inline-size: 30rem;
 	--do-modal-max-block-size: 70rem;
 	--do-modal-min-inline-size: 18rem;
-}
 
-.do-modal {
 	animation: do-modal-in 0.2s ease-out forwards;
 	max-block-size: min(
 		/* account for additional margin bottom on mobile */
@@ -51,7 +49,9 @@
 	);
 	max-inline-size: min(calc(100% - 2rem), var(--do-modal-max-inline-size));
 	min-inline-size: var(--do-modal-min-inline-size);
-	transition: opacity 0.2s linear, transform 0.2s ease;
+	transition:
+		opacity 0.2s linear,
+		transform 0.2s ease;
 
 	@media (width <= 32rem) {
 		/*
@@ -64,7 +64,9 @@
 		animation: do-modal-out 0.2s ease-in forwards;
 		opacity: 0;
 		pointer-events: none;
-		transition: opacity 0.2s linear, visibility 0s 0.2s linear,
+		transition:
+			opacity 0.2s linear,
+			visibility 0s 0.2s linear,
 			transform 0.2s ease;
 		visibility: hidden;
 
