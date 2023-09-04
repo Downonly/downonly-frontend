@@ -1,5 +1,12 @@
+/*
+	eslint-disable
+	@typescript-eslint/no-unsafe-assignment,
+	@typescript-eslint/no-unsafe-call,
+	@typescript-eslint/no-unsafe-member-access,
+	@typescript-eslint/no-unsafe-return
+*/
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '@/services/db'
+import prisma from '@/services/db'
 
 async function allMints() {
 	const allMints = await prisma.mints.findMany()

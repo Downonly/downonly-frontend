@@ -3,7 +3,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: ['plugin:prettier/recommended'],
+	extends: ['plugin:prettier/recommended', 'plugin:@next/next/recommended'],
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
