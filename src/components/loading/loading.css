@@ -1,4 +1,4 @@
-@keyframes do-loading {
+@keyframes do-loading-left {
 	0% {
 		opacity: 0;
 	}
@@ -11,14 +11,30 @@
 		opacity: 1;
 	}
 
-	60% {
-		transform: translateY(2rem) rotate(0.1turn);
+	60%,
+	100% {
+		opacity: 0;
+		transform: translateY(2rem) rotate(-0.1turn);
+	}
+}
+
+@keyframes do-loading-right {
+	0% {
 		opacity: 0;
 	}
 
+	8% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	60%,
 	100% {
-		transform: translateY(2rem) rotate(0.1turn);
 		opacity: 0;
+		transform: translateY(2rem) rotate(0.1turn);
 	}
 }
 
@@ -29,36 +45,46 @@
 	width: 8.2ch;
 
 	span {
-		animation: do-loading 1.6s cubic-bezier(0.64, 0, 0.78, 0) forwards infinite;
+		animation-duration: 1.6s;
+		animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0);
+		animation-fill-mode: forwards;
+		animation-iteration-count: infinite;
+		animation-name: do-loading-left;
 		position: absolute;
 
 		&:nth-child(2) {
 			animation-delay: 0.15s;
+			animation-name: do-loading-right;
 			left: 1.2ch;
 		}
 
 		&:nth-child(3) {
 			animation-delay: 0.35s;
+			animation-name: do-loading-left;
 			left: 2.4ch;
 		}
 
 		&:nth-child(4) {
 			animation-delay: 0.4s;
+			animation-name: do-loading-right;
 			left: 3.6ch;
 		}
 
 		&:nth-child(5) {
 			animation-delay: 0.6s;
+			animation-name: do-loading-left;
 			left: 4.8ch;
 		}
 
 		&:nth-child(6) {
 			animation-delay: 0.65s;
+			animation-name: do-loading-right;
 			left: 5.7ch;
 		}
 
 		&:nth-child(7) {
 			animation-delay: 0.8s;
+			animation-name: do-loading-right;
 			left: 7.2ch;
 		}
 	}
