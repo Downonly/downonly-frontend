@@ -16,7 +16,7 @@
     "@apollo/server": "^4.9.2",
     "@as-integrations/next": "^2.0.2",
     "@prisma/client": "^5.2.0",
-    "@react-three/drei": "^9.80.8",
+    "@react-three/drei": "^9.83.9",
     "@react-three/fiber": "^8.13.7",
     "ethers": "^6.7.1",
     "graphql": "^16.8.0",
