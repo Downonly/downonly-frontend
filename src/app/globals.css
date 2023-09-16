@@ -108,23 +108,17 @@ body {
 		var(--do-view-transition-duration-ms) - var(--do-view-transition-delay-ms)
 	);
 	animation-fill-mode: both;
+	animation-name: down-new-right;
 	animation-timing-function: cubic-bezier(0.6, 1.4, 0, 0.9);
 	opacity: 0;
 
 	html.do-fall-transition & {
+		animation-name: down-old-right;
 		animation-timing-function: cubic-bezier(0.11, 0, 0.5, 0);
 	}
 
 	html.do-fall-transition-done & {
 		visibility: hidden;
-	}
-}
-
-.do-fall-0 {
-	animation-name: down-new-right;
-
-	html.do-fall-transition & {
-		animation-name: down-old-right;
 	}
 }
 
