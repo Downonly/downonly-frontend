@@ -120,6 +120,14 @@ body {
 	}
 }
 
+.do-fall-0 {
+	animation-name: down-new-right;
+
+	html.do-fall-transition & {
+		animation-name: down-old-right;
+	}
+}
+
 .do-fall-1 {
 	animation-name: down-new-left;
 	animation-delay: calc(0.125 * var(--do-view-transition-delay-ms));
