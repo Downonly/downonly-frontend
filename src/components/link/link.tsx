@@ -26,7 +26,9 @@ export default function Link(props: {
 		startViewTransition()
 			.then(() => {
 				if (path) {
-					router.push(path, { scroll: props.scroll ?? true })
+					requestAnimationFrame(() => {
+						router.push(path, { scroll: props.scroll ?? true })
+					})
 				}
 			})
 			.catch((err) => {

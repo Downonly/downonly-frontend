@@ -22,7 +22,7 @@ export default function Player(props: {
 					id="full-screen-container"
 					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 				>
-					<div className="do-fall do-fall-4">
+					<div className="do-fall do-fall-1">
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 							<Scene />
 						</Canvas>

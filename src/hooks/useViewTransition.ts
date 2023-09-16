@@ -6,7 +6,8 @@ export default function useViewTransition() {
 	const pathname = usePathname()
 
 	useEffect(() => {
-		document.documentElement.classList.remove('page-transition')
+		document.documentElement.classList.remove('do-fall-transition')
+		document.documentElement.classList.remove('do-fall-transition-done')
 	}, [pathname])
 
 	return () => {
@@ -16,10 +17,11 @@ export default function useViewTransition() {
 		)
 
 		return new Promise<void>((resolve) => {
-			document.documentElement.classList.add('page-transition')
+			document.documentElement.classList.add('do-fall-transition')
 
 			clearTimeout(timeout)
 			timeout = setTimeout(() => {
+				document.documentElement.classList.add('do-fall-transition-done')
 				resolve()
 			}, transitionDuration)
 		})
