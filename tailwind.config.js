@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ['./src/**/*.{js,ts,jsx,tsx}'],
+	darkMode: 'class',
 	theme: {
 		colors: {
 			white: '#ffffff',
@@ -24,29 +25,60 @@ module.exports = {
 				'4/3': '4/3',
 			},
 			animation: {
-				'down-left': 'down-left 0.4s cubic-bezier(0.6, 1.4, 0, 0.9) none',
-				'down-right': 'down-right 0.4s cubic-bezier(0.6, 1.4, 0, 0.9) none',
+				'down-new-left':
+					'down-new-left 0.4s cubic-bezier(0.6, 1.4, 0, 0.9) both',
+				'down-new-right':
+					'down-new-right 0.4s cubic-bezier(0.6, 1.4, 0, 0.9) both',
+				'down-old-left':
+					'down-old-left 0.4s cubic-bezier(0.11, 0, 0.5, 0) both',
+				'down-old-right':
+					'down-old-right 0.4s cubic-bezier(0.11, 0, 0.5, 0) both',
+				wiggle: 'wiggle 4s ease-in-out infinite',
 			},
 			keyframes: {
-				'down-left': {
+				'down-new-left': {
 					'0%': {
 						opacity: '0',
-						transform: 'translateY(-4rem) rotate(0.005turn)',
+						transform: 'translateY(-100%) rotate(0.005turn)',
 					},
 					'100%': {
 						opacity: '1',
 						transform: 'none',
 					},
 				},
-				'down-right': {
+				'down-new-right': {
 					'0%': {
 						opacity: '0',
-						transform: 'translateY(-4rem) rotate(-0.01turn)',
+						transform: 'translateY(-100%) rotate(-0.01turn)',
 					},
 					'100%': {
 						opacity: '1',
 						transform: 'none',
 					},
+				},
+				'down-old-left': {
+					'0%': {
+						opacity: '1',
+						transform: 'none',
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'translateY(100%) rotate(-0.005turn)',
+					},
+				},
+				'down-old-right': {
+					'0%': {
+						opacity: '1',
+						transform: 'none',
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'translateY(-100%) rotate(0.01turn)',
+					},
+				},
+				wiggle: {
+					'0%, 100%': { transform: 'translateY(-5%)' },
+					'50%': { transform: 'translateY(5%)' },
 				},
 			},
 		},

@@ -55,7 +55,7 @@ body {
 	@apply font-display uppercase;
 }
 
-@keyframes down-old-left {
+@keyframes down-fall-old-left {
 	0% {
 		opacity: 1;
 		transform: none;
@@ -67,7 +67,7 @@ body {
 	}
 }
 
-@keyframes down-new-left {
+@keyframes down-fall-new-left {
 	0% {
 		opacity: 0;
 		transform: translateY(-20rem) rotate(0.0125turn);
@@ -79,7 +79,7 @@ body {
 	}
 }
 
-@keyframes down-old-right {
+@keyframes down-fall-old-right {
 	0% {
 		opacity: 1;
 		transform: none;
@@ -91,7 +91,7 @@ body {
 	}
 }
 
-@keyframes down-new-right {
+@keyframes down-fall-new-right {
 	0% {
 		opacity: 0;
 		transform: translateY(-20rem) rotate(-0.0125turn);
@@ -108,12 +108,12 @@ body {
 		var(--do-view-transition-duration-ms) - var(--do-view-transition-delay-ms)
 	);
 	animation-fill-mode: both;
-	animation-name: down-new-right;
+	animation-name: down-fall-new-right;
 	animation-timing-function: cubic-bezier(0.6, 1.4, 0, 0.9);
 	opacity: 0;
 
 	html.do-fall-transition & {
-		animation-name: down-old-right;
+		animation-name: down-fall-old-right;
 		animation-timing-function: cubic-bezier(0.11, 0, 0.5, 0);
 	}
 
@@ -123,73 +123,73 @@ body {
 }
 
 .do-fall-1 {
-	animation-name: down-new-left;
+	animation-name: down-fall-new-left;
 	animation-delay: calc(0.125 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-left;
+		animation-name: down-fall-old-left;
 	}
 }
 
 .do-fall-2 {
-	animation-name: down-new-right;
+	animation-name: down-fall-new-right;
 	animation-delay: calc(0.25 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-right;
+		animation-name: down-fall-old-right;
 	}
 }
 
 .do-fall-3 {
-	animation-name: down-new-left;
+	animation-name: down-fall-new-left;
 	animation-delay: calc(0.375 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-left;
+		animation-name: down-fall-old-left;
 	}
 }
 
 .do-fall-4 {
-	animation-name: down-new-right;
+	animation-name: down-fall-new-right;
 	animation-delay: calc(0.5 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-right;
+		animation-name: down-fall-old-right;
 	}
 }
 
 .do-fall-5 {
-	animation-name: down-new-left;
+	animation-name: down-fall-new-left;
 	animation-delay: calc(0.625 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-left;
+		animation-name: down-fall-old-left;
 	}
 }
 
 .do-fall-6 {
-	animation-name: down-new-right;
+	animation-name: down-fall-new-right;
 	animation-delay: calc(0.75 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-right;
+		animation-name: down-fall-old-right;
 	}
 }
 
 .do-fall-7 {
-	animation-name: down-new-left;
+	animation-name: down-fall-new-left;
 	animation-delay: calc(0.875 * var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-left;
+		animation-name: down-fall-old-left;
 	}
 }
 
 .do-fall-8 {
-	animation-name: down-new-right;
+	animation-name: down-fall-new-right;
 	animation-delay: calc(var(--do-view-transition-delay-ms));
 
 	html.do-fall-transition & {
-		animation-name: down-old-right;
+		animation-name: down-fall-old-right;
 	}
 }

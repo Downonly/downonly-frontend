@@ -4,6 +4,7 @@ import Link from '@/components/link/link'
 import Button from '@/components/button/button'
 import Logo from '@/components/logo/logo'
 import { usePathname } from 'next/navigation'
+import ThemeToggle from '@/components/themeToggle/themeToggle'
 
 export default function Nav(props: {
 	className?: string
@@ -24,33 +25,21 @@ export default function Nav(props: {
 			<Link href="/" className="interactive absolute left-0 origin-[30%_80%]">
 				<Logo className="do-fall do-fall-8 -mb-24 w-44" />
 			</Link>
-			<Link href="/team/">
-				<Button
-					className="do-fall do-fall-3"
-					mode="secondary"
-					salt={'banana'}
-					tag="span"
-				>
+			<div className="animate-down-new-left" style={{ animationDelay: '0.4s' }}>
+				<ThemeToggle className="do-fall do-fall-0 -translate-y-0.5" />
+			</div>
+			<Link className="do-fall do-fall-3" href="/team/">
+				<Button mode="secondary" salt={'banana'} tag="span">
 					Team
 				</Button>
 			</Link>
-			<Link href="/traits/">
-				<Button
-					className="do-fall do-fall-2"
-					mode="secondary"
-					salt={'tomato'}
-					tag="span"
-				>
+			<Link className="do-fall do-fall-2" href="/traits/">
+				<Button mode="secondary" salt={'tomato'} tag="span">
 					Traits
 				</Button>
 			</Link>
-			<Link href="/playground/">
-				<Button
-					className="do-fall do-fall-4"
-					mode="secondary"
-					salt={'apple'}
-					tag="span"
-				>
+			<Link className="do-fall do-fall-4" href="/playground/">
+				<Button mode="secondary" salt={'apple'} tag="span">
 					Playground
 				</Button>
 			</Link>

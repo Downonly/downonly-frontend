@@ -15,7 +15,6 @@ export default function useViewTransition() {
 		const transitionDuration = parseFloat(
 			bodyStyles.getPropertyValue('--do-view-transition-duration-ms')
 		)
-
 		return new Promise<void>((resolve) => {
 			document.documentElement.classList.add('do-fall-transition')
 

@@ -21,10 +21,11 @@ export default function RootLayout(props: {
 }) {
 	return (
 		<html
+			className={`${fontDisplay.variable} ${fontBody.variable}`}
 			lang="en"
-			className={`${fontDisplay.variable} ${fontBody.variable} bg-snow font-body text-carbon dark:bg-cole dark:text-snow`}
+			suppressHydrationWarning={true}
 		>
-			<body className="grid grid-rows-[auto_1fr_auto]">
+			<body className="grid grid-rows-[auto_1fr_auto] bg-snow font-body text-carbon transition-colors dark:bg-cole dark:text-snow">
 				<Nav className="container relative z-10 my-10 w-full" />
 				<main>
 					<div className="container flex flex-col items-stretch">
