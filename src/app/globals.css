@@ -30,7 +30,7 @@
 	.bg-secondary {
 		&::after {
 			content: '';
-			@apply absolute w-screen h-full top-0 -z-10 bg-white dark:bg-carbon;
+			@apply do-fall do-fall-4 absolute top-0 -z-10 h-full w-screen bg-white dark:bg-carbon;
 		}
 	}
 }
