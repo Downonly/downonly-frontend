@@ -18,11 +18,7 @@ export default function MintCTA(props: {
 	}, [])
 
 	return (
-		<div
-			id={props.id}
-			className={`text-center ${props.className ?? ''}`}
-			style={props.style}
-		>
+		<div id={props.id} className={props.className ?? ''} style={props.style}>
 			<p className="mb-2">👮‍🏥🪑</p>
 			<p className="text-display mb-2">
 				Mint #52

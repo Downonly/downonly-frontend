@@ -13,23 +13,25 @@ export default function Player(props: {
 		<>
 			<div
 				id={props.id}
-				className={`-mt-36 flex w-full flex-col justify-end sm:-mt-32 lg:flex-row ${
+				className={`-mt-36 grid w-full justify-end sm:-mt-32 lg:grid-cols-2 ${
 					props.className ?? ''
 				}`}
 				style={props.style}
 			>
 				<div
 					id="full-screen-container"
-					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
+					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
 				>
-					<div className="do-fall do-fall-1">
+					<div className="do-fall do-fall-1 h-full">
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 							<Scene />
 						</Canvas>
 					</div>
-					<Controls className="do-fall do-fall-0" />
+					<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
+						<Controls className="h-full" />
+					</div>
 				</div>
-				<div className="do-fall do-fall-3 flex items-center justify-center p-6 lg:w-1/2">
+				<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
 					<MintCTA />
 				</div>
 			</div>

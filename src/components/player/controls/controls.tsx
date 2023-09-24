@@ -14,7 +14,7 @@ export default function Controls(props: {
 }): JSX.Element {
 	const controlsRef = useRef<HTMLDivElement>(null)
 	const [isFullScreen, setIsFullScreen] = useState(false)
-	const [mouseAtBottom, setMouseAtBottom] = useState(false)
+	const [mouseOverControls, setMouseOverControls] = useState(false)
 	const [controlsHidden, setControlsHidden] = useState(false)
 	const [canFullscreen, setCanFullscreen] = useState(false)
 
@@ -23,10 +23,10 @@ export default function Controls(props: {
 	}
 
 	const onMouseMove = (ev: MouseEvent) => {
-		setMouseAtBottom(
+		setMouseOverControls(
 			!(
-				ev.clientY <
-				window.innerHeight - (controlsRef.current?.clientHeight ?? 0)
+				ev.clientX <
+				window.innerWidth - (controlsRef.current?.clientWidth ?? 0)
 			)
 		)
 	}
@@ -39,6 +39,13 @@ export default function Controls(props: {
 	}
 
 	useEffect(() => {
+		const fullscreenContainer = document.getElementById('full-screen-container')
+		if (isFullScreen) {
+			fullscreenContainer!.style.paddingRight = '0'
+		} else {
+			fullscreenContainer!.style.removeProperty('padding-right')
+		}
+
 		if (isTouchDevice()) return
 
 		if (isFullScreen) {
@@ -57,13 +64,13 @@ export default function Controls(props: {
 		if (isTouchDevice()) return
 		if (!isFullScreen) return
 
-		if (mouseAtBottom) {
+		if (mouseOverControls) {
 			clearTimeout(timeoutToHide)
 			setControlsHidden(false)
 		} else {
 			hideAfterTimeout()
 		}
-	}, [mouseAtBottom, isFullScreen])
+	}, [mouseOverControls, isFullScreen])
 
 	useEffect(() => {
 		const fullscreenContainer = document.getElementById('full-screen-container')
@@ -99,35 +106,59 @@ export default function Controls(props: {
 			id={props.id}
 			className={`${props.className ?? ''} ${
 				isFullScreen
-					? 'absolute bottom-0 mx-auto w-full origin-top-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
-					: 'lg:container-half container mx-auto my-4 lg:me-0'
-			}${controlsHidden ? ' translate-y-full rotate-6' : ''}`}
+					? 'absolute right-0 my-auto h-full origin-bottom-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
+					: 'sm:translate-x-[calc(100%_-_1.5rem)] lg:translate-x-[calc(100%_+_0.75rem)]'
+			}${controlsHidden ? ' translate-x-full rotate-6' : ''} flex`}
 			ref={controlsRef}
 			style={props.style}
 		>
-			<Progress className="mb-3" progress={0.3} />
+			<Progress progress={0.3} />
 
-			<div className="flex gap-2">
+			<div className="ml-3 flex flex-col justify-end gap-2">
 				<button className="interactive">
-					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
+					<svg
+						className="rotate-90"
+						width="24"
+						height="24"
+						viewBox="0 0 800 800"
+						fill="currentColor"
+					>
 						<path d="m717 12-16.4-1.8L158.4 400l-18-387-54.2-3L83 787h57.3l17-356L698 785.7l15.8-2.7L717 12Z" />
 					</svg>
 				</button>
 
 				<button className="interactive">
-					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
+					<svg
+						className="rotate-90"
+						width="24"
+						height="24"
+						viewBox="0 0 800 800"
+						fill="currentColor"
+					>
 						<path d="m221.7 749 137.1 8-29.2-728.7L214 29l7.8 720Zm221.6 8H586L539.7 37.3l-122.6-9L443.3 757Z" />
 					</svg>
 				</button>
 
 				<button className="interactive">
-					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
+					<svg
+						className="rotate-90"
+						width="24"
+						height="24"
+						viewBox="0 0 800 800"
+						fill="currentColor"
+					>
 						<path d="m141.1 755 23.4 13.8L678.7 400l-7-49L150.2 18.3 121.3 27 141 755Z" />
 					</svg>
 				</button>
 
 				<button className="interactive">
-					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
+					<svg
+						className="rotate-90"
+						width="24"
+						height="24"
+						viewBox="0 0 800 800"
+						fill="currentColor"
+					>
 						<path d="m92 778 19.4 2.8L644.6 409l15 375 56.2-4L707 10h-56.3l-8 341L102 11.3 80.2 26 92 778Z" />
 					</svg>
 				</button>

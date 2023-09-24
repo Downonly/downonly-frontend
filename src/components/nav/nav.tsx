@@ -26,7 +26,9 @@ export default function Nav(props: {
 				<Logo className="do-fall do-fall-8 -mb-24 w-44" />
 			</Link>
 			<div className="animate-down-new-left" style={{ animationDelay: '0.4s' }}>
-				<ThemeToggle className="do-fall do-fall-0 -translate-y-0.5" />
+				<div className="-translate-y-0.5">
+					<ThemeToggle className="do-fall do-fall-0" />
+				</div>
 			</div>
 			<Link className="do-fall do-fall-3" href="/team/">
 				<Button mode="secondary" salt={'banana'} tag="span">

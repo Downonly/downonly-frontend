@@ -35,6 +35,9 @@ module.exports = {
 					'down-old-right 0.4s cubic-bezier(0.11, 0, 0.5, 0) both',
 				wiggle: 'wiggle 4s ease-in-out infinite',
 			},
+			minWidth: {
+				device: 'var(--do-min-width-device)',
+			},
 			keyframes: {
 				'down-new-left': {
 					'0%': {

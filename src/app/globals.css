@@ -5,6 +5,7 @@
 :root {
 	--do-view-transition-duration-ms: 600ms;
 	--do-view-transition-delay-ms: 200ms;
+	--do-min-width-device: 23.4375rem;
 
 	color-scheme: light dark;
 }
@@ -25,6 +26,13 @@
 			content: '\00a0↗';
 		}
 	}
+
+	.bg-secondary {
+		&::after {
+			content: '';
+			@apply absolute w-screen h-full top-0 -z-10 bg-white dark:bg-carbon;
+		}
+	}
 }
 
 @layer utilities {
@@ -36,11 +44,13 @@
 		width: min(70rem, 90vw);
 		max-width: calc(100% - 2rem);
 		margin-inline: auto;
+		min-width: calc(var(--do-min-width-device) - 2rem);
 	}
 
 	.container-half {
 		width: min(35rem, 45vw);
 		max-width: calc(100% - 1rem);
+		min-width: calc(var(--do-min-width-device) / 2 - 1rem);
 	}
 }
 
@@ -49,6 +59,7 @@ body {
 	height: 100%;
 	max-width: 100vw;
 	overflow-x: hidden;
+	min-width: var(--do-min-width-device);
 }
 
 .text-display {

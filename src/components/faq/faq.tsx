@@ -11,7 +11,7 @@ export default function Faq(props: {
 			id={props.id}
 			className={`${
 				props.className ?? ''
-			} relative left-1/2 w-screen -translate-x-1/2 bg-white pb-32 pt-14 dark:bg-carbon`}
+			} bg-secondary relative left-1/2 w-screen min-w-device -translate-x-1/2 pb-32 pt-14`}
 			style={props.style}
 		>
 			<div className="container px-6">

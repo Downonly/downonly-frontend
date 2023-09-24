@@ -12,7 +12,7 @@ export default function Concept(props: {
 			id={props.id}
 			className={`${
 				props.className ?? ''
-			} relative left-1/2 w-screen -translate-x-1/2 bg-white py-14 dark:bg-carbon`}
+			} bg-secondary relative left-1/2 z-10 w-screen min-w-device -translate-x-1/2 py-14 `}
 			style={props.style}
 		>
 			<div className="container">
