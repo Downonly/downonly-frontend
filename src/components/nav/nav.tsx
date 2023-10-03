@@ -31,17 +31,17 @@ export default function Nav(props: {
 				</div>
 			</div>
 			<Link className="do-fall do-fall-3" href="/team/">
-				<Button mode="secondary" salt={'banana'} tag="span">
+				<Button salt={'banana'} tag="span">
 					Team
 				</Button>
 			</Link>
 			<Link className="do-fall do-fall-2" href="/traits/">
-				<Button mode="secondary" salt={'tomato'} tag="span">
+				<Button salt={'tomato'} tag="span">
 					Traits
 				</Button>
 			</Link>
 			<Link className="do-fall do-fall-4" href="/playground/">
-				<Button mode="secondary" salt={'apple'} tag="span">
+				<Button salt={'apple'} tag="span">
 					Playground
 				</Button>
 			</Link>

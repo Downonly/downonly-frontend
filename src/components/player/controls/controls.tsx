@@ -8,9 +8,15 @@ let timeoutToHide: NodeJS.Timeout
 
 export default function Controls(props: {
 	className?: string
-	style?: React.CSSProperties
+	currentIndex: number
 	id?: string
-	children?: React.ReactNode
+	isPlaying: boolean
+	onNext: () => void
+	onPause: () => void
+	onPlay: () => void
+	onPrev: () => void
+	style?: React.CSSProperties
+	total: number
 }): JSX.Element {
 	const controlsRef = useRef<HTMLDivElement>(null)
 	const [isFullScreen, setIsFullScreen] = useState(false)
@@ -115,7 +121,7 @@ export default function Controls(props: {
 			<Progress progress={0.3} />
 
 			<div className="ml-3 flex flex-col justify-end gap-2">
-				<button className="interactive">
+				<button className="interactive" onClick={props.onPrev}>
 					<svg
 						className="rotate-90"
 						width="24"
@@ -127,7 +133,10 @@ export default function Controls(props: {
 					</svg>
 				</button>
 
-				<button className="interactive">
+				<button
+					className="interactive"
+					onClick={props.isPlaying ? props.onPause : props.onPlay}
+				>
 					<svg
 						className="rotate-90"
 						width="24"
@@ -135,23 +144,15 @@ export default function Controls(props: {
 						viewBox="0 0 800 800"
 						fill="currentColor"
 					>
-						<path d="m221.7 749 137.1 8-29.2-728.7L214 29l7.8 720Zm221.6 8H586L539.7 37.3l-122.6-9L443.3 757Z" />
+						{props.isPlaying ? (
+							<path d="m221.7 749 137.1 8-29.2-728.7L214 29l7.8 720Zm221.6 8H586L539.7 37.3l-122.6-9L443.3 757Z" />
+						) : (
+							<path d="m141.1 755 23.4 13.8L678.7 400l-7-49L150.2 18.3 121.3 27 141 755Z" />
+						)}
 					</svg>
 				</button>
 
-				<button className="interactive">
-					<svg
-						className="rotate-90"
-						width="24"
-						height="24"
-						viewBox="0 0 800 800"
-						fill="currentColor"
-					>
-						<path d="m141.1 755 23.4 13.8L678.7 400l-7-49L150.2 18.3 121.3 27 141 755Z" />
-					</svg>
-				</button>
-
-				<button className="interactive">
+				<button className="interactive" onClick={props.onNext}>
 					<svg
 						className="rotate-90"
 						width="24"

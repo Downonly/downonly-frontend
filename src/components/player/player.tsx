@@ -1,7 +1,11 @@
+'use client'
+
 import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Controls from '@/components/player/controls/controls'
+import Model from '@/components/player/model/model'
+import { useState } from 'react'
 
 export default function Player(props: {
 	className?: string
@@ -9,6 +13,26 @@ export default function Player(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const [isPlaying, setIsPlaying] = useState(false)
+	const [currentIndex] = useState(0)
+	const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
+
+	const handleNext = () => {
+		console.info('handleNext')
+	}
+
+	const handlePause = () => {
+		setIsPlaying(false)
+	}
+
+	const handlePlay = () => {
+		setIsPlaying(true)
+	}
+
+	const handlePrev = () => {
+		console.info('handlePrev')
+	}
+
 	return (
 		<>
 			<div
@@ -24,11 +48,22 @@ export default function Player(props: {
 				>
 					<div className="do-fall do-fall-1 h-full">
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
-							<Scene />
+							<Scene>
+								<Model path={modelsToLoad.at(currentIndex)!} />
+							</Scene>
 						</Canvas>
 					</div>
 					<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
-						<Controls className="h-full" />
+						<Controls
+							className="h-full"
+							currentIndex={currentIndex}
+							isPlaying={isPlaying}
+							onNext={handleNext}
+							onPause={handlePause}
+							onPlay={handlePlay}
+							onPrev={handlePrev}
+							total={modelsToLoad.length}
+						/>
 					</div>
 				</div>
 				<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">

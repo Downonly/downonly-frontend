@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { LoopOnce } from 'three'
 // import { LoopRepeat } from 'three'
 
-export default function Model() {
+export default function Model(props: { path: string }) {
 	const { scene, animations } = useGLTF(
 		// '/QmVHsPUUoxmWvP4yogUf9GnnKXoPMjBVRsipyzLUYEvEPc'
-		'/WireframeTestFall_230718.glb'
+		props.path
 	)
 	const { mixer, actions } = useAnimations(animations, scene)
 	const action = actions[0]
