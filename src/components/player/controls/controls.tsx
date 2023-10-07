@@ -123,7 +123,11 @@ export default function Controls(props: {
 			<Progress progress={0.3} />
 
 			<div className="ml-3 flex flex-col justify-end gap-2">
-				<button className="interactive" onClick={props.onPrev}>
+				<button
+					className="interactive"
+					disabled={props.currentIndex === 0}
+					onClick={props.onPrev}
+				>
 					<svg
 						className="rotate-90"
 						width="24"
@@ -154,7 +158,11 @@ export default function Controls(props: {
 					</svg>
 				</button>
 
-				<button className="interactive" onClick={props.onNext}>
+				<button
+					className="interactive"
+					disabled={props.currentIndex === props.total - 1}
+					onClick={props.onNext}
+				>
 					<svg
 						className="rotate-90"
 						width="24"

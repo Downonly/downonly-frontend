@@ -66,6 +66,7 @@ export default function ThemeToggle(props: {
 		>
 			<input
 				className="hidden"
+				id="dark-light-switch"
 				onChange={handleChange}
 				suppressHydrationWarning={true}
 				type="checkbox"

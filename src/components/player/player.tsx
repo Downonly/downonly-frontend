@@ -13,20 +13,33 @@ export default function Player(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	const [isPlaying, setIsPlaying] = useState(false)
+	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
-	const [currentIndex] = useState(0)
+	const [currentIndex, setCurrentIndex] = useState(0)
 	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
-	const [modelsToLoad] = useState(['/bf_toWeb_Exports/bf09/bf09.draco.glb'])
+	const [modelsToLoad] = useState([
+		'/bf_toWeb_Exports/bf06/bf06.draco.glb',
+		'/bf_toWeb_Exports/bf07/bf07.draco.glb',
+		'/bf_toWeb_Exports/bf08/bf08.draco.glb',
+		'/bf_toWeb_Exports/bf09/bf09.draco.glb',
+	])
 
 	// useGLTF.preload('/WireframeTestFall_230718.glb')
 
 	const handleFinished = () => {
 		console.info('finished')
+		if (currentIndex === modelsToLoad.length - 1) {
+			setCurrentIndex(0)
+		} else {
+			setCurrentIndex(currentIndex + 1)
+		}
 	}
 
 	const handleNext = () => {
-		console.info('handleNext')
+		if (currentIndex < modelsToLoad.length - 1) {
+			setCurrentIndex(currentIndex + 1)
+			setIsPlaying(true)
+		}
 	}
 
 	const handlePause = () => {
@@ -38,7 +51,10 @@ export default function Player(props: {
 	}
 
 	const handlePrev = () => {
-		console.info('handlePrev')
+		if (currentIndex > 0) {
+			setCurrentIndex(currentIndex - 1)
+			setIsPlaying(true)
+		}
 	}
 
 	const handleSound = () => {
@@ -62,6 +78,7 @@ export default function Player(props: {
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 							<Scene>
 								<Model
+									isPlaying={isPlaying}
 									onFinished={handleFinished}
 									path={modelsToLoad.at(currentIndex)!}
 								/>
