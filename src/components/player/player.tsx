@@ -16,7 +16,14 @@ export default function Player(props: {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex] = useState(0)
-	const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
+	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
+	const [modelsToLoad] = useState(['/bf_toWeb_Exports/bf09/bf09.draco.glb'])
+
+	// useGLTF.preload('/WireframeTestFall_230718.glb')
+
+	const handleFinished = () => {
+		console.info('finished')
+	}
 
 	const handleNext = () => {
 		console.info('handleNext')
@@ -54,7 +61,10 @@ export default function Player(props: {
 					<div className="do-fall do-fall-1 h-full">
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 							<Scene>
-								<Model path={modelsToLoad.at(currentIndex)!} />
+								<Model
+									onFinished={handleFinished}
+									path={modelsToLoad.at(currentIndex)!}
+								/>
 							</Scene>
 						</Canvas>
 					</div>

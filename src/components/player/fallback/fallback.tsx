@@ -1,9 +1,12 @@
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
+import { Html, useProgress } from '@react-three/drei'
 
 export default function Fallback() {
 	const cubeRef = useRef<Mesh>(null)
+
+	const { progress } = useProgress()
 
 	useFrame(() => {
 		if (cubeRef.current) {
@@ -12,27 +15,15 @@ export default function Fallback() {
 		}
 	})
 
-	// const spherePositionXVal = 2
-	// const { spherePositionX } = isDebug()
-	// 	? // eslint-disable-next-line react-hooks/rules-of-hooks
-	// 	  useControls({
-	// 			spherePositionX: {
-	// 				value: spherePositionXVal,
-	// 				min: -2,
-	// 				max: 2,
-	// 				step: 0.01,
-	// 			},
-	// 	  })
-	// 	: {
-	// 			spherePositionX: spherePositionXVal,
-	// 	  }
-
 	return (
 		<>
 			<mesh scale={1.5} ref={cubeRef}>
 				<boxGeometry />
 				<meshStandardMaterial color="#191919" wireframe />
 			</mesh>
+			<Html center>
+				<p className="text-display text-xl text-cole">{progress.toFixed(0)}%</p>
+			</Html>
 		</>
 	)
 }
