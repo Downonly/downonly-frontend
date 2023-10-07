@@ -11,10 +11,12 @@ export default function Controls(props: {
 	currentIndex: number
 	id?: string
 	isPlaying: boolean
+	isSounding: boolean
 	onNext: () => void
 	onPause: () => void
 	onPlay: () => void
 	onPrev: () => void
+	onSound: () => void
 	style?: React.CSSProperties
 	total: number
 }): JSX.Element {
@@ -161,6 +163,26 @@ export default function Controls(props: {
 						fill="currentColor"
 					>
 						<path d="m92 778 19.4 2.8L644.6 409l15 375 56.2-4L707 10h-56.3l-8 341L102 11.3 80.2 26 92 778Z" />
+					</svg>
+				</button>
+
+				<button className="interactive" onClick={props.onSound}>
+					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
+						<path
+							d="M14 1 12.7.9l-6 5.8-3.9-.3-.1 10.3 3.8-.4 6.6 7.1.9-.2v-22Z"
+							transform="matrix(33.3 0 0 33.3 -26.4 -2.5)"
+						/>
+						{props.isSounding ? (
+							<path
+								d="m642 145-57.4 13.2 66.7 119 24 188.7L587 578.7l48.8 25.3 101.7-102.3-17.7-224.1L642 145Zm-72.8 68.5-49 32.6 43.2 66.4 3 119.7-51.7 71.1 42.4 41.2 79.1-88.5-14.7-131.4-52.3-111.1Z"
+								transform="matrix(1.3 0 0 1.1 -166.6 -36.5)"
+							/>
+						) : (
+							<path
+								d="m762 326-45.4-45-57.3 71.6L557 257.3l-24.5 64.5 83.7 88.3L526 518.8l41.8 45.2 66.7-82.8 75.2 88.1 34-47-68-88L762 326Z"
+								transform="matrix(1.3 0 0 1.2 -219.5 -95)"
+							/>
+						)}
 					</svg>
 				</button>
 

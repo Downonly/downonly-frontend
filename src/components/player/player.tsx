@@ -14,6 +14,7 @@ export default function Player(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	const [isPlaying, setIsPlaying] = useState(false)
+	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex] = useState(0)
 	const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
 
@@ -31,6 +32,10 @@ export default function Player(props: {
 
 	const handlePrev = () => {
 		console.info('handlePrev')
+	}
+
+	const handleSound = () => {
+		setIsSounding(!isSounding)
 	}
 
 	return (
@@ -58,10 +63,12 @@ export default function Player(props: {
 							className="h-full"
 							currentIndex={currentIndex}
 							isPlaying={isPlaying}
+							isSounding={isSounding}
 							onNext={handleNext}
 							onPause={handlePause}
 							onPlay={handlePlay}
 							onPrev={handlePrev}
+							onSound={handleSound}
 							total={modelsToLoad.length}
 						/>
 					</div>
