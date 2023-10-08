@@ -60,6 +60,11 @@ export default function Player(props: {
 		}
 	}
 
+	const handleSeek = (index: number) => {
+		setCurrentIndex(index)
+		setIsPlaying(true)
+	}
+
 	const handleSound = () => {
 		setIsSounding(!isSounding)
 	}
@@ -100,6 +105,7 @@ export default function Player(props: {
 							onPause={handlePause}
 							onPlay={handlePlay}
 							onPrev={handlePrev}
+							onSeek={handleSeek}
 							onSound={handleSound}
 							total={modelsToLoad.length}
 						/>

@@ -16,6 +16,7 @@ export default function Controls(props: {
 	onPause: () => void
 	onPlay: () => void
 	onPrev: () => void
+	onSeek: (index: number) => void
 	onSound: () => void
 	style?: React.CSSProperties
 	total: number
@@ -120,7 +121,11 @@ export default function Controls(props: {
 			ref={controlsRef}
 			style={props.style}
 		>
-			<Progress currentIndex={props.currentIndex} total={props.total} />
+			<Progress
+				currentIndex={props.currentIndex}
+				onSeek={props.onSeek}
+				total={props.total}
+			/>
 
 			<div className="ml-3 flex flex-col justify-end gap-2">
 				<button
