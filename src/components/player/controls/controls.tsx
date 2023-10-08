@@ -116,7 +116,7 @@ export default function Controls(props: {
 			className={`${props.className ?? ''} ${
 				isFullScreen
 					? 'absolute right-0 my-auto h-full origin-bottom-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
-					: 'sm:translate-x-[calc(100%_-_1.5rem)] lg:translate-x-[calc(100%_+_0.75rem)]'
+					: 'sm:translate-x-[calc(100%_-_1.5rem)] lg:translate-x-[calc(100%_+_1rem)]'
 			}${controlsHidden ? ' translate-x-full rotate-6' : ''} flex`}
 			ref={controlsRef}
 			style={props.style}
@@ -127,7 +127,7 @@ export default function Controls(props: {
 				total={props.total}
 			/>
 
-			<div className="ml-3 flex flex-col justify-end gap-2">
+			<div className="ml-3 flex flex-col justify-end gap-2 lg:ml-4">
 				<button
 					className="interactive"
 					disabled={props.currentIndex === 0}
