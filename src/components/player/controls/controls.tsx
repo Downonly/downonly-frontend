@@ -120,7 +120,7 @@ export default function Controls(props: {
 			ref={controlsRef}
 			style={props.style}
 		>
-			<Progress progress={0.3} />
+			<Progress currentIndex={props.currentIndex} total={props.total} />
 
 			<div className="ml-3 flex flex-col justify-end gap-2">
 				<button

@@ -34,7 +34,7 @@ export default function Orbit(): JSX.Element {
 						value: false,
 					},
 					enablePan: {
-						value: false,
+						value: true,
 					},
 				},
 				{
@@ -45,7 +45,7 @@ export default function Orbit(): JSX.Element {
 				minDistance: minDistanceVal,
 				maxDistance: maxDistanceVal,
 				enableZoom: false,
-				enablePan: false,
+				enablePan: true,
 		  }
 
 	return (
