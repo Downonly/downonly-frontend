@@ -1,14 +1,12 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useEffect } from 'react'
 import { LoopOnce } from 'three'
-// import { LoopRepeat } from 'three'
 
 export default function Model(props: {
 	isPlaying: boolean
 	path: string
 	onFinished: () => void
 }) {
-	console.info('props.path', props.path)
 	const { scene, animations } = useGLTF(props.path)
 	const { mixer, actions } = useAnimations(animations, scene)
 	const action = actions[0]
@@ -23,7 +21,6 @@ export default function Model(props: {
 	useEffect(() => {
 		const action = mixer.clipAction(animations[0])
 		action.setLoop(LoopOnce, 0)
-		// action.setEffectiveTimeScale(mixerSettings.actionTimeScale)
 		action.play()
 		action.paused = !props.isPlaying
 	}, [action, animations, mixer, props.isPlaying])

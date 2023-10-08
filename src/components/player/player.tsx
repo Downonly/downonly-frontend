@@ -5,7 +5,8 @@ import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Controls from '@/components/player/controls/controls'
 import Model from '@/components/player/model/model'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useGLTF } from '@react-three/drei'
 
 export default function Player(props: {
 	className?: string
@@ -16,6 +17,7 @@ export default function Player(props: {
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
+
 	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
 	const [modelsToLoad] = useState([
 		'/bf_toWeb_Exports/bf06/bf06.draco.glb',
@@ -24,10 +26,11 @@ export default function Player(props: {
 		'/bf_toWeb_Exports/bf09/bf09.draco.glb',
 	])
 
-	// useGLTF.preload('/WireframeTestFall_230718.glb')
+	useEffect(() => {
+		useGLTF.preload(modelsToLoad.slice(currentIndex + 1, currentIndex + 4))
+	}, [currentIndex, modelsToLoad])
 
 	const handleFinished = () => {
-		console.info('finished')
 		if (currentIndex === modelsToLoad.length - 1) {
 			setCurrentIndex(0)
 		} else {
@@ -77,11 +80,13 @@ export default function Player(props: {
 					<div className="do-fall do-fall-1 h-full">
 						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
 							<Scene>
-								<Model
-									isPlaying={isPlaying}
-									onFinished={handleFinished}
-									path={modelsToLoad.at(currentIndex)!}
-								/>
+								<group>
+									<Model
+										isPlaying={isPlaying}
+										onFinished={handleFinished}
+										path={modelsToLoad.at(currentIndex)!}
+									/>
+								</group>
 							</Scene>
 						</Canvas>
 					</div>
