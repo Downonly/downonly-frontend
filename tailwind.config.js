@@ -11,7 +11,7 @@ module.exports = {
 			carbon: '#282828',
 			cole: '#191919',
 			black: '#000000',
-			tomato: 'tomato',
+			silver: '#808080',
 			current: 'currentColor',
 			inherit: 'inherit',
 			transparent: 'transparent',

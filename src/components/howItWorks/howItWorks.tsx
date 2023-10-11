@@ -19,7 +19,7 @@ export default function HowItWorks(props: {
 					of this works
 				</h2>
 
-				<div className="do-fall do-fall-0 aspect-video bg-tomato" />
+				<div className="do-fall do-fall-0 aspect-video bg-silver" />
 			</div>
 		</div>
 	)

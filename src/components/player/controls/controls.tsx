@@ -67,7 +67,7 @@ export default function Controls(props: {
 			clearTimeout(timeoutToHide)
 			setControlsHidden(false)
 		}
-	}, [isFullScreen])
+	}, [isFullScreen, props])
 
 	useEffect(() => {
 		if (isTouchDevice()) return

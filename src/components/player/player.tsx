@@ -18,16 +18,18 @@ export default function Player(props: {
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
 
-	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
-	const [modelsToLoad] = useState([
-		'/bf_toWeb_Exports/bf06/bf06.draco.glb',
-		'/bf_toWeb_Exports/bf07/bf07.draco.glb',
-		'/bf_toWeb_Exports/bf08/bf08.draco.glb',
-		'/bf_toWeb_Exports/bf09/bf09.draco.glb',
-	])
+	const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
+	// const [modelsToLoad] = useState([
+	// 	'/bf_toWeb_Exports/bf06/bf06.draco.glb',
+	// 	'/bf_toWeb_Exports/bf07/bf07.draco.glb',
+	// 	'/bf_toWeb_Exports/bf08/bf08.draco.glb',
+	// 	'/bf_toWeb_Exports/bf09/bf09.draco.glb',
+	// ])
 
 	useEffect(() => {
-		useGLTF.preload(modelsToLoad.slice(currentIndex + 1, currentIndex + 4))
+		if (modelsToLoad.length) {
+			useGLTF.preload(modelsToLoad.slice(currentIndex + 1, currentIndex + 4))
+		}
 	}, [currentIndex, modelsToLoad])
 
 	const handleFinished = () => {
@@ -83,15 +85,17 @@ export default function Player(props: {
 					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
 				>
 					<div className="do-fall do-fall-1 h-full">
-						<Canvas id="canvas" className="aspect-square cursor-grab bg-tomato">
+						<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
 							<Scene>
-								<group>
-									<Model
-										isPlaying={isPlaying}
-										onFinished={handleFinished}
-										path={modelsToLoad.at(currentIndex)!}
-									/>
-								</group>
+								{modelsToLoad.length && (
+									<group>
+										<Model
+											isPlaying={isPlaying}
+											onFinished={handleFinished}
+											path={modelsToLoad.at(currentIndex)!}
+										/>
+									</group>
+								)}
 							</Scene>
 						</Canvas>
 					</div>
