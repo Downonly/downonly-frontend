@@ -20,7 +20,7 @@ export default function Canvas(props: {
 			id={props.id}
 			className={`h-full w-full ${props.className ?? ''}`}
 			style={props.style}
-			camera={{ fov: 45, near: 0.1, far: 200, position: [3, 2, 6] }}
+			camera={{ fov: 45, near: 0.1, far: 200, position: [1, -2, 9] }}
 			gl={gl}
 			resize={{ scroll: false }}
 		>
