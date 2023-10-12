@@ -13,7 +13,7 @@ export default function MintCTA(props: {
 
 	useEffect(() => {
 		void (async () => {
-			setPrice(/*await getPrice()*/ await Promise.resolve(4.123))
+			setPrice(/*await getPrice()*/ await Promise.resolve(0.33))
 		})()
 	}, [])
 
