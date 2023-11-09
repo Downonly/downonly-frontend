@@ -1,16 +1,21 @@
 import { roundedRectClipPath } from '@/utils/shape'
 
 export default function Card(props: {
-	className?: string
 	bgClassName?: string
-	style?: React.CSSProperties
-	id?: string
 	children?: React.ReactNode
+	className?: string
+	id?: string
 	mode?: 'secondary'
 	salt: string
+	style?: React.CSSProperties
+	tag?: keyof JSX.IntrinsicElements
 }): JSX.Element {
+	const Tag = (props.tag ?? 'div') as unknown as React.ComponentClass<{
+		children: (React.ReactNode | Element)[]
+		className: string
+	}>
 	return (
-		<div className={`relative z-0 p-6 ${props.className}`}>
+		<Tag className={`relative z-0 p-6 ${props.className}`}>
 			{props.children}
 			<div
 				className={`absolute inset-0 -z-10 h-full w-full ${props.bgClassName} ${
@@ -22,6 +27,6 @@ export default function Card(props: {
 					clipPath: roundedRectClipPath(40, props.salt),
 				}}
 			/>
-		</div>
+		</Tag>
 	)
 }

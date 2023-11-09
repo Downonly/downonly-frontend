@@ -2,17 +2,18 @@
 
 import { isPerf } from '@/utils/debug'
 import { Perf } from 'r3f-perf'
-import { Suspense } from 'react'
+import { MutableRefObject, Suspense } from 'react'
 import Fallback from '@/components/player/fallback/fallback'
 import Orbit from './orbit'
 
 export default function Scene(props: {
 	children: React.ReactNode
+	ocRef: MutableRefObject<null>
 }): JSX.Element {
 	return (
 		<>
 			{isPerf() && <Perf position="top-left" />}
-			<Orbit />
+			<Orbit ocRef={props.ocRef} />
 
 			<ambientLight />
 			{/*<pointLight position={[10, 10, 10]} />*/}

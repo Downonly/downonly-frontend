@@ -8,7 +8,7 @@ export default function Concept(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	return (
-		<div
+		<section
 			id={props.id}
 			className={`${
 				props.className ?? ''
@@ -54,6 +54,6 @@ export default function Concept(props: {
 					</div>
 				</Card>
 			</div>
-		</div>
+		</section>
 	)
 }

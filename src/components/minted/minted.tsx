@@ -7,7 +7,7 @@ export default function Minted(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	return (
-		<div
+		<section
 			id={props.id}
 			className={`${props.className ?? ''}`}
 			style={props.style}
@@ -67,6 +67,6 @@ export default function Minted(props: {
 					<div className="aspect-square bg-snow dark:bg-nickel" />
 				</Polaroid>
 			</div>
-		</div>
+		</section>
 	)
 }

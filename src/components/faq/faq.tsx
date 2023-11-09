@@ -7,7 +7,7 @@ export default function Faq(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	return (
-		<div
+		<section
 			id={props.id}
 			className={`${
 				props.className ?? ''
@@ -70,6 +70,6 @@ export default function Faq(props: {
 					</Details>
 				</div>
 			</div>
-		</div>
+		</section>
 	)
 }

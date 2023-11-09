@@ -5,7 +5,7 @@ import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Controls from '@/components/player/controls/controls'
 import Model from '@/components/player/model/model'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Player(props: {
@@ -14,6 +14,7 @@ export default function Player(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const ocRef = useRef(null)
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
@@ -90,53 +91,52 @@ export default function Player(props: {
 	}
 
 	return (
-		<>
+		<section
+			id={props.id}
+			className={`-mt-36 grid w-full justify-end sm:-mt-32 lg:grid-cols-2 ${
+				props.className ?? ''
+			}`}
+			style={props.style}
+		>
 			<div
-				id={props.id}
-				className={`-mt-36 grid w-full justify-end sm:-mt-32 lg:grid-cols-2 ${
-					props.className ?? ''
-				}`}
-				style={props.style}
+				id="full-screen-container"
+				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
 			>
-				<div
-					id="full-screen-container"
-					className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
-				>
-					<div className="do-fall do-fall-1 h-full">
-						<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
-							<Scene>
-								{modelsToLoad.length && (
-									<group>
-										<Model
-											isPlaying={isPlaying}
-											onFinished={handleFinished}
-											path={modelsToLoad.at(currentIndex)!}
-										/>
-									</group>
-								)}
-							</Scene>
-						</Canvas>
-					</div>
-					<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
-						<Controls
-							className="h-full"
-							currentIndex={currentIndex}
-							isPlaying={isPlaying}
-							isSounding={isSounding}
-							onNext={handleNext}
-							onPause={handlePause}
-							onPlay={handlePlay}
-							onPrev={handlePrev}
-							onSeek={handleSeek}
-							onSound={handleSound}
-							total={modelsToLoad.length}
-						/>
-					</div>
+				<div className="do-fall do-fall-1 h-full">
+					<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
+						<Scene ocRef={ocRef}>
+							{modelsToLoad.length && (
+								<group>
+									<Model
+										isPlaying={isPlaying}
+										ocRef={ocRef}
+										onFinished={handleFinished}
+										path={modelsToLoad.at(currentIndex)!}
+									/>
+								</group>
+							)}
+						</Scene>
+					</Canvas>
 				</div>
-				<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
-					<MintCTA />
+				<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
+					<Controls
+						className="h-full"
+						currentIndex={currentIndex}
+						isPlaying={isPlaying}
+						isSounding={isSounding}
+						onNext={handleNext}
+						onPause={handlePause}
+						onPlay={handlePlay}
+						onPrev={handlePrev}
+						onSeek={handleSeek}
+						onSound={handleSound}
+						total={modelsToLoad.length}
+					/>
 				</div>
 			</div>
-		</>
+			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
+				<MintCTA />
+			</div>
+		</section>
 	)
 }

@@ -1,15 +1,14 @@
 import {
-	// InfuraProvider,
+	type BaseContract,
 	BrowserProvider,
 	Contract,
-	type Eip1193Provider,
 	type ContractInterface,
-	type BaseContract,
-	type JsonRpcSigner,
-	type JsonRpcApiProvider,
+	type Eip1193Provider,
 	formatEther,
-	parseUnits,
 	getDefaultProvider,
+	type JsonRpcApiProvider,
+	type JsonRpcSigner,
+	parseUnits,
 	TransactionResponse,
 } from 'ethers'
 
@@ -107,7 +106,7 @@ export async function deposit(wei: number) {
 		await depositTx.wait()
 
 		console.log('Deposit successful!')
-	} catch (error) {
-		console.error('Deposit failed:', error)
+	} catch (err) {
+		console.error('Deposit failed:', err)
 	}
 }

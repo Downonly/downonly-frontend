@@ -5,7 +5,7 @@ export default function HowItWorks(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	return (
-		<div
+		<section
 			id={props.id}
 			className={`${
 				props.className ?? ''
@@ -21,6 +21,6 @@ export default function HowItWorks(props: {
 
 				<div className="do-fall do-fall-0 aspect-video bg-silver" />
 			</div>
-		</div>
+		</section>
 	)
 }
