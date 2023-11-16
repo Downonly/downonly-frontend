@@ -149,7 +149,7 @@ export default function Controls(props: {
 					onClick={props.isPlaying ? props.onPause : props.onPlay}
 				>
 					<svg
-						className={props.isPlaying ? '' : 'rotate-90'}
+						className="rotate-90"
 						width="24"
 						height="24"
 						viewBox="0 0 800 800"
