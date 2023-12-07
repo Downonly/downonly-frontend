@@ -9,7 +9,7 @@ CREATE TABLE `mints` (
     `openSea` VARCHAR(255) NULL,
     `ipfsSound` VARCHAR(255) NULL,
     `fullname` VARCHAR(255) NULL,
-    `mintdate` VARCHAR(255) NULL,
+    `mintdate` DATETIME DEFAULT current_timestamp(),
 
     UNIQUE INDEX `id`(`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

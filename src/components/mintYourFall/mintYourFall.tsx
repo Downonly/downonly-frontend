@@ -14,9 +14,7 @@ export default function MintYourFall(props: {
 }): JSX.Element {
 	useEffect(() => {
 		fetch(`/api/mints`, { cache: 'force-cache' })
-			.then((data) => {
-				return data.json()
-			})
+			.then((response) => response.json())
 			.then((data) => {
 				console.info('data', data)
 			})

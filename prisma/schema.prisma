@@ -22,5 +22,5 @@ model mints {
   ipfsSound     String? @db.VarChar(255)
   mintprice     String? @db.VarChar(255)
   fullname      String? @db.VarChar(255)
-  mintdate      String? @db.VarChar(255)
+  mintdate      DateTime? @default(now()) @db.DateTime
 }
