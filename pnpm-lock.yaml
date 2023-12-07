@@ -21,8 +21,8 @@ dependencies:
     specifier: ^8.13.7
     version: 8.13.7(react-dom@18.2.0)(react@18.2.0)(three@0.157.0)
   ethers:
-    specifier: ^6.7.1
-    version: 6.7.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+    specifier: ^6.9.0
+    version: 6.9.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -138,8 +138,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@adraffy/ens-normalize@1.9.2:
-    resolution: {integrity: sha512-0h+FrQDqe2Wn+IIGFkTCd4aAwTJ+7834Ek1COohCyV26AXhwQ7WQaz+4F/nLOeVl/3BtWHOHLPsq46V8YB46Eg==}
+  /@adraffy/ens-normalize@1.10.0:
+    resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
     dev: false
 
   /@alloc/quick-lru@5.2.0:
@@ -1170,12 +1170,15 @@ packages:
     dev: false
     optional: true
 
-  /@noble/hashes@1.1.2:
-    resolution: {integrity: sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==}
+  /@noble/curves@1.2.0:
+    resolution: {integrity: sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==}
+    dependencies:
+      '@noble/hashes': 1.3.2
     dev: false
 
-  /@noble/secp256k1@1.7.1:
-    resolution: {integrity: sha512-hOUk6AyBFmqVrv7k5WAw/LpszxVbj9gGN4JRkIX52fdFAj1UA61KXmZDvqVEm+pOyec3+fIeZB02LYa/pWOArw==}
+  /@noble/hashes@1.3.2:
+    resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
+    engines: {node: '>= 16'}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -3448,13 +3451,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /ethers@6.7.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
-    resolution: {integrity: sha512-qX5kxIFMfg1i+epfgb0xF4WM7IqapIIu50pOJ17aebkxxa4BacW5jFrQRmCJpDEg2ZK2oNtR5QjrQ1WDBF29dA==}
+  /ethers@6.9.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+    resolution: {integrity: sha512-pmfNyQzc2mseLe91FnT2vmNaTt8dDzhxZ/xItAV7uGsF4dI4ek2ufMu3rAkgQETL/TIs0GS5A+U05g9QyWnv3Q==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@adraffy/ens-normalize': 1.9.2
-      '@noble/hashes': 1.1.2
-      '@noble/secp256k1': 1.7.1
+      '@adraffy/ens-normalize': 1.10.0
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
       '@types/node': 18.15.13
       aes-js: 4.0.0-beta.5
       tslib: 2.4.0

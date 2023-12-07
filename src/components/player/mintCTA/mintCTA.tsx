@@ -1,22 +1,9 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import { getPrice } from '@/services/ether'
-
 export default function MintCTA(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	const [price, setPrice] = useState<number>()
-
-	useEffect(() => {
-		void (async () => {
-			setPrice(await getPrice() /*await Promise.resolve(0.33)*/)
-		})()
-	}, [])
-
 	return (
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
 			<p className="mb-2">👮‍🏥🪑</p>
@@ -30,7 +17,7 @@ export default function MintCTA(props: {
 				<br />
 				Lorem Ipsum
 				<br />
-				{price && `Price: ${price} Eth`}
+				{/*{price && `Price: ${price} Eth`}*/}
 			</p>
 		</div>
 	)

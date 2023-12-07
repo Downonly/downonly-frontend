@@ -8,9 +8,10 @@ import {
 	getDefaultProvider,
 	type JsonRpcApiProvider,
 	type JsonRpcSigner,
-	parseUnits,
+	parseEther,
 	TransactionResponse,
 } from 'ethers'
+import abi from './abi/dutchauction.json'
 
 declare const window: Window &
 	typeof globalThis & {
@@ -19,7 +20,7 @@ declare const window: Window &
 
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
-const contractAddress = '0x7306d039Ab052AABAac0C94F27778cf2D55476F4'
+const contractAddress = '0xc05CD9F2b6C23374D6557EC39DbfD5531FC5156E'
 let signer: JsonRpcSigner
 let provider: JsonRpcApiProvider
 let contract: MyContract
@@ -35,7 +36,7 @@ async function initContract() {
 		provider = getDefaultProvider('goerli') as JsonRpcApiProvider
 
 		// Alternatively we can use the InfuraProvider.
-		// provider = new InfuraProvider('goerli', 'b782095ddbde41128ce524c730e2a506')
+		// provider = new InfuraProvider('matic', '45967322314d46219179ada7e414c389')
 	} else {
 		// Connect to the MetaMask EIP-1193 object. This is a standard
 		// protocol that allows Ethers access to make all read-only
@@ -50,60 +51,51 @@ async function initContract() {
 		provider = browserProvider
 	}
 
-	const abi = [
-		{
-			inputs: [],
-			name: 'deposit',
-			outputs: [],
-			stateMutability: 'payable',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'getBalance',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		// TODO: getPrice
-		// TODO: getPause - during pause buying is disabled, because minting is in progress
-		// TODO: getLife (nice to have)
-	]
 	contract = new Contract(contractAddress, abi, signer || provider)
 }
 
-export async function getPrice() {
+export async function getCurrentPrice() {
 	await initContract()
-
-	const balance = (await contract.getBalance()) as number
-	const balanceEther = formatEther(balance)
-
-	console.info('balance', balance)
-	console.info('balanceEther', `${balanceEther} Ether`)
-
-	return 4.7
+	const currentPrice = (await contract.currentPrice()) as number
+	return formatEther(currentPrice)
 }
 
-export async function deposit(wei: number) {
+export async function getIsPaused() {
 	await initContract()
+	return (await contract.isPaused()) as boolean
+}
+
+export async function getTimeUntilAuctionEnds() {
+	await initContract()
+	return parseInt((await contract.remainingTimeUntilPriceReset()) as string, 10)
+}
+
+export async function buy(ether: string) {
+	// const wei =  Number(parseInt(ether, 10) * 1e18).toString(16)
+	await initContract()
+
+	console.info('A')
 
 	// TODO: If we have no signer. Tell the user to first install a wallet.
 
 	try {
 		const contractWithSigner = contract.connect(signer)
 
-		await contract.deposit()
+		console.info('B')
 
 		// Call the deposit function on the contract
-		const depositTx = (await (contractWithSigner as MyContract).deposit({
-			value: parseUnits(wei.toString(), -18),
-		})) as TransactionResponse
+		const depositTx = (await (contractWithSigner as MyContract).buy(
+			'rk2',
+			'wc1',
+			'547',
+			{
+				value: parseEther(ether),
+				// value: parseUnits(wei.toString(), -18),
+			}
+		)) as TransactionResponse
+
+		// TODO: show loader and disable button
+		console.info('C')
 
 		// Wait for the transaction to be mined
 		await depositTx.wait()

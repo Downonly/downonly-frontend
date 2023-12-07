@@ -40,27 +40,28 @@ export default function Player(props: {
 	const [takes, setTakes] = useState<Take[]>()
 
 	useEffect(() => {
-		fetch(`/api/mints`, { cache: 'force-cache' })
-			.then((response) => response.json())
-			.then((data: Row[]) => {
-				console.info('data', data)
-				setTakes(
-					data
-						.filter((row) => row.ipfsVideo && row.ipfsSound)
-						.map((row) => {
-							const { ipfsVideo, ipfsSound, mintdate, ...rest } = row
-							return {
-								modelURL: ipfsVideo!,
-								soundURL: ipfsSound!,
-								mintDate: new Date(mintdate),
-								...rest,
-							}
-						})
-				)
-			})
-			.catch((err) => {
-				console.error(err)
-			})
+		setTakes([])
+		// fetch(`/api/mints`, { cache: 'force-cache' })
+		// 	.then((response) => response.json())
+		// 	.then((data: Row[]) => {
+		// 		console.info('data', data)
+		// 		setTakes(
+		// 			data
+		// 				.filter((row) => row.ipfsVideo && row.ipfsSound)
+		// 				.map((row) => {
+		// 					const { ipfsVideo, ipfsSound, mintdate, ...rest } = row
+		// 					return {
+		// 						modelURL: ipfsVideo!,
+		// 						soundURL: ipfsSound!,
+		// 						mintDate: new Date(mintdate),
+		// 						...rest,
+		// 					}
+		// 				})
+		// 		)
+		// 	})
+		// 	.catch((err) => {
+		// 		console.error(err)
+		// 	})
 	}, [])
 
 	useEffect(() => {

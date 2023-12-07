@@ -6,6 +6,7 @@ export default function Button(props: {
 	children: React.ReactNode
 	onClick?: () => void | Promise<void>
 	className?: string
+	disabled?: boolean
 	style?: React.CSSProperties
 	size?: 'lg'
 	mode?: 'secondary'
@@ -24,7 +25,8 @@ export default function Button(props: {
 				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
-			} ${props.className ?? ''}`}
+			} ${props.disabled ? 'opacity-50' : ''} ${props.className ?? ''}`}
+			disabled={props.disabled}
 			onClick={props.onClick}
 			style={{
 				...props.style,

@@ -2,14 +2,22 @@
 
 import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
-import { useState } from 'react'
-import { deposit } from '@/services/ether'
+import { useEffect, useState } from 'react'
+import { buy, getCurrentPrice } from '@/services/ether'
 
 export default function MintCTA(): JSX.Element {
 	const [modalOpen, setModalOpen] = useState(false)
 	const handleDismiss = () => {
 		setModalOpen(false)
 	}
+
+	const [price, setPrice] = useState<string>()
+
+	useEffect(() => {
+		void (async () => {
+			setPrice(await getCurrentPrice())
+		})()
+	}, [])
 
 	return (
 		<>
@@ -18,15 +26,16 @@ export default function MintCTA(): JSX.Element {
 				<p className="text-sm text-carbon dark:text-iron">
 					Time: 23:55:04
 					<br />
-					Price: 4.7 Eth
+					Price: {price} Eth
 				</p>
 			</div>
 			<div>
 				<Button
 					onClick={async () => {
-						await deposit(1)
-						setModalOpen(true)
+						await buy(price!)
+						// setModalOpen(true)
 					}}
+					disabled={!price}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"
