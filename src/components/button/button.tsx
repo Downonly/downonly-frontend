@@ -4,7 +4,7 @@ import { roundedRectClipPath } from '@/utils/shape'
 
 export default function Button(props: {
 	children: React.ReactNode
-	onClick?: () => void
+	onClick?: () => void | Promise<void>
 	className?: string
 	style?: React.CSSProperties
 	size?: 'lg'

@@ -3,7 +3,7 @@
 import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
 import { useState } from 'react'
-// import { deposit } from '@/services/ether'
+import { deposit } from '@/services/ether'
 
 export default function MintCTA(): JSX.Element {
 	const [modalOpen, setModalOpen] = useState(false)
@@ -23,13 +23,10 @@ export default function MintCTA(): JSX.Element {
 			</div>
 			<div>
 				<Button
-					onClick={
-						// async
-						() => {
-							// await deposit(1)
-							setModalOpen(true)
-						}
-					}
+					onClick={async () => {
+						await deposit(1)
+						setModalOpen(true)
+					}}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"

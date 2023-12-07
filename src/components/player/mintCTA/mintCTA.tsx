@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-// import { getPrice } from '@/services/ether'
+import { getPrice } from '@/services/ether'
 
 export default function MintCTA(props: {
 	className?: string
@@ -13,7 +13,7 @@ export default function MintCTA(props: {
 
 	useEffect(() => {
 		void (async () => {
-			setPrice(/*await getPrice()*/ await Promise.resolve(0.33))
+			setPrice(await getPrice() /*await Promise.resolve(0.33)*/)
 		})()
 	}, [])
 

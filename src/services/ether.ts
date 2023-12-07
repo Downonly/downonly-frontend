@@ -71,6 +71,9 @@ async function initContract() {
 			stateMutability: 'view',
 			type: 'function',
 		},
+		// TODO: getPrice
+		// TODO: getPause - during pause buying is disabled, because minting is in progress
+		// TODO: getLife (nice to have)
 	]
 	contract = new Contract(contractAddress, abi, signer || provider)
 }

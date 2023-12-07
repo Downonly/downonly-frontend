@@ -20,30 +20,36 @@ export default function Player(props: {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
-	// const [modelsToLoad] = useState([
-	// 	'/bf_toWeb_Exports/bf06/bf06.draco.glb',
-	// 	'/bf_toWeb_Exports/bf07/bf07.draco.glb',
-	// 	'/bf_toWeb_Exports/bf08/bf08.draco.glb',
-	// 	'/bf_toWeb_Exports/bf09/bf09.draco.glb',
-	// ])
 	const [modelsToLoad] = useState([
-		'/glb_fall_seq_231011_02/Fall_000148.glb',
-		'/glb_fall_seq_231011_02/Fall_000149.glb',
-		'/glb_fall_seq_231011_02/Fall_000150.glb',
-		'/glb_fall_seq_231011_02/Fall_000151.glb',
-		'/glb_fall_seq_231011_02/Fall_000152.glb',
-		'/glb_fall_seq_231011_02/Fall_000153.glb',
-		'/glb_fall_seq_231011_02/Fall_000154.glb',
-		'/glb_fall_seq_231011_02/Fall_000155.glb',
-		'/glb_fall_seq_231011_02/Fall_000156.glb',
-		'/glb_fall_seq_231011_02/Fall_000157.glb',
-		'/glb_fall_seq_231011_02/Fall_000158.glb',
-		'/glb_fall_seq_231011_02/Fall_000159.glb',
-		'/glb_fall_seq_231011_02/Fall_000160.glb',
-		'/glb_fall_seq_231011_02/Fall_000161.glb',
-		'/glb_fall_seq_231011_02/Fall_000162.glb',
-		'/glb_fall_seq_231011_02/Fall_000163.glb',
+		'/bf_toWeb_Exports/bf06/bf06.draco.glb',
+		'/bf_toWeb_Exports/bf07/bf07.draco.glb',
+		'/bf_toWeb_Exports/bf08/bf08.draco.glb',
+		'/bf_toWeb_Exports/bf09/bf09.draco.glb',
 	])
+	const [audioToLoad] = useState([
+		'/bf_toWeb_Exports/bf06/bf06.mp3',
+		'/bf_toWeb_Exports/bf07/bf07.mp3',
+		'/bf_toWeb_Exports/bf08/bf08.mp3',
+		'/bf_toWeb_Exports/bf09/bf09.mp3',
+	])
+	// const [modelsToLoad] = useState([
+	// 	'/glb_fall_seq_231011_02/Fall_000148.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000149.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000150.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000151.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000152.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000153.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000154.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000155.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000156.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000157.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000158.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000159.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000160.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000161.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000162.glb',
+	// 	'/glb_fall_seq_231011_02/Fall_000163.glb',
+	// ])
 
 	useEffect(() => {
 		if (modelsToLoad.length) {
@@ -111,7 +117,8 @@ export default function Player(props: {
 										isPlaying={isPlaying}
 										ocRef={ocRef}
 										onFinished={handleFinished}
-										path={modelsToLoad.at(currentIndex)!}
+										audioPath={audioToLoad.at(currentIndex)!}
+										gltfPath={modelsToLoad.at(currentIndex)!}
 									/>
 								</group>
 							)}
