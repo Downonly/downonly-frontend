@@ -8,6 +8,25 @@ import Model from '@/components/player/model/model'
 import { useEffect, useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 
+interface Row {
+	id: string
+	jobState: 'paid' | 'minting' | 'done'
+	surface: string
+	obstacle: string
+	figure: string
+	ipfsVideo: string | undefined
+	openSea: string
+	ipfsSound: string | undefined
+	fullname: string
+	mintdate: string
+}
+
+interface Take extends Omit<Row, 'ipfsSound' | 'ipfsVideo' | 'mintdate'> {
+	modelURL: string
+	soundURL: string
+	mintDate: Date
+}
+
 export default function Player(props: {
 	className?: string
 	style?: React.CSSProperties
@@ -18,47 +37,45 @@ export default function Player(props: {
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
-
-	// const [modelsToLoad] = useState(['/WireframeTestFall_230718.glb'])
-	const [modelsToLoad] = useState([
-		'/bf_toWeb_Exports/bf06/bf06.draco.glb',
-		'/bf_toWeb_Exports/bf07/bf07.draco.glb',
-		'/bf_toWeb_Exports/bf08/bf08.draco.glb',
-		'/bf_toWeb_Exports/bf09/bf09.draco.glb',
-	])
-	const [audioToLoad] = useState([
-		'/bf_toWeb_Exports/bf06/bf06.mp3',
-		'/bf_toWeb_Exports/bf07/bf07.mp3',
-		'/bf_toWeb_Exports/bf08/bf08.mp3',
-		'/bf_toWeb_Exports/bf09/bf09.mp3',
-	])
-	// const [modelsToLoad] = useState([
-	// 	'/glb_fall_seq_231011_02/Fall_000148.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000149.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000150.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000151.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000152.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000153.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000154.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000155.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000156.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000157.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000158.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000159.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000160.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000161.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000162.glb',
-	// 	'/glb_fall_seq_231011_02/Fall_000163.glb',
-	// ])
+	const [takes, setTakes] = useState<Take[]>()
 
 	useEffect(() => {
-		if (modelsToLoad.length) {
-			useGLTF.preload(modelsToLoad.slice(currentIndex + 1, currentIndex + 4))
+		fetch(`/api/mints`, { cache: 'force-cache' })
+			.then((response) => response.json())
+			.then((data: Row[]) => {
+				console.info('data', data)
+				setTakes(
+					data
+						.filter((row) => row.ipfsVideo && row.ipfsSound)
+						.map((row) => {
+							const { ipfsVideo, ipfsSound, mintdate, ...rest } = row
+							return {
+								modelURL: ipfsVideo!,
+								soundURL: ipfsSound!,
+								mintDate: new Date(mintdate),
+								...rest,
+							}
+						})
+				)
+			})
+			.catch((err) => {
+				console.error(err)
+			})
+	}, [])
+
+	useEffect(() => {
+		if (takes?.length) {
+			useGLTF.preload(
+				takes
+					.slice(currentIndex + 1, currentIndex + 4)
+					.map((take) => take.modelURL)
+			)
 		}
-	}, [currentIndex, modelsToLoad])
+	}, [currentIndex, takes])
 
 	const handleFinished = () => {
-		if (currentIndex === modelsToLoad.length - 1) {
+		if (!takes) return
+		if (currentIndex === takes.length - 1) {
 			setCurrentIndex(0)
 		} else {
 			setCurrentIndex(currentIndex + 1)
@@ -66,7 +83,8 @@ export default function Player(props: {
 	}
 
 	const handleNext = () => {
-		if (currentIndex < modelsToLoad.length - 1) {
+		if (!takes) return
+		if (currentIndex < takes.length - 1) {
 			setCurrentIndex(currentIndex + 1)
 			setIsPlaying(true)
 		}
@@ -111,14 +129,14 @@ export default function Player(props: {
 				<div className="do-fall do-fall-1 h-full">
 					<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
 						<Scene ocRef={ocRef}>
-							{modelsToLoad.length && (
+							{takes?.length && (
 								<group>
 									<Model
 										isPlaying={isPlaying}
 										ocRef={ocRef}
 										onFinished={handleFinished}
-										audioPath={audioToLoad.at(currentIndex)!}
-										gltfPath={modelsToLoad.at(currentIndex)!}
+										audioPath={takes.at(currentIndex)!.soundURL}
+										gltfPath={takes.at(currentIndex)!.modelURL}
 									/>
 								</group>
 							)}
@@ -137,7 +155,7 @@ export default function Player(props: {
 						onPrev={handlePrev}
 						onSeek={handleSeek}
 						onSound={handleSound}
-						total={modelsToLoad.length}
+						total={takes?.length ?? 0}
 					/>
 				</div>
 			</div>

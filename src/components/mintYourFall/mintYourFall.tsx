@@ -4,7 +4,6 @@ import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 import Picker from '@/components/mintYourFall/step/picker'
-import { useEffect } from 'react'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -12,17 +11,6 @@ export default function MintYourFall(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	useEffect(() => {
-		fetch(`/api/mints`, { cache: 'force-cache' })
-			.then((response) => response.json())
-			.then((data) => {
-				console.info('data', data)
-			})
-			.catch((err) => {
-				console.error(err)
-			})
-	}, [])
-
 	return (
 		<Card
 			id={props.id}

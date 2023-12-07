@@ -72,6 +72,7 @@ export default function Model(props: {
 
 		sound = new Howl({
 			src: [props.audioPath],
+			format: ['webm'],
 		})
 		sound.on('play', () => {
 			sound.seek(mixer.time)
