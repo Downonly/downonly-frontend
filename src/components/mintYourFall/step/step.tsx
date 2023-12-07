@@ -2,13 +2,14 @@ import Card from '@/components/card/card'
 import Circle from '@/components/circle/circle'
 
 export default function Step(props: {
+	children?: React.ReactNode
 	className?: string
-	style?: React.CSSProperties
 	id?: string
+	label: string
 	num: `${number}`
 	operator?: string
-	label: string
-	children?: React.ReactNode
+	salt: string
+	style?: React.CSSProperties
 }): JSX.Element {
 	return (
 		<div
@@ -24,17 +25,20 @@ export default function Step(props: {
 					{props.operator}
 				</span>
 			)}
-			<Circle className="mb-2">{props.num}</Circle>
+			<Circle className="mb-2" salt={`circle-1-${props.salt}`}>
+				{props.num}
+			</Circle>
 			<p className="text-display mb-10 text-sm">{props.label}</p>
 
 			<Card
-				salt="blueberry"
+				salt={`card-${props.salt}`}
 				className="relative aspect-square"
 				bgClassName="bg-gradient-to-r from-snow to-snow dark:from-nickel dark:to-nickel"
 			>
 				<Circle
-					style={{ position: 'absolute' }}
 					className="top-0 -translate-x-1/2 -translate-y-1/2 text-white dark:text-carbon"
+					salt={`circle-2-${props.salt}`}
+					style={{ position: 'absolute' }}
 				/>
 				{props.children}
 			</Card>

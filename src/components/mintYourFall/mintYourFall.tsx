@@ -1,7 +1,10 @@
+'use client'
+
 import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 import Picker from '@/components/mintYourFall/step/picker'
+import { useEffect } from 'react'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -9,6 +12,19 @@ export default function MintYourFall(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	useEffect(() => {
+		fetch(`/api/mints`, { cache: 'force-cache' })
+			.then((data) => {
+				return data.json()
+			})
+			.then((data) => {
+				console.info('data', data)
+			})
+			.catch((err) => {
+				console.error(err)
+			})
+	}, [])
+
 	return (
 		<Card
 			id={props.id}
@@ -23,22 +39,22 @@ export default function MintYourFall(props: {
 			</header>
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-				<Step num="1" label="Setting">
+				<Step salt="potato" num="1" label="Setting">
 					<Picker
 						options={[{ emoji: '🏥' }, { emoji: '🏭' }, { emoji: '💒' }]}
 					/>
 				</Step>
-				<Step num="2" label="Character" operator="+">
+				<Step salt="tomato" num="2" label="Character" operator="+">
 					<Picker
 						options={[{ emoji: '👮‍♂️' }, { emoji: '👷🏻‍♂️' }, { emoji: '👨🏿‍🚒' }]}
 					/>
 				</Step>
-				<Step num="3" label="Obstacle" operator="+">
+				<Step salt="carrot" num="3" label="Obstacle" operator="+">
 					<Picker
 						options={[{ emoji: '🛴' }, { emoji: '🛢️' }, { emoji: '🧹' }]}
 					/>
 				</Step>
-				<Step num="4" label="Push down" operator="=">
+				<Step salt="onion" num="4" label="Push down" operator="=">
 					<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
 						☝️
 					</div>

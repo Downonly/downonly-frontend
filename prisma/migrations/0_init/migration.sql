@@ -5,7 +5,8 @@ CREATE TABLE `mints` (
     `surface` VARCHAR(255) NULL,
     `obstacle` VARCHAR(255) NULL,
     `figure` VARCHAR(255) NULL,
-    `ipfs` VARCHAR(255) NULL,
+    `ipfsVideo` VARCHAR(255) NULL,
+    `ipfsSound` VARCHAR(255) NULL,
     `openSea` VARCHAR(255) NULL,
 
     UNIQUE INDEX `id`(`id`)
