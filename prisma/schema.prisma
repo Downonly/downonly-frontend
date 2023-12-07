@@ -18,6 +18,9 @@ model mints {
   obstacle      String? @db.VarChar(255)
   figure        String? @db.VarChar(255)
   ipfsVideo     String? @db.VarChar(255)
-  ipfsSound     String? @db.VarChar(255)
   openSea       String? @db.VarChar(255)
+  ipfsSound     String? @db.VarChar(255)
+  mintprice     String? @db.VarChar(255)
+  fullname      String? @db.VarChar(255)
+  mintdate      String? @db.VarChar(255)
 }

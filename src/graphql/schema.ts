@@ -6,8 +6,10 @@ export const typeDefs = `#graphql
     obstacle:      String
     figure:        String
     ipfsVideo:     String
-    ipfsSound:     String
     openSea:       String
+    ipfsSound:     String
+    fullname:      String
+    mintdate:      String
   }
 
   type Query {

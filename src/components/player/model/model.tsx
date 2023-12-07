@@ -78,7 +78,8 @@ export default function Model(props: {
 			console.info('mixer', mixer)
 		})
 		if (props.isPlaying) {
-			sound.play()
+			// TODO: implement sound toggle
+			// sound.play()
 		}
 	}, [action, animations, mixer, props.audioPath, props.isPlaying])
 
