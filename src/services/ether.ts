@@ -26,6 +26,8 @@ let provider: JsonRpcApiProvider
 let contract: MyContract
 
 async function initContract() {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
+
 	if (contract) return
 
 	if (!window.ethereum) {
@@ -55,23 +57,39 @@ async function initContract() {
 }
 
 export async function getCurrentPrice() {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0')
+	}
+
 	await initContract()
 	const currentPrice = (await contract.currentPrice()) as number
 	return formatEther(currentPrice)
 }
 
 export async function getIsPaused() {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return Boolean(process.env.NEXT_PUBLIC_MOCK_ETHER_IS_PAUSED)
+	}
+
 	await initContract()
 	return (await contract.isPaused()) as boolean
 }
 
 export async function getTimeUntilAuctionEnds() {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return parseInt(
+			process.env.NEXT_PUBLIC_MOCK_ETHER_TIME_UNTIL_AUCTION_ENDS ?? '0',
+			10
+		)
+	}
+
 	await initContract()
 	return parseInt((await contract.remainingTimeUntilPriceReset()) as string, 10)
 }
 
 export async function buy(ether: string) {
-	// const wei =  Number(parseInt(ether, 10) * 1e18).toString(16)
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
+
 	await initContract()
 
 	console.info('A')
