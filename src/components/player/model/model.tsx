@@ -1,25 +1,27 @@
-import { useAnimations, useGLTF } from '@react-three/drei'
+import { useAnimations } from '@react-three/drei'
 import { Howl } from 'howler'
 import { MutableRefObject, useCallback, useEffect, useState } from 'react'
 import { LoopOnce, type Object3D } from 'three'
 import { OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
+import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
 let ticking = false
 let sound: Howl
 export default function Model(props: {
 	audioPath: string
-	gltfPath: string
+	gltf?: GLTF
 	isPlaying: boolean
 	ocRef: MutableRefObject<null>
 	onFinished: () => void
 }) {
-	const { scene, animations } = useGLTF(props.gltfPath)
-	const { mixer, actions } = useAnimations(animations, scene)
+	const { scene, animations } = props.gltf ?? {}
+	const { mixer, actions } = useAnimations(animations ?? [], scene)
 	const action = actions[0]
 	const [hip, setHip] = useState<Object3D>()
 
 	const tick = useCallback(() => {
 		if (!ticking) return
+		if (!scene) return
 
 		if (hip) {
 			scene.position.setY(-hip?.position.y / 2.5)
@@ -41,7 +43,7 @@ export default function Model(props: {
 		}
 
 		window.requestAnimationFrame(tick)
-	}, [hip, props.ocRef, scene.position])
+	}, [hip, props.ocRef, scene])
 
 	useEffect(() => {
 		ticking = true
@@ -59,6 +61,8 @@ export default function Model(props: {
 	}, [mixer, props.onFinished])
 
 	useEffect(() => {
+		if (!animations) return
+
 		const action = mixer.clipAction(animations[0])
 		action.setLoop(LoopOnce, 0)
 		mixer.time = 0
@@ -85,7 +89,7 @@ export default function Model(props: {
 	}, [action, animations, mixer, props.audioPath, props.isPlaying])
 
 	useEffect(() => {
-		scene.traverse((child) => {
+		scene?.traverse((child) => {
 			child.frustumCulled = false
 			if (child.name.includes('_hip_01')) {
 				setHip(child)
@@ -93,5 +97,5 @@ export default function Model(props: {
 		})
 	}, [scene])
 
-	return <primitive object={scene} />
+	return scene ? <primitive object={scene} /> : <></>
 }

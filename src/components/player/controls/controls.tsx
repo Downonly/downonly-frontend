@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { isTouchDevice } from '@/utils/device'
 import Progress from './progress'
+import { Take } from '@/components/player/player'
 
 let timeoutToHide: NodeJS.Timeout
 
@@ -12,6 +13,7 @@ export default function Controls(props: {
 	id?: string
 	isPlaying: boolean
 	isSounding: boolean
+	loaded: Set<string>
 	onNext: () => void
 	onPause: () => void
 	onPlay: () => void
@@ -19,7 +21,7 @@ export default function Controls(props: {
 	onSeek: (index: number) => void
 	onSound: () => void
 	style?: React.CSSProperties
-	total: number
+	takes: Take[] | undefined
 }): JSX.Element {
 	const controlsRef = useRef<HTMLDivElement>(null)
 	const [isFullScreen, setIsFullScreen] = useState(false)
@@ -110,6 +112,8 @@ export default function Controls(props: {
 		}
 	}
 
+	const total = props.takes?.length ?? 0
+
 	return (
 		<div
 			id={props.id}
@@ -123,8 +127,9 @@ export default function Controls(props: {
 		>
 			<Progress
 				currentIndex={props.currentIndex}
+				loaded={props.loaded}
 				onSeek={props.onSeek}
-				total={props.total}
+				takes={props.takes}
 			/>
 
 			<div className="ml-3 flex flex-col justify-end gap-2 lg:ml-4">
@@ -165,7 +170,7 @@ export default function Controls(props: {
 
 				<button
 					className="interactive"
-					disabled={props.currentIndex === props.total - 1}
+					disabled={props.currentIndex === total - 1}
 					onClick={props.onNext}
 				>
 					<svg

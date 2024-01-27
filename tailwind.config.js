@@ -33,6 +33,7 @@ module.exports = {
 					'down-old-left 0.4s cubic-bezier(0.11, 0, 0.5, 0) both',
 				'down-old-right':
 					'down-old-right 0.4s cubic-bezier(0.11, 0, 0.5, 0) both',
+				flimmer: 'flimmer 0.2s linear infinite',
 				wiggle: 'wiggle 4s ease-in-out infinite',
 			},
 			minWidth: {
@@ -78,6 +79,10 @@ module.exports = {
 						opacity: '0',
 						transform: 'translateY(-100%) rotate(0.01turn)',
 					},
+				},
+				flimmer: {
+					'0%, 100%': { opacity: '0.1' },
+					'50%': { opacity: '0.3' },
 				},
 				wiggle: {
 					'0%, 100%': { transform: 'translateY(-5%)' },

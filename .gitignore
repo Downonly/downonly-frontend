@@ -36,4 +36,4 @@ next-env.d.ts
 
 dev/resources
 .env
-src/app/uno.css
+public/draco
