@@ -1,6 +1,7 @@
 import { type Take } from '@/components/player/player'
 
 export default function Progress(props: {
+	bufferSize: number
 	children?: React.ReactNode
 	className?: string
 	currentIndex: number
@@ -17,11 +18,14 @@ export default function Progress(props: {
 		if (!props.takes?.length) return false
 		if (index === props.currentIndex) return false
 		if (index < props.currentIndex) {
-			if (index + props.takes.length > props.currentIndex - 3) {
+			if (
+				index + props.takes.length >
+				props.currentIndex - (props.bufferSize - 1)
+			) {
 				return false
 			}
 		} else {
-			if (index > props.currentIndex + 3) {
+			if (index > props.currentIndex + (props.bufferSize - 1)) {
 				return false
 			}
 		}

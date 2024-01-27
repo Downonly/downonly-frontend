@@ -31,6 +31,8 @@ export interface Take
 	mintDate: Date
 }
 
+const BUFFER_SIZE = 4
+
 export default function Player(props: {
 	className?: string
 	style?: React.CSSProperties
@@ -100,7 +102,7 @@ export default function Player(props: {
 		if (takes?.length) {
 			useGLTF.preload(
 				takes
-					.slice(currentIndex, currentIndex + 4)
+					.slice(currentIndex, currentIndex + BUFFER_SIZE)
 					.map((take) => take.modelURL),
 				undefined,
 				undefined,
@@ -135,7 +137,7 @@ export default function Player(props: {
 
 		setIsPreloading(
 			takes
-				.slice(currentIndex + 1, currentIndex + 4)
+				.slice(currentIndex + 1, currentIndex + BUFFER_SIZE)
 				.some((take) => !loaded.has(take.modelURL))
 		)
 	}, [currentIndex, isPreloading, takes, loaded])
@@ -212,6 +214,7 @@ export default function Player(props: {
 				</div>
 				<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
 					<Controls
+						bufferSize={BUFFER_SIZE}
 						className="h-full"
 						currentIndex={currentIndex}
 						isPlaying={isPlaying}

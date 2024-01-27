@@ -8,6 +8,7 @@ import { Take } from '@/components/player/player'
 let timeoutToHide: NodeJS.Timeout
 
 export default function Controls(props: {
+	bufferSize: number
 	className?: string
 	currentIndex: number
 	id?: string
@@ -126,6 +127,7 @@ export default function Controls(props: {
 			style={props.style}
 		>
 			<Progress
+				bufferSize={props.bufferSize}
 				currentIndex={props.currentIndex}
 				loaded={props.loaded}
 				onSeek={props.onSeek}
