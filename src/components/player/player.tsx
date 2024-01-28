@@ -4,11 +4,13 @@ import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import { useMap } from 'usehooks-ts'
 import { useGLTF } from '@react-three/drei'
+import Loading from '@/components/loading/loading'
+import { Mesh } from 'three'
 
 export interface Row {
 	id: string | number
@@ -40,7 +42,10 @@ export default function Player(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	const ocRef = useRef(null)
-	const [loaded, { set: setLoaded }] = useMap<string, GLTF>()
+	const [loaded, { set: setLoaded, remove: removeLoaded }] = useMap<
+		string,
+		GLTF
+	>()
 	const [isPreloading, setIsPreloading] = useState(true)
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
@@ -100,10 +105,17 @@ export default function Player(props: {
 
 	useEffect(() => {
 		if (takes?.length) {
+			const takesToPreload = takes.slice(
+				currentIndex,
+				currentIndex + BUFFER_SIZE
+			)
+			if (takesToPreload.length < BUFFER_SIZE) {
+				takesToPreload.push(
+					...takes.slice(0, BUFFER_SIZE - takesToPreload.length)
+				)
+			}
 			useGLTF.preload(
-				takes
-					.slice(currentIndex, currentIndex + BUFFER_SIZE)
-					.map((take) => take.modelURL),
+				takesToPreload.map((take) => take.modelURL),
 				undefined,
 				undefined,
 				(loader) => {
@@ -116,17 +128,29 @@ export default function Player(props: {
 							| undefined,
 						onError?: ((event: ErrorEvent) => void) | undefined
 					) => {
-						originalLoad(url, (gltf: GLTF) => {
-							setLoaded(url, gltf)
-							onLoad(gltf)
-						}),
+						originalLoad(
+							url,
+							(gltf: GLTF) => {
+								setLoaded(url, gltf)
+								onLoad(gltf)
+							},
 							onProgress,
 							onError
+						)
 					}
 				}
 			)
 		}
 	}, [setLoaded, currentIndex, takes])
+
+	const getNextTakes = useCallback(() => {
+		if (!takes?.length) return []
+		const nextTakes = takes.slice(currentIndex + 1, currentIndex + BUFFER_SIZE)
+		if (nextTakes.length < BUFFER_SIZE - 1) {
+			nextTakes.push(...takes.slice(0, BUFFER_SIZE - 1 - nextTakes.length))
+		}
+		return nextTakes
+	}, [currentIndex, takes])
 
 	useEffect(() => {
 		if (!takes?.length) return
@@ -135,12 +159,34 @@ export default function Player(props: {
 			return
 		}
 
-		setIsPreloading(
-			takes
-				.slice(currentIndex + 1, currentIndex + BUFFER_SIZE)
-				.some((take) => !loaded.has(take.modelURL))
-		)
-	}, [currentIndex, isPreloading, takes, loaded])
+		const nextTakes = getNextTakes()
+
+		setIsPreloading(nextTakes.some((take) => !loaded.has(take.modelURL)))
+	}, [currentIndex, getNextTakes, isPreloading, loaded, takes])
+
+	useEffect(() => {
+		if (!takes?.length) return
+		const nextTakes = getNextTakes()
+
+		// Dispose all loaded that are not listed as next.
+		Array.from(loaded.keys()).forEach((modelURL) => {
+			if (modelURL === takes[currentIndex].modelURL) return
+			if (!nextTakes.some((nextTake) => nextTake.modelURL === modelURL)) {
+				loaded.get(modelURL)?.scene.traverse((child) => {
+					if (child instanceof Mesh) {
+						const mesh = child as Mesh
+						mesh.geometry?.dispose()
+						if (Array.isArray(mesh.material)) {
+							mesh.material.forEach((m) => m.dispose())
+						} else {
+							mesh.material.dispose()
+						}
+					}
+				})
+				removeLoaded(modelURL)
+			}
+		})
+	}, [currentIndex, getNextTakes, loaded, removeLoaded, takes])
 
 	const handleFinished = () => {
 		if (!takes?.length) return
@@ -196,6 +242,10 @@ export default function Player(props: {
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
 			>
 				<div className="do-fall do-fall-1 h-full">
+					<Loading
+						style={isPreloading ? {} : { visibility: 'hidden' }}
+						className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
+					/>
 					<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
 						<Scene ocRef={ocRef}>
 							{takes?.length && (

@@ -2,8 +2,7 @@
 
 import { isPerf } from '@/utils/debug'
 import { Perf } from 'r3f-perf'
-import { MutableRefObject, Suspense } from 'react'
-import Fallback from '@/components/player/fallback/fallback'
+import { MutableRefObject } from 'react'
 import Orbit from './orbit'
 
 export default function Scene(props: {
@@ -23,7 +22,7 @@ export default function Scene(props: {
 				shadow-normalBias={0.04}
 			/>
 
-			<Suspense fallback={<Fallback />}>{props.children}</Suspense>
+			{props.children}
 		</>
 	)
 }
