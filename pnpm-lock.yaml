@@ -27,8 +27,8 @@ dependencies:
     specifier: ^16.8.1
     version: 16.8.1
   gsap:
-    specifier: ^3.12.3
-    version: 3.12.3
+    specifier: ^3.12.5
+    version: 3.12.5
   howler:
     specifier: ^2.2.4
     version: 2.2.4
@@ -4641,8 +4641,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
     dev: false
 
-  /gsap@3.12.3:
-    resolution: {integrity: sha512-TySXTE+ABiAVa61W+h5wv2p5GkJT1Uj//4nWpK8EjmhcDqwH++35IvtbQlVVFj+rdcJdFCdCt0SKgb+SwdPq/A==}
+  /gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
     dev: false
 
   /handlebars@4.7.8:
