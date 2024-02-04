@@ -5,12 +5,20 @@ import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import { useMap } from 'usehooks-ts'
-import { useGLTF } from '@react-three/drei'
 import Loading from '@/components/loading/loading'
-import { Mesh } from 'three'
+import { LoadingManager, Mesh } from 'three'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+
+const loadingManager = new LoadingManager()
+
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
+
+const gltfLoader = new GLTFLoader(loadingManager)
+gltfLoader.setDRACOLoader(dracoLoader)
 
 export interface Row {
 	id: string | number
@@ -114,32 +122,12 @@ export default function Player(props: {
 					...takes.slice(0, BUFFER_SIZE - takesToPreload.length)
 				)
 			}
-			useGLTF.preload(
-				takesToPreload.map((take) => take.modelURL),
-				undefined,
-				undefined,
-				(loader) => {
-					const originalLoad = loader.load.bind(loader)
-					loader.load = (
-						url: string,
-						onLoad: (gltf: GLTF) => void,
-						onProgress?:
-							| ((event: ProgressEvent<EventTarget>) => void)
-							| undefined,
-						onError?: ((event: ErrorEvent) => void) | undefined
-					) => {
-						originalLoad(
-							url,
-							(gltf: GLTF) => {
-								setLoaded(url, gltf)
-								onLoad(gltf)
-							},
-							onProgress,
-							onError
-						)
-					}
-				}
-			)
+			console.info('preload', takesToPreload)
+			takesToPreload.forEach((take) => {
+				gltfLoader.load(take.modelURL, (gltf: GLTF) => {
+					setLoaded(take.modelURL, gltf)
+				})
+			})
 		}
 	}, [setLoaded, currentIndex, takes])
 
@@ -155,13 +143,13 @@ export default function Player(props: {
 	useEffect(() => {
 		if (!takes?.length) return
 		// Set only to preloading, if the current is not preloaded.
-		if (!isPreloading && loaded.has(takes[currentIndex].modelURL)) {
+		if (!isPreloading && loaded.get(takes[currentIndex].modelURL)) {
 			return
 		}
 
 		const nextTakes = getNextTakes()
 
-		setIsPreloading(nextTakes.some((take) => !loaded.has(take.modelURL)))
+		setIsPreloading(nextTakes.some((take) => !loaded.get(take.modelURL)))
 	}, [currentIndex, getNextTakes, isPreloading, loaded, takes])
 
 	useEffect(() => {

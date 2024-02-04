@@ -15,7 +15,7 @@ export default function MintCTA(): JSX.Element {
 
 	useEffect(() => {
 		void (async () => {
-			setPrice(await getCurrentPrice())
+			setPrice(String(await getCurrentPrice()))
 		})()
 	}, [])
 
