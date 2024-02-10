@@ -1,12 +1,15 @@
-import { useAnimations } from '@react-three/drei'
-import { Howl } from 'howler'
-import { MutableRefObject, useCallback, useEffect, useState } from 'react'
-import { LoopOnce, type Object3D } from 'three'
+// import { Howl } from 'howler'
+import {
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
+import { AnimationMixer, Clock, LoopOnce, type Object3D } from 'three'
 import { OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
-let ticking = false
-let sound: Howl
 export default function Model(props: {
 	audioPath: string
 	gltf?: GLTF
@@ -14,14 +17,25 @@ export default function Model(props: {
 	ocRef: MutableRefObject<null>
 	onFinished: () => void
 }) {
+	const raf = useRef<number>()
+	const clock = useRef(new Clock(props.isPlaying))
+	const oldElapsedTime = useRef(0)
+	const mixer = useRef<AnimationMixer | null>(null)
+	const ticking = useRef(false)
+
 	const { scene, animations } = props.gltf ?? {}
-	const { mixer, actions } = useAnimations(animations ?? [], scene)
-	const action = actions[0]
 	const [hip, setHip] = useState<Object3D>()
 
 	const tick = useCallback(() => {
-		if (!ticking) return
+		if (!ticking.current) return
 		if (!scene) return
+		if (!mixer.current) return
+
+		const elapsedTime = clock.current.getElapsedTime()
+		const deltaTime = elapsedTime - oldElapsedTime.current
+		oldElapsedTime.current = elapsedTime
+
+		mixer.current.update(deltaTime)
 
 		if (hip) {
 			scene.position.setY(-hip?.position.y / 2.5)
@@ -42,60 +56,66 @@ export default function Model(props: {
 			// )
 		}
 
-		window.requestAnimationFrame(tick)
+		raf.current = window.requestAnimationFrame(tick)
 	}, [hip, props.ocRef, scene])
 
+	const play = useCallback(() => {
+		if (!mixer.current) return
+		if (!animations) return
+
+		const action = mixer.current.clipAction(animations[0])
+		if (!action) return
+
+		action.setLoop(LoopOnce, 0)
+		mixer.current.time = 0
+		action.play()
+		action.paused = !props.isPlaying
+	}, [animations, props.isPlaying])
+
 	useEffect(() => {
-		ticking = true
+		ticking.current = true
 		tick()
 		return () => {
-			ticking = false
+			ticking.current = false
 		}
 	}, [tick])
 
 	useEffect(() => {
-		mixer.addEventListener('finished', props.onFinished)
-		return () => {
-			mixer.removeEventListener('finished', props.onFinished)
-		}
-	}, [mixer, props.onFinished])
-
-	useEffect(() => {
-		if (!animations) return
-
-		const action = mixer.clipAction(animations[0])
-		action.setLoop(LoopOnce, 0)
-		mixer.time = 0
-		action.play()
-		action.paused = !props.isPlaying
-
-		if (sound) {
-			sound.off('play')
-			sound.unload()
-		}
-
-		sound = new Howl({
-			src: [props.audioPath],
-			format: ['webm'],
-		})
-		sound.on('play', () => {
-			sound.seek(mixer.time)
-			console.info('mixer', mixer)
-		})
 		if (props.isPlaying) {
-			// TODO: implement sound toggle
-			// sound.play()
+			clock.current.start()
+		} else {
+			clock.current.stop()
 		}
-	}, [action, animations, mixer, props.audioPath, props.isPlaying])
+	}, [props.isPlaying])
 
 	useEffect(() => {
+		const mx = mixer.current
+		mx?.addEventListener('finished', props.onFinished)
+		return () => {
+			mx?.removeEventListener('finished', props.onFinished)
+		}
+	}, [props.onFinished])
+
+	useEffect(() => {
+		clock.current = new Clock(props.isPlaying)
+		oldElapsedTime.current = 0
+		mixer.current = scene ? new AnimationMixer(scene) : null
 		scene?.traverse((child) => {
-			child.frustumCulled = false
 			if (child.name.includes('_hip_01')) {
 				setHip(child)
 			}
 		})
-	}, [scene])
+		play()
+	}, [play, props.isPlaying, scene])
+
+	useEffect(() => {
+		const r = raf.current
+		return () => {
+			if (typeof r === 'number') {
+				window.cancelAnimationFrame(r)
+			}
+		}
+	}, [])
 
 	return scene ? <primitive object={scene} /> : <></>
 }

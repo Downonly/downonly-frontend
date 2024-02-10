@@ -9,8 +9,15 @@ import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import { useMap } from 'usehooks-ts'
 import Loading from '@/components/loading/loading'
-import { LoadingManager, Mesh } from 'three'
+import {
+	FrontSide,
+	LoadingManager,
+	Mesh,
+	MeshStandardMaterial,
+	NearestFilter,
+} from 'three'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+import { dispose } from '@/utils/dispose'
 
 const loadingManager = new LoadingManager()
 
@@ -35,7 +42,7 @@ export interface Row {
 
 export interface Take
 	extends Omit<Row, 'ipfsSound' | 'ipfsVideo' | 'mintdate'> {
-	model?: GLTF
+	model?: GLTF | null
 	modelURL: string
 	soundURL: string
 	mintDate: Date
@@ -122,9 +129,22 @@ export default function Player(props: {
 					...takes.slice(0, BUFFER_SIZE - takesToPreload.length)
 				)
 			}
-			console.info('preload', takesToPreload)
 			takesToPreload.forEach((take) => {
 				gltfLoader.load(take.modelURL, (gltf: GLTF) => {
+					gltf.scene.traverse((child) => {
+						child.frustumCulled = false
+						// Improve performance of textures.
+						if (
+							child instanceof Mesh &&
+							child.material instanceof MeshStandardMaterial
+						) {
+							child.material.side = FrontSide
+							if (child.material.map) {
+								child.material.map.generateMipmaps = false
+								child.material.map.minFilter = NearestFilter
+							}
+						}
+					})
 					setLoaded(take.modelURL, gltf)
 				})
 			})
@@ -160,18 +180,23 @@ export default function Player(props: {
 		Array.from(loaded.keys()).forEach((modelURL) => {
 			if (modelURL === takes[currentIndex].modelURL) return
 			if (!nextTakes.some((nextTake) => nextTake.modelURL === modelURL)) {
-				loaded.get(modelURL)?.scene.traverse((child) => {
+				const scene = loaded.get(modelURL)?.scene
+				scene?.traverse((child) => {
 					if (child instanceof Mesh) {
 						const mesh = child as Mesh
-						mesh.geometry?.dispose()
-						if (Array.isArray(mesh.material)) {
-							mesh.material.forEach((m) => m.dispose())
-						} else {
-							mesh.material.dispose()
-						}
+						// mesh.geometry?.dispose()
+						// if (Array.isArray(mesh.material)) {
+						// 	mesh.material.forEach((m) => m.dispose())
+						// } else {
+						// 	mesh.material.dispose()
+						// }
+						dispose(mesh)
 					}
 				})
+				scene?.removeFromParent()
+				scene?.clear()
 				removeLoaded(modelURL)
+				takes.find((take) => take.modelURL === modelURL)!.model = null
 			}
 		})
 	}, [currentIndex, getNextTakes, loaded, removeLoaded, takes])
