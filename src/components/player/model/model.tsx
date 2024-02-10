@@ -1,121 +1,120 @@
 // import { Howl } from 'howler'
+import { type MutableRefObject, useEffect, useRef, useState } from 'react'
 import {
-	MutableRefObject,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react'
-import { AnimationMixer, Clock, LoopOnce, type Object3D } from 'three'
-import { OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
+	type AnimationAction,
+	AnimationMixer,
+	Clock,
+	LoopOnce,
+	type Object3D,
+} from 'three'
+import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default function Model(props: {
 	audioPath: string
 	gltf?: GLTF
 	isPlaying: boolean
-	ocRef: MutableRefObject<null>
+	ocRef: MutableRefObject<OCs | undefined>
 	onFinished: () => void
 }) {
 	const raf = useRef<number>()
-	const clock = useRef(new Clock(props.isPlaying))
+	const clock = useRef(new Clock())
 	const oldElapsedTime = useRef(0)
 	const mixer = useRef<AnimationMixer | null>(null)
-	const ticking = useRef(false)
+	const action = useRef<AnimationAction>()
+	const hip = useRef<Object3D>()
 
-	const { scene, animations } = props.gltf ?? {}
-	const [hip, setHip] = useState<Object3D>()
+	const [tick, setTick] = useState(false)
 
-	const tick = useCallback(() => {
-		if (!ticking.current) return
-		if (!scene) return
-		if (!mixer.current) return
-
-		const elapsedTime = clock.current.getElapsedTime()
+	useEffect(() => {
+		const elapsedTime = clock.current?.getElapsedTime() ?? 0
 		const deltaTime = elapsedTime - oldElapsedTime.current
 		oldElapsedTime.current = elapsedTime
 
-		mixer.current.update(deltaTime)
+		mixer.current?.update(deltaTime)
 
-		if (hip) {
-			scene.position.setY(-hip?.position.y / 2.5)
-			;(props.ocRef.current as unknown as OCs).target?.setX(
-				hip.position.x / 1.5
-			)
-			;(props.ocRef.current as unknown as OCs).target?.setY(hip.position.y / 4)
-			;(props.ocRef.current as unknown as OCs).target?.setZ(
-				hip.position.z / 1.5
-			)
-			;(props.ocRef.current as unknown as OCs).target?.setX(
-				hip.position.x / 1.5
-			)
-			// .set(
-			// 	hip.position.x,
-			// 	hip.position.y,
-			// 	hip.position.z / 2
-			// )
-		}
-
-		raf.current = window.requestAnimationFrame(tick)
-	}, [hip, props.ocRef, scene])
-
-	const play = useCallback(() => {
-		if (!mixer.current) return
-		if (!animations) return
-
-		const action = mixer.current.clipAction(animations[0])
-		if (!action) return
-
-		action.setLoop(LoopOnce, 0)
-		mixer.current.time = 0
-		action.play()
-		action.paused = !props.isPlaying
-	}, [animations, props.isPlaying])
-
-	useEffect(() => {
-		ticking.current = true
-		tick()
-		return () => {
-			ticking.current = false
-		}
+		raf.current = window.requestAnimationFrame(() => {
+			setTick(!tick)
+		})
 	}, [tick])
 
-	useEffect(() => {
-		if (props.isPlaying) {
-			clock.current.start()
-		} else {
-			clock.current.stop()
-		}
-	}, [props.isPlaying])
+	// useEffect(() => {
+	// 	const { scene } = props.gltf ?? {}
+	//
+	// 	if (!scene) return
+	// 	if (!hip.current) return
+	//
+	// 	const oc = props.ocRef.current?.target
+	// 	if (!oc) return
+	//
+	// 	console.info('orbit')
+	//
+	// 	scene.position.setY(-hip.current.position.y / 2.5)
+	// 	// oc.setX(hip.current.position.x / 1.5)
+	// 	// oc.setY(hip.current.position.y / 4)
+	// 	// oc.setZ(hip.current.position.z / 1.5)
+	// 	// oc.setX(hip.current.position.x / 1.5)
+	// 	oc.set(
+	// 		hip.current.position.x,
+	// 		hip.current.position.y,
+	// 		hip.current.position.z / 2
+	// 	)
+	// }, [props.gltf, props.ocRef])
+
+	// useEffect(() => {
+	// 	if (props.isPlaying) {
+	// 		clock.current.start()
+	// 	} else {
+	// 		clock.current.stop()
+	// 	}
+	// }, [props.isPlaying])
 
 	useEffect(() => {
 		const mx = mixer.current
-		mx?.addEventListener('finished', props.onFinished)
 		return () => {
-			mx?.removeEventListener('finished', props.onFinished)
+			if (mx) {
+				mx.stopAllAction()
+				mx.removeEventListener('finished', props.onFinished)
+			}
 		}
 	}, [props.onFinished])
 
 	useEffect(() => {
-		clock.current = new Clock(props.isPlaying)
-		oldElapsedTime.current = 0
-		mixer.current = scene ? new AnimationMixer(scene) : null
-		scene?.traverse((child) => {
-			if (child.name.includes('_hip_01')) {
-				setHip(child)
-			}
-		})
-		play()
-	}, [play, props.isPlaying, scene])
+		const { scene, animations } = props.gltf ?? {}
+		if (!animations || !scene) return
+
+		mixer.current?.stopAllAction()
+		mixer.current?.removeEventListener('finished', props.onFinished)
+
+		mixer.current = new AnimationMixer(scene)
+		action.current = mixer.current.clipAction(animations[0]!)
+		mixer.current.addEventListener('finished', props.onFinished)
+		mixer.current.time = 0
+		action.current.setLoop(LoopOnce, 0)
+
+		// scene?.traverse((child) => {
+		// 	if (child.name.includes('_hip_01')) {
+		// 		hip.current = child
+		// 		return false
+		// 	}
+		// })
+
+		action.current.play()
+	}, [props.gltf, props.onFinished])
+
+	useEffect(() => {
+		if (!action.current) return
+		action.current.paused = !props.isPlaying
+	}, [props.isPlaying])
 
 	useEffect(() => {
 		const r = raf.current
 		return () => {
-			if (typeof r === 'number') {
+			if (r !== undefined) {
 				window.cancelAnimationFrame(r)
 			}
 		}
 	}, [])
 
-	return scene ? <primitive object={scene} /> : <></>
+	return props.gltf?.scene ? <primitive object={props.gltf.scene} /> : <></>
 }

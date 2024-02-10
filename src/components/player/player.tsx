@@ -16,6 +16,7 @@ import {
 	MeshStandardMaterial,
 	NearestFilter,
 } from 'three'
+import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { dispose } from '@/utils/dispose'
 
@@ -56,7 +57,7 @@ export default function Player(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	const ocRef = useRef(null)
+	const ocRef = useRef<OCs>()
 	const [loaded, { set: setLoaded, remove: removeLoaded }] = useMap<
 		string,
 		GLTF
@@ -264,11 +265,11 @@ export default function Player(props: {
 							{takes?.length && (
 								<group>
 									<Model
+										audioPath={takes[currentIndex]!.soundURL}
+										gltf={loaded.get(takes[currentIndex]!.modelURL)}
 										isPlaying={!isPreloading && isPlaying}
 										ocRef={ocRef}
 										onFinished={handleFinished}
-										audioPath={takes.at(currentIndex)!.soundURL}
-										gltf={loaded.get(takes.at(currentIndex)!.modelURL)}
 									/>
 								</group>
 							)}
