@@ -1,4 +1,3 @@
-// import { Howl } from 'howler'
 import {
 	type MutableRefObject,
 	useCallback,
@@ -17,19 +16,23 @@ import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitCont
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default function Model(props: {
-	audioPath: string
 	gltf?: GLTF
 	isPlaying: boolean
+	isSounding: boolean
 	ocRef: MutableRefObject<OCs | undefined>
 	onFinished: () => void
+	sound?: Howl
 }) {
 	const raf = useRef<number>()
-	const clock = useRef(new Clock())
+	const clockRef = useRef(new Clock())
 	const oldElapsedTime = useRef(0)
-	const mixer = useRef<AnimationMixer | null>(null)
-	const action = useRef<AnimationAction>()
-	const hip = useRef<Object3D>()
-	const handleFinished = useRef<() => void>()
+	const mixerRef = useRef<AnimationMixer | null>(null)
+	const soundRef = useRef<Howl | null>(null)
+	const isPlayingRef = useRef(props.isPlaying)
+	const isSoundingRef = useRef(props.isSounding)
+	const actionRef = useRef<AnimationAction>()
+	const hipRef = useRef<Object3D>()
+	const handleFinishedRef = useRef<() => void>()
 
 	const [tick, setTick] = useState(false)
 
@@ -38,27 +41,35 @@ export default function Model(props: {
 		const oc = props.ocRef.current?.target
 
 		if (!scene) return
-		if (!hip.current) return
+		if (!hipRef.current) return
 		if (!oc) return
 
-		scene.position.setY(-hip.current.position.y / 2.5)
+		scene.position.setY(-hipRef.current.position.y / 2.5)
 		// oc.setX(hip.current.position.x / 1.5)
 		// oc.setY(hip.current.position.y / 4)
 		// oc.setZ(hip.current.position.z / 1.5)
 		// oc.setX(hip.current.position.x / 1.5)
 		oc.set(
-			hip.current.position.x,
-			hip.current.position.y,
-			hip.current.position.z / 2
+			hipRef.current.position.x,
+			hipRef.current.position.y,
+			hipRef.current.position.z / 2
 		)
 	}, [props.gltf, props.ocRef])
 
 	useEffect(() => {
-		const elapsedTime = clock.current?.getElapsedTime() ?? 0
+		isPlayingRef.current = props.isPlaying
+	}, [props.isPlaying])
+
+	useEffect(() => {
+		isSoundingRef.current = props.isSounding
+	}, [props.isSounding])
+
+	useEffect(() => {
+		const elapsedTime = clockRef.current?.getElapsedTime() ?? 0
 		const deltaTime = elapsedTime - oldElapsedTime.current
 		oldElapsedTime.current = elapsedTime
 
-		mixer.current?.update(deltaTime)
+		if (isPlayingRef.current) mixerRef.current?.update(deltaTime)
 		updateOCs()
 
 		raf.current = window.requestAnimationFrame(() => {
@@ -67,37 +78,61 @@ export default function Model(props: {
 	}, [tick, updateOCs])
 
 	useEffect(() => {
-		handleFinished.current = props.onFinished
+		handleFinishedRef.current = props.onFinished
 	}, [props.onFinished])
 
 	useEffect(() => {
 		const { scene, animations } = props.gltf ?? {}
+		const snd = props.sound
+
 		if (!animations) return
 		if (!scene) return
+		if (!snd) return
 
-		mixer.current?.stopAllAction()
-		mixer.current?.removeEventListener('finished', handleFinished.current!)
+		mixerRef.current?.stopAllAction()
+		mixerRef.current?.removeEventListener(
+			'finished',
+			handleFinishedRef.current!
+		)
+		soundRef.current?.stop()
+		soundRef.current?.off('play')
 
 		const mx = new AnimationMixer(scene)
 		const ac = mx.clipAction(animations[0])
-		mx.addEventListener('finished', handleFinished.current!)
+		mx.addEventListener('finished', handleFinishedRef.current!)
 		ac.setLoop(LoopOnce, 0)
-		action.current = ac
-		mixer.current = mx
+		actionRef.current = ac
+		mixerRef.current = mx
+		snd.on('play', () => {
+			snd.seek(mx.time)
+		})
+		soundRef.current = snd
+		if (isSoundingRef.current) snd.play()
 
 		scene?.traverse((child) => {
 			if (child.name.includes('_hip_01')) {
-				hip.current = child
+				hipRef.current = child
 				return false
 			}
 		})
 
 		ac.play()
-	}, [props.gltf])
+	}, [props.sound, props.gltf])
 
 	useEffect(() => {
-		if (!action.current) return
-		action.current.paused = !props.isPlaying
+		if (actionRef.current) {
+			actionRef.current.paused = !props.isPlaying
+		}
+
+		if (!soundRef.current) return
+
+		if (props.isPlaying) {
+			if (!soundRef.current?.playing()) {
+				soundRef.current.play()
+			}
+		} else {
+			soundRef.current?.stop()
+		}
 	}, [props.isPlaying])
 
 	useEffect(() => {

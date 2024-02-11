@@ -8,6 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import { useMap } from 'usehooks-ts'
+import gsap from 'gsap'
 import Loading from '@/components/loading/loading'
 import {
 	FrontSide,
@@ -18,7 +19,7 @@ import {
 } from 'three'
 import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
-import { dispose } from '@/utils/dispose'
+import { Howl } from 'howler'
 
 const loadingManager = new LoadingManager()
 
@@ -45,6 +46,7 @@ export interface Take
 	extends Omit<Row, 'ipfsSound' | 'ipfsVideo' | 'mintdate'> {
 	model?: GLTF | null
 	modelURL: string
+	sound?: Howl | null
 	soundURL: string
 	mintDate: Date
 }
@@ -60,7 +62,7 @@ export default function Player(props: {
 	const ocRef = useRef<OCs>()
 	const [loaded, { set: setLoaded, remove: removeLoaded }] = useMap<
 		string,
-		GLTF
+		{ gltf: GLTF; sound: Howl }
 	>()
 	const loadedRef = useRef<typeof loaded>()
 	const [isPreloading, setIsPreloading] = useState(true)
@@ -70,6 +72,7 @@ export default function Player(props: {
 	const [takes, setTakes] = useState<Take[]>()
 
 	const [currentGLTF, setCurrentGLTF] = useState<GLTF>()
+	const [currentSound, setCurrentSound] = useState<Howl>()
 
 	useEffect(() => {
 		loadedRef.current = loaded
@@ -136,6 +139,10 @@ export default function Player(props: {
 			)
 		}
 		takesToPreload.forEach((take) => {
+			const sound = new Howl({
+				src: [take.soundURL],
+			})
+
 			gltfLoader.load(take.modelURL, (gltf: GLTF) => {
 				gltf.scene.traverse((child) => {
 					child.frustumCulled = false
@@ -152,7 +159,7 @@ export default function Player(props: {
 					}
 				})
 				if (!loadedRef.current!.has(take.modelURL)) {
-					setLoaded(take.modelURL, gltf)
+					setLoaded(take.modelURL, { gltf, sound })
 				}
 			})
 		})
@@ -187,21 +194,22 @@ export default function Player(props: {
 		Array.from(loaded.keys()).forEach((modelURL) => {
 			if (modelURL === takes[currentIndex].modelURL) return
 			if (!nextTakes.some((nextTake) => nextTake.modelURL === modelURL)) {
-				const scene = loaded.get(modelURL)?.scene
+				const scene = loaded.get(modelURL)?.gltf.scene
 				scene?.traverse((child) => {
 					if (child instanceof Mesh) {
 						const mesh = child as Mesh
-						// mesh.geometry?.dispose()
-						// if (Array.isArray(mesh.material)) {
-						// 	mesh.material.forEach((m) => m.dispose())
-						// } else {
-						// 	mesh.material.dispose()
-						// }
-						dispose(mesh)
+						mesh.geometry?.dispose()
+						if (Array.isArray(mesh.material)) {
+							mesh.material.forEach((m) => m.dispose())
+						} else {
+							mesh.material.dispose()
+						}
 					}
 				})
 				scene?.removeFromParent()
 				scene?.clear()
+				const sound = loaded.get(modelURL)?.sound
+				sound?.unload()
 				removeLoaded(modelURL)
 				takes.find((take) => take.modelURL === modelURL)!.model = null
 			}
@@ -250,10 +258,23 @@ export default function Player(props: {
 	}
 
 	useEffect(() => {
+		const volumeObject = { volume: Howler.volume() }
+		gsap.to(volumeObject, {
+			volume: isSounding ? 1 : 0,
+			duration: 0.5,
+			overwrite: 'auto',
+			onUpdate: () => {
+				Howler.volume(volumeObject.volume)
+			},
+		})
+	}, [isSounding])
+
+	useEffect(() => {
 		if (takes?.length) {
-			const gltf = loaded.get(takes[currentIndex]!.modelURL)
+			const { gltf, sound } = loaded.get(takes[currentIndex]!.modelURL) ?? {}
 			if (gltf && gltf !== currentGLTF) {
 				setCurrentGLTF(gltf)
+				setCurrentSound(sound)
 			}
 		}
 	}, [currentGLTF, currentIndex, loaded, takes])
@@ -280,11 +301,12 @@ export default function Player(props: {
 							{takes?.length && (
 								<group>
 									<Model
-										audioPath={takes[currentIndex]!.soundURL}
 										gltf={currentGLTF}
 										isPlaying={!isPreloading && isPlaying}
+										isSounding={isSounding}
 										ocRef={ocRef}
 										onFinished={handleFinished}
+										sound={currentSound}
 									/>
 								</group>
 							)}
