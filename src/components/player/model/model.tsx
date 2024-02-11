@@ -1,5 +1,11 @@
 // import { Howl } from 'howler'
-import { type MutableRefObject, useEffect, useRef, useState } from 'react'
+import {
+	type MutableRefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 import {
 	type AnimationAction,
 	AnimationMixer,
@@ -26,58 +32,38 @@ export default function Model(props: {
 
 	const [tick, setTick] = useState(false)
 
+	const updateOCs = useCallback(() => {
+		const { scene } = props.gltf ?? {}
+		const oc = props.ocRef.current?.target
+
+		if (!scene) return
+		if (!hip.current) return
+		if (!oc) return
+
+		scene.position.setY(-hip.current.position.y / 2.5)
+		// oc.setX(hip.current.position.x / 1.5)
+		// oc.setY(hip.current.position.y / 4)
+		// oc.setZ(hip.current.position.z / 1.5)
+		// oc.setX(hip.current.position.x / 1.5)
+		oc.set(
+			hip.current.position.x,
+			hip.current.position.y,
+			hip.current.position.z / 2
+		)
+	}, [props.gltf, props.ocRef])
+
 	useEffect(() => {
 		const elapsedTime = clock.current?.getElapsedTime() ?? 0
 		const deltaTime = elapsedTime - oldElapsedTime.current
 		oldElapsedTime.current = elapsedTime
 
 		mixer.current?.update(deltaTime)
+		updateOCs()
 
 		raf.current = window.requestAnimationFrame(() => {
 			setTick(!tick)
 		})
-	}, [tick])
-
-	// useEffect(() => {
-	// 	const { scene } = props.gltf ?? {}
-	//
-	// 	if (!scene) return
-	// 	if (!hip.current) return
-	//
-	// 	const oc = props.ocRef.current?.target
-	// 	if (!oc) return
-	//
-	// 	console.info('orbit')
-	//
-	// 	scene.position.setY(-hip.current.position.y / 2.5)
-	// 	// oc.setX(hip.current.position.x / 1.5)
-	// 	// oc.setY(hip.current.position.y / 4)
-	// 	// oc.setZ(hip.current.position.z / 1.5)
-	// 	// oc.setX(hip.current.position.x / 1.5)
-	// 	oc.set(
-	// 		hip.current.position.x,
-	// 		hip.current.position.y,
-	// 		hip.current.position.z / 2
-	// 	)
-	// }, [props.gltf, props.ocRef])
-
-	// useEffect(() => {
-	// 	if (props.isPlaying) {
-	// 		clock.current.start()
-	// 	} else {
-	// 		clock.current.stop()
-	// 	}
-	// }, [props.isPlaying])
-
-	useEffect(() => {
-		const mx = mixer.current
-		return () => {
-			if (mx) {
-				mx.stopAllAction()
-				mx.removeEventListener('finished', props.onFinished)
-			}
-		}
-	}, [props.onFinished])
+	}, [tick, updateOCs])
 
 	useEffect(() => {
 		const { scene, animations } = props.gltf ?? {}
@@ -86,21 +72,25 @@ export default function Model(props: {
 		mixer.current?.stopAllAction()
 		mixer.current?.removeEventListener('finished', props.onFinished)
 
-		mixer.current = new AnimationMixer(scene)
-		action.current = mixer.current.clipAction(animations[0]!)
-		mixer.current.addEventListener('finished', props.onFinished)
-		mixer.current.time = 0
-		action.current.setLoop(LoopOnce, 0)
+		const mx = new AnimationMixer(scene)
+		const ac = mx.clipAction(animations[0])
+		mx.addEventListener('finished', props.onFinished)
+		ac.setLoop(LoopOnce, 0)
+		action.current = ac
+		mixer.current = mx
 
-		// scene?.traverse((child) => {
-		// 	if (child.name.includes('_hip_01')) {
-		// 		hip.current = child
-		// 		return false
-		// 	}
-		// })
+		scene?.traverse((child) => {
+			if (child.name.includes('_hip_01')) {
+				hip.current = child
+				return false
+			}
+		})
 
-		action.current.play()
-	}, [props.gltf, props.onFinished])
+		console.info('play')
+		ac.play()
+
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	}, [props.gltf])
 
 	useEffect(() => {
 		if (!action.current) return

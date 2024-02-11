@@ -68,6 +68,8 @@ export default function Player(props: {
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [takes, setTakes] = useState<Take[]>()
 
+	const [currentGLTF, setCurrentGLTF] = useState<GLTF>()
+
 	useEffect(() => {
 		setTakes([])
 
@@ -146,10 +148,13 @@ export default function Player(props: {
 							}
 						}
 					})
-					setLoaded(take.modelURL, gltf)
+					if (!loaded.has(take.modelURL)) {
+						setLoaded(take.modelURL, gltf)
+					}
 				})
 			})
 		}
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	}, [setLoaded, currentIndex, takes])
 
 	const getNextTakes = useCallback(() => {
@@ -243,6 +248,15 @@ export default function Player(props: {
 		setIsSounding(!isSounding)
 	}
 
+	useEffect(() => {
+		if (takes?.length) {
+			const gltf = loaded.get(takes[currentIndex]!.modelURL)
+			if (gltf && gltf !== currentGLTF) {
+				setCurrentGLTF(gltf)
+			}
+		}
+	}, [currentGLTF, currentIndex, loaded, takes])
+
 	return (
 		<section
 			id={props.id}
@@ -266,7 +280,7 @@ export default function Player(props: {
 								<group>
 									<Model
 										audioPath={takes[currentIndex]!.soundURL}
-										gltf={loaded.get(takes[currentIndex]!.modelURL)}
+										gltf={currentGLTF}
 										isPlaying={!isPreloading && isPlaying}
 										ocRef={ocRef}
 										onFinished={handleFinished}
