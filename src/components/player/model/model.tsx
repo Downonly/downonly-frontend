@@ -29,6 +29,7 @@ export default function Model(props: {
 	const mixer = useRef<AnimationMixer | null>(null)
 	const action = useRef<AnimationAction>()
 	const hip = useRef<Object3D>()
+	const handleFinished = useRef<() => void>()
 
 	const [tick, setTick] = useState(false)
 
@@ -66,15 +67,20 @@ export default function Model(props: {
 	}, [tick, updateOCs])
 
 	useEffect(() => {
+		handleFinished.current = props.onFinished
+	}, [props.onFinished])
+
+	useEffect(() => {
 		const { scene, animations } = props.gltf ?? {}
-		if (!animations || !scene) return
+		if (!animations) return
+		if (!scene) return
 
 		mixer.current?.stopAllAction()
-		mixer.current?.removeEventListener('finished', props.onFinished)
+		mixer.current?.removeEventListener('finished', handleFinished.current!)
 
 		const mx = new AnimationMixer(scene)
 		const ac = mx.clipAction(animations[0])
-		mx.addEventListener('finished', props.onFinished)
+		mx.addEventListener('finished', handleFinished.current!)
 		ac.setLoop(LoopOnce, 0)
 		action.current = ac
 		mixer.current = mx
@@ -86,10 +92,7 @@ export default function Model(props: {
 			}
 		})
 
-		console.info('play')
 		ac.play()
-
-		/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	}, [props.gltf])
 
 	useEffect(() => {
