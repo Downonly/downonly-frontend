@@ -62,6 +62,7 @@ export default function Player(props: {
 		string,
 		GLTF
 	>()
+	const loadedRef = useRef<typeof loaded>()
 	const [isPreloading, setIsPreloading] = useState(true)
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
@@ -69,6 +70,10 @@ export default function Player(props: {
 	const [takes, setTakes] = useState<Take[]>()
 
 	const [currentGLTF, setCurrentGLTF] = useState<GLTF>()
+
+	useEffect(() => {
+		loadedRef.current = loaded
+	}, [loaded])
 
 	useEffect(() => {
 		setTakes([])
@@ -122,39 +127,35 @@ export default function Player(props: {
 	}, [])
 
 	useEffect(() => {
-		if (takes?.length) {
-			const takesToPreload = takes.slice(
-				currentIndex,
-				currentIndex + BUFFER_SIZE
+		if (!takes?.length) return
+
+		const takesToPreload = takes.slice(currentIndex, currentIndex + BUFFER_SIZE)
+		if (takesToPreload.length < BUFFER_SIZE) {
+			takesToPreload.push(
+				...takes.slice(0, BUFFER_SIZE - takesToPreload.length)
 			)
-			if (takesToPreload.length < BUFFER_SIZE) {
-				takesToPreload.push(
-					...takes.slice(0, BUFFER_SIZE - takesToPreload.length)
-				)
-			}
-			takesToPreload.forEach((take) => {
-				gltfLoader.load(take.modelURL, (gltf: GLTF) => {
-					gltf.scene.traverse((child) => {
-						child.frustumCulled = false
-						// Improve performance of textures.
-						if (
-							child instanceof Mesh &&
-							child.material instanceof MeshStandardMaterial
-						) {
-							child.material.side = FrontSide
-							if (child.material.map) {
-								child.material.map.generateMipmaps = false
-								child.material.map.minFilter = NearestFilter
-							}
+		}
+		takesToPreload.forEach((take) => {
+			gltfLoader.load(take.modelURL, (gltf: GLTF) => {
+				gltf.scene.traverse((child) => {
+					child.frustumCulled = false
+					// Improve performance of textures.
+					if (
+						child instanceof Mesh &&
+						child.material instanceof MeshStandardMaterial
+					) {
+						child.material.side = FrontSide
+						if (child.material.map) {
+							child.material.map.generateMipmaps = false
+							child.material.map.minFilter = NearestFilter
 						}
-					})
-					if (!loaded.has(take.modelURL)) {
-						setLoaded(take.modelURL, gltf)
 					}
 				})
+				if (!loadedRef.current!.has(take.modelURL)) {
+					setLoaded(take.modelURL, gltf)
+				}
 			})
-		}
-		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+		})
 	}, [setLoaded, currentIndex, takes])
 
 	const getNextTakes = useCallback(() => {
