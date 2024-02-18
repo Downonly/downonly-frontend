@@ -12,6 +12,7 @@ import {
 	TransactionResponse,
 } from 'ethers'
 import abi from './abi/dutchauction.json'
+import { DepositError } from '@/errors/errorEther'
 
 declare const window: Window &
 	typeof globalThis & {
@@ -120,6 +121,6 @@ export async function buy(ether: string) {
 
 		console.log('Deposit successful!')
 	} catch (err) {
-		console.error('Deposit failed:', err)
+		throw new DepositError('Deposit failed.', { cause: err })
 	}
 }

@@ -1,6 +1,5 @@
 import './globals.css'
 import localFont from 'next/font/local'
-import { Montserrat } from 'next/font/google'
 import Nav from '@/components/nav/nav'
 import Footer from '@/components/footer/footer'
 
@@ -8,7 +7,10 @@ const fontDisplay = localFont({
 	src: './jegelskerdig.woff2',
 	variable: '--font-display',
 })
-const fontBody = Montserrat({ subsets: ['latin'], variable: '--font-body' })
+const fontBody = localFont({
+	src: './montserrat.woff2',
+	variable: '--font-body',
+})
 
 export const metadata = {
 	title: 'Downonly',

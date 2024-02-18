@@ -4,11 +4,24 @@ import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
 import { useEffect, useState } from 'react'
 import { buy, getCurrentPrice } from '@/services/ether'
+import { DepositError } from '@/errors/errorEther'
 
 export default function MintCTA(): JSX.Element {
 	const [modalOpen, setModalOpen] = useState(false)
 	const handleDismiss = () => {
 		setModalOpen(false)
+	}
+
+	const handleMintFall = async () => {
+		try {
+			await buy(price!)
+		} catch (err) {
+			if (err instanceof DepositError) {
+				setModalOpen(true)
+			} else {
+				console.error(err)
+			}
+		}
 	}
 
 	const [price, setPrice] = useState<string>()
@@ -31,10 +44,7 @@ export default function MintCTA(): JSX.Element {
 			</div>
 			<div>
 				<Button
-					onClick={async () => {
-						await buy(price!)
-						// setModalOpen(true)
-					}}
+					onClick={handleMintFall}
 					disabled={!price}
 					className="relative z-10"
 					salt={'cucumber'}
