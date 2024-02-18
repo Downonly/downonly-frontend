@@ -282,21 +282,24 @@ export default function Player(props: {
 	return (
 		<section
 			id={props.id}
-			className={`-mt-36 grid w-full justify-end sm:-mt-32 lg:grid-cols-2 ${
+			className={`-mt-36 grid w-full sm:-mt-32 lg:grid-cols-2 ${
 				props.className ?? ''
 			}`}
 			style={props.style}
 		>
 			<div
 				id="full-screen-container"
-				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] w-screen min-w-device justify-self-end bg-snow pr-12 transition-colors dark:bg-cole sm:pr-8 lg:w-[50vw] lg:max-w-[40rem] lg:pr-0"
+				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 			>
 				<div className="do-fall do-fall-1 h-full">
 					<Loading
 						style={isPreloading ? {} : { visibility: 'hidden' }}
 						className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
 					/>
-					<Canvas id="canvas" className="aspect-square cursor-grab bg-silver">
+					<Canvas
+						id="canvas"
+						className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
+					>
 						<Scene ocRef={ocRef}>
 							{takes?.length && (
 								<group>
@@ -313,10 +316,9 @@ export default function Player(props: {
 						</Scene>
 					</Canvas>
 				</div>
-				<div className="do-fall do-fall-0 absolute right-0 top-0 z-10 h-full">
+				<div className="do-fall do-fall-0">
 					<Controls
 						bufferSize={BUFFER_SIZE}
-						className="h-full"
 						currentIndex={currentIndex}
 						isPlaying={isPlaying}
 						isSounding={isSounding}

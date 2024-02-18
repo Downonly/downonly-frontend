@@ -45,7 +45,7 @@ export default function Progress(props: {
 				Progress
 			</span>
 			<div
-				className="flex h-full w-1 flex-col justify-end rounded-full"
+				className="flex h-1 w-full rounded-full"
 				aria-labelledby={progressLabelId}
 				aria-valuenow={Math.floor(((props.currentIndex + 1) / total) * 100)}
 				role="progressbar"
@@ -55,21 +55,21 @@ export default function Progress(props: {
 						key={index}
 						className="relative w-full"
 						style={{
-							height: `min(1.2rem, 100% / ${total})`,
+							width: `min(1.2rem, 100% / ${total})`,
 						}}
 					>
 						<button
 							aria-label={`Seek to ${index + 1}`}
-							className={`absolute top-1/2 h-[calc(100%_-_max(0.15rem,_20%))] w-full -translate-y-1/2 bg-cole hover:scale-x-150 hover:opacity-100 focus-visible:scale-x-150 focus-visible:opacity-100 dark:bg-snow ${
+							className={`absolute left-1/2 h-full w-[calc(100%_-_max(0.15rem,_20%))] -translate-x-1/2 bg-cole hover:scale-y-150 hover:opacity-100 focus-visible:scale-y-150 focus-visible:opacity-100 dark:bg-snow ${
 								index === props.currentIndex
-									? 'scale-x-150'
+									? 'scale-y-150'
 									: props.loaded.has(take.modelURL)
 										? 'opacity-70'
 										: 'opacity-30'
 							} ${isLoading(index) ? 'animate-blink' : ''}`}
 							onClick={() => props.onSeek(index)}
 						>
-							<span className="absolute -inset-x-1 top-0 h-full" />
+							<span className="absolute -inset-y-1 left-0 w-full" />
 						</button>
 					</div>
 				))}

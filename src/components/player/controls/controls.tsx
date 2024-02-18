@@ -35,12 +35,11 @@ export default function Controls(props: {
 	}
 
 	const onMouseMove = (ev: MouseEvent) => {
-		setMouseOverControls(
-			!(
-				ev.clientX <
-				window.innerWidth - (controlsRef.current?.clientWidth ?? 0)
-			)
+		const isOver = !(
+			ev.clientY <
+			window.innerHeight - (controlsRef.current?.clientHeight ?? 0)
 		)
+		setMouseOverControls(isOver)
 	}
 
 	const hideAfterTimeout = () => {
@@ -51,13 +50,6 @@ export default function Controls(props: {
 	}
 
 	useEffect(() => {
-		const fullscreenContainer = document.getElementById('full-screen-container')
-		if (isFullScreen) {
-			fullscreenContainer!.style.paddingRight = '0'
-		} else {
-			fullscreenContainer!.style.removeProperty('padding-right')
-		}
-
 		if (isTouchDevice()) return
 
 		if (isFullScreen) {
@@ -120,13 +112,14 @@ export default function Controls(props: {
 			id={props.id}
 			className={`${props.className ?? ''} ${
 				isFullScreen
-					? 'absolute right-0 my-auto h-full origin-bottom-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
-					: 'sm:translate-x-[calc(100%_-_1.5rem)] lg:translate-x-[calc(100%_+_1rem)]'
-			}${controlsHidden ? ' translate-x-full rotate-6' : ''} flex`}
+					? 'absolute bottom-0 mx-auto w-full origin-top-left bg-snow/75 p-3 transition-transform duration-300 ease-in-out dark:bg-cole/75 lg:mx-auto lg:me-auto 2xl:mx-auto'
+					: 'lg:container-half container mx-auto my-4 lg:me-0'
+			}${controlsHidden ? ' translate-y-full rotate-6' : ''}`}
 			ref={controlsRef}
 			style={props.style}
 		>
 			<Progress
+				className="mb-3"
 				bufferSize={props.bufferSize}
 				currentIndex={props.currentIndex}
 				loaded={props.loaded}
@@ -134,19 +127,13 @@ export default function Controls(props: {
 				takes={props.takes}
 			/>
 
-			<div className="ml-3 flex flex-col justify-end gap-2 lg:ml-4">
+			<div className="flex gap-2">
 				<button
 					className="interactive"
 					disabled={props.currentIndex === 0}
 					onClick={props.onPrev}
 				>
-					<svg
-						className="rotate-90"
-						width="24"
-						height="24"
-						viewBox="0 0 800 800"
-						fill="currentColor"
-					>
+					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
 						<path d="m717 12-16.4-1.8L158.4 400l-18-387-54.2-3L83 787h57.3l17-356L698 785.7l15.8-2.7L717 12Z" />
 					</svg>
 				</button>
@@ -155,13 +142,7 @@ export default function Controls(props: {
 					className="interactive"
 					onClick={props.isPlaying ? props.onPause : props.onPlay}
 				>
-					<svg
-						className="rotate-90"
-						width="24"
-						height="24"
-						viewBox="0 0 800 800"
-						fill="currentColor"
-					>
+					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
 						{props.isPlaying ? (
 							<path d="m221.7 749 137.1 8-29.2-728.7L214 29l7.8 720Zm221.6 8H586L539.7 37.3l-122.6-9L443.3 757Z" />
 						) : (
@@ -175,13 +156,7 @@ export default function Controls(props: {
 					disabled={props.currentIndex === total - 1}
 					onClick={props.onNext}
 				>
-					<svg
-						className="rotate-90"
-						width="24"
-						height="24"
-						viewBox="0 0 800 800"
-						fill="currentColor"
-					>
+					<svg width="24" height="24" viewBox="0 0 800 800" fill="currentColor">
 						<path d="m92 778 19.4 2.8L644.6 409l15 375 56.2-4L707 10h-56.3l-8 341L102 11.3 80.2 26 92 778Z" />
 					</svg>
 				</button>
@@ -207,7 +182,7 @@ export default function Controls(props: {
 				</button>
 
 				{canFullscreen && (
-					<button className="interactive ms-auto" onClick={toggleFullScreen}>
+					<button className="interactive" onClick={toggleFullScreen}>
 						<svg
 							width="24"
 							height="24"
