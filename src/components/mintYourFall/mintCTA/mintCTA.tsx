@@ -53,6 +53,7 @@ export default function MintCTA(): JSX.Element {
 					Mint fall
 				</Button>
 			</div>
+
 			<Modal open={modalOpen} onDismiss={handleDismiss}>
 				<strong className="text-display mb-4 block text-2xl">
 					Looks like you

@@ -89,7 +89,9 @@ export async function getTimeUntilAuctionEnds() {
 }
 
 export async function buy(ether: string) {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		throw new DepositError('Deposit failed.')
+	}
 
 	await initContract()
 
