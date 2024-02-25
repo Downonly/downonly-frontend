@@ -12,8 +12,11 @@ export default function MintCTA(): JSX.Element {
 		setModalOpen(false)
 	}
 
+	const [isMinting, setIsMinting] = useState(false)
+
 	const handleMintFall = async () => {
 		try {
+			setIsMinting(true)
 			await buy(price!)
 		} catch (err) {
 			if (err instanceof DepositError) {
@@ -21,6 +24,8 @@ export default function MintCTA(): JSX.Element {
 			} else {
 				console.error(err)
 			}
+		} finally {
+			setIsMinting(false)
 		}
 	}
 
@@ -46,6 +51,7 @@ export default function MintCTA(): JSX.Element {
 				<Button
 					onClick={handleMintFall}
 					disabled={!price}
+					loading={isMinting}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"

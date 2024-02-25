@@ -1,12 +1,14 @@
 'use client'
 
 import { roundedRectClipPath } from '@/utils/shape'
+import Loading from '@/components/loading/loading'
 
 export default function Button(props: {
 	children: React.ReactNode
 	onClick?: () => void | Promise<void>
 	className?: string
 	disabled?: boolean
+	loading?: boolean
 	style?: React.CSSProperties
 	size?: 'lg'
 	mode?: 'secondary'
@@ -21,12 +23,15 @@ export default function Button(props: {
 		'button') as unknown as React.ComponentClass<JSX.IntrinsicElements>
 	return (
 		<Tag
+			aria-busy={props.loading ? 'true' : undefined}
 			className={`interactive text-display inline-flex rounded-full border-current leading-tight ${
 				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
-			} ${props.disabled ? 'opacity-50' : ''} ${props.className ?? ''}`}
-			disabled={props.disabled}
+			} ${
+				props.disabled ? props.disabled : props.loading ? 'opacity-50' : ''
+			} ${props.className ?? ''}`}
+			disabled={props.disabled ?? props.loading}
 			onClick={props.onClick}
 			style={{
 				...props.style,
@@ -34,7 +39,15 @@ export default function Button(props: {
 				WebkitTapHighlightColor: 'transparent',
 			}}
 		>
-			{props.children}
+			<Loading
+				style={{
+					position: 'absolute',
+					display: props.loading ? undefined : 'none',
+				}}
+				className={`left-1/2 -translate-x-1/2 ${props.loading ? '' : 'hidden'}`}
+				dots
+			/>
+			<span className={props.loading ? 'invisible' : ''}>{props.children}</span>
 			<div
 				className="absolute inset-0 -z-10 h-full w-full bg-cole dark:bg-snow"
 				style={{ clipPath }}
