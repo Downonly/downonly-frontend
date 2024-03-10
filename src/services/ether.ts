@@ -19,6 +19,13 @@ declare const window: Window &
 		ethereum: Eip1193Provider
 	}
 
+type AuctionStage =
+	| 'premint'
+	| 'mint'
+	| 'inbetween-mint-push'
+	| 'inbetween-mint-play'
+	| 'postmint'
+
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
 const contractAddress = '0xc05CD9F2b6C23374D6557EC39DbfD5531FC5156E'
@@ -55,6 +62,14 @@ async function initContract() {
 	}
 
 	contract = new Contract(contractAddress, abi, signer || provider)
+}
+
+export async function getAuctionStage(): Promise<AuctionStage> {
+	if (process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE) {
+		return process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as AuctionStage
+	}
+
+	return Promise.resolve('mint') // TODO: fetch auction stage
 }
 
 export async function getCurrentPrice() {
@@ -95,16 +110,13 @@ export async function buy(ether: string) {
 
 	await initContract()
 
-	console.info('A')
-
-	// TODO: If we have no signer. Tell the user to first install a wallet.
+	// If we have no signer, we throw a deposit error, catch it, and
+	// tell the user to first install a wallet.
 
 	try {
 		const contractWithSigner = contract.connect(signer)
 
-		console.info('B')
-
-		// Call the deposit function on the contract
+		// Call the deposit function on the contract.
 		const depositTx = (await (contractWithSigner as MyContract).buy(
 			'rk2',
 			'wc1',
@@ -115,13 +127,8 @@ export async function buy(ether: string) {
 			}
 		)) as TransactionResponse
 
-		// TODO: show loader and disable button
-		console.info('C')
-
-		// Wait for the transaction to be mined
+		// Wait for the transaction to be mined.
 		await depositTx.wait()
-
-		console.log('Deposit successful!')
 	} catch (err) {
 		throw new DepositError('Deposit failed.', { cause: err })
 	}
