@@ -110,8 +110,8 @@ devDependencies:
     specifier: ^7.33.2
     version: 7.33.2(eslint@8.48.0)
   eslint-plugin-tailwindcss:
-    specifier: ^3.13.1
-    version: 3.13.1(tailwindcss@3.4.1)
+    specifier: ^3.15.1
+    version: 3.15.1(tailwindcss@3.4.1)
   postcss:
     specifier: ^8.4.31
     version: 8.4.31
@@ -3693,7 +3693,7 @@ packages:
       eslint: 8.48.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.7.4)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.0)(eslint@8.48.0)
       eslint-plugin-import: 2.28.1(@typescript-eslint/parser@6.7.4)(eslint-import-resolver-typescript@3.6.0)(eslint@8.48.0)
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       get-tsconfig: 4.7.0
       is-core-module: 2.13.0
       is-glob: 4.0.3
@@ -3890,13 +3890,13 @@ packages:
       string.prototype.matchall: 4.0.8
     dev: true
 
-  /eslint-plugin-tailwindcss@3.13.1(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-2Nlgr9doO6vFAG9w4iGU0sspWXuzypfng10HTF+dFS2NterhweWtgdRvf/f7aaoOUUxVZM8wMIXzazrZ7CxyeA==}
+  /eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-4RXRMIaMG07C2TBEW1k0VM4+dDazz1kxcZhkK4zirvmHGZTA4jnlSO2kq5mamuSPi+Wo17dh2SlC8IyFBuCd7Q==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
-      tailwindcss: ^3.3.2
+      tailwindcss: ^3.4.0
     dependencies:
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       postcss: 8.4.31
       tailwindcss: 3.4.1
     dev: true
@@ -4150,8 +4150,6 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
-    dev: false
-    optional: true
 
   /fast-json-parse@1.0.3:
     resolution: {integrity: sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==}
@@ -4548,7 +4546,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
