@@ -22,7 +22,7 @@
     "howler": "^2.2.4",
     "leva": "^0.9.35",
     "next": "13.5.3",
-    "nexus-prisma": "^2.0.1",
+    "nexus-prisma": "^2.0.5",
     "r3f-perf": "^7.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
