@@ -5,6 +5,7 @@ import Modal from '@/components/modal/modal'
 import { useEffect, useState } from 'react'
 import { buy, getCurrentPrice } from '@/services/ether'
 import { DepositError } from '@/errors/errorEther'
+import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 export default function MintCTA(): JSX.Element {
 	const [modalOpen, setModalOpen] = useState(false)
@@ -12,6 +13,7 @@ export default function MintCTA(): JSX.Element {
 		setModalOpen(false)
 	}
 
+	const auctionInfo = useAuctionInfo()
 	const [isMinting, setIsMinting] = useState(false)
 
 	const handleMintFall = async () => {
@@ -32,10 +34,12 @@ export default function MintCTA(): JSX.Element {
 	const [price, setPrice] = useState<string>()
 
 	useEffect(() => {
-		void (async () => {
-			setPrice(String(await getCurrentPrice()))
-		})()
-	}, [])
+		if (auctionInfo?.stage === 'mint') {
+			void (async () => {
+				setPrice(String(await getCurrentPrice()))
+			})()
+		}
+	}, [auctionInfo])
 
 	return (
 		<>

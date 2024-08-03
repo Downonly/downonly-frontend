@@ -19,12 +19,24 @@ declare const window: Window &
 		ethereum: Eip1193Provider
 	}
 
-type AuctionStage =
+export type AuctionStage =
 	| 'premint'
 	| 'mint'
 	| 'inbetween-mint-push'
 	| 'inbetween-mint-play'
 	| 'postmint'
+
+export interface AuctionInfoMint {
+	price: number
+}
+
+export interface AuctionInfoBase {
+	stage: AuctionStage
+}
+
+export interface AuctionInfo {
+	stage: AuctionStage
+}
 
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
@@ -64,12 +76,20 @@ async function initContract() {
 	contract = new Contract(contractAddress, abi, signer || provider)
 }
 
-export async function getAuctionStage(): Promise<AuctionStage> {
-	if (process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE) {
-		return process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as AuctionStage
+export async function getAuctionInfo(): Promise<AuctionInfo> {
+	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
+		| AuctionStage
+		| undefined
+	if (mockedAuctionStage) {
+		switch (mockedAuctionStage) {
+			default:
+				return {
+					stage: mockedAuctionStage,
+				}
+		}
 	}
 
-	return Promise.resolve('mint') // TODO: fetch auction stage
+	return Promise.resolve({ stage: 'mint' }) // TODO: fetch auction info
 }
 
 export async function getCurrentPrice() {
