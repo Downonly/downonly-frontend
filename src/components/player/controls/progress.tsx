@@ -1,4 +1,4 @@
-import { type Take } from '@/components/player/player'
+import { type Take } from '@/components/player/types'
 
 export default function Progress(props: {
 	bufferSize: number

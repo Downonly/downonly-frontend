@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { isTouchDevice } from '@/utils/device'
 import Progress from './progress'
-import { Take } from '@/components/player/player'
+import { Take } from '@/components/player/types'
 
 let timeoutToHide: NodeJS.Timeout
 
