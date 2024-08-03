@@ -271,7 +271,7 @@ export default function Player(props: {
 
 	useEffect(() => {
 		if (takes?.length) {
-			const { gltf, sound } = loaded.get(takes[currentIndex]!.modelURL) ?? {}
+			const { gltf, sound } = loaded.get(takes[currentIndex].modelURL) ?? {}
 			if (gltf && gltf !== currentGLTF) {
 				setCurrentGLTF(gltf)
 				setCurrentSound(sound)

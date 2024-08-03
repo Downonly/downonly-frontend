@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prebuild": "prisma generate",
     "build": "next build",
     "dev": "next dev",
     "graphql": "open http://localhost:3000/api/graphql",

@@ -49,13 +49,13 @@ export default function Button(props: {
 			/>
 			<span className={props.loading ? 'invisible' : ''}>{props.children}</span>
 			<div
-				className="absolute inset-0 -z-10 h-full w-full bg-cole dark:bg-snow"
+				className="absolute inset-0 -z-10 size-full bg-cole dark:bg-snow"
 				style={{ clipPath }}
 			/>
 			{props.mode === 'secondary' && (
-				<div className="absolute inset-0 -z-10 h-full w-full p-0.5">
+				<div className="absolute inset-0 -z-10 size-full p-0.5">
 					<div
-						className="h-full w-full bg-snow dark:bg-cole"
+						className="size-full bg-snow dark:bg-cole"
 						style={{
 							clipPath,
 						}}

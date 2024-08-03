@@ -18,7 +18,7 @@ export default function Card(props: {
 		<Tag className={`relative z-0 p-6 ${props.className}`}>
 			{props.children}
 			<div
-				className={`absolute inset-0 -z-10 h-full w-full ${props.bgClassName} ${
+				className={`absolute inset-0 -z-10 size-full ${props.bgClassName} ${
 					props.mode === 'secondary'
 						? 'bg-snow dark:bg-nickel'
 						: 'bg-white dark:bg-carbon'
