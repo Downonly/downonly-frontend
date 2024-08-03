@@ -55,7 +55,7 @@ export default function ThemeToggle(props: {
 		<label
 			aria-label="Switch between dark and light mode"
 			aria-checked={isDark ? 'true' : 'false'}
-			className={`interactive relative h-8 w-8 [&[aria-checked="false"]>svg:first-of-type]:animate-down-new-left [&[aria-checked="false"]>svg:last-of-type]:animate-down-old-left [&[aria-checked="true"]>svg:first-of-type]:animate-down-old-left [&[aria-checked="true"]>svg:last-of-type]:animate-down-new-left ${
+			className={`interactive relative size-8 [&[aria-checked="false"]>svg:first-of-type]:animate-down-new-left [&[aria-checked="false"]>svg:last-of-type]:animate-down-old-left [&[aria-checked="true"]>svg:first-of-type]:animate-down-old-left [&[aria-checked="true"]>svg:last-of-type]:animate-down-new-left ${
 				props.className ?? ''
 			}`}
 			id="dark-light-toggle"

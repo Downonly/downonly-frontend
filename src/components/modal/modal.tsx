@@ -62,7 +62,7 @@ export default function Modal(props: {
 			>
 				<button
 					style={{ WebkitTapHighlightColor: 'transparent' }}
-					className="absolute right-3 top-3 inline-block h-8 w-8 origin-center -rotate-45 touch-manipulation select-none rounded-full font-display text-4xl leading-none transition-transform hover:rotate-45"
+					className="absolute right-3 top-3 inline-block size-8 origin-center -rotate-45 touch-manipulation select-none rounded-full font-display text-4xl leading-none transition-transform hover:rotate-45"
 					aria-label="Dismiss"
 					onClick={dismiss}
 				>
