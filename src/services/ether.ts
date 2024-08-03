@@ -26,17 +26,41 @@ export type AuctionStage =
 	| 'inbetween-mint-play'
 	| 'postmint'
 
-export interface AuctionInfoMint {
+interface AuctionInfoBase {
+	stage: AuctionStage
+}
+
+interface AuctionInfoWithPrice extends AuctionInfoBase {
 	price: number
 }
 
-export interface AuctionInfoBase {
-	stage: AuctionStage
+export interface AuctionInfoPremint extends AuctionInfoBase {
+	countdown: number
+	stage: 'premint'
 }
 
-export interface AuctionInfo {
-	stage: AuctionStage
+export interface AuctionInfoMint extends AuctionInfoWithPrice {
+	stage: 'mint'
 }
+
+export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
+	stage: 'inbetween-mint-push'
+}
+
+export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
+	stage: 'inbetween-mint-play'
+}
+
+export interface AuctionInfoPostmint extends AuctionInfoWithPrice {
+	stage: 'postmint'
+}
+
+export type AuctionInfo =
+	| AuctionInfoPremint
+	| AuctionInfoMint
+	| AuctionInfoInbetweenMintPush
+	| AuctionInfoInbetweenMintPlay
+	| AuctionInfoPostmint
 
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
@@ -82,14 +106,30 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		| undefined
 	if (mockedAuctionStage) {
 		switch (mockedAuctionStage) {
-			default:
+			case 'premint':
 				return {
 					stage: mockedAuctionStage,
-				}
+				} as AuctionInfoPremint
+			case 'mint':
+				return {
+					stage: mockedAuctionStage,
+				} as AuctionInfoMint
+			case 'inbetween-mint-push':
+				return {
+					stage: mockedAuctionStage,
+				} as AuctionInfoInbetweenMintPush
+			case 'inbetween-mint-play':
+				return {
+					stage: mockedAuctionStage,
+				} as AuctionInfoInbetweenMintPlay
+			case 'postmint':
+				return {
+					stage: mockedAuctionStage,
+				} as AuctionInfoPostmint
 		}
 	}
 
-	return Promise.resolve({ stage: 'mint' }) // TODO: fetch auction info
+	return Promise.resolve({ stage: 'mint' } as AuctionInfoMint) // TODO: fetch auction info
 }
 
 export async function getCurrentPrice() {

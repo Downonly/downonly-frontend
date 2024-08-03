@@ -1,4 +1,4 @@
-import { Row } from '@/components/player/player'
+import { Row } from '@/components/player/types'
 
 export const getMockData = () => {
 	const data: Row[] = []

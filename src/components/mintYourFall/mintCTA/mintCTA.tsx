@@ -34,9 +34,14 @@ export default function MintCTA(): JSX.Element {
 	const [price, setPrice] = useState<string>()
 
 	useEffect(() => {
+		console.info('auctionInfo', auctionInfo)
 		if (auctionInfo?.stage === 'mint') {
 			void (async () => {
-				setPrice(String(await getCurrentPrice()))
+				try {
+					setPrice(String(await getCurrentPrice()))
+				} catch (err) {
+					console.error(err)
+				}
 			})()
 		}
 	}, [auctionInfo])
@@ -46,9 +51,20 @@ export default function MintCTA(): JSX.Element {
 			<div className="pt-8">
 				<p className="text-display mb-2 text-sm">Dutch Auction</p>
 				<p className="text-sm text-carbon dark:text-iron">
-					Time: 23:55:04
-					<br />
-					Price: {price} Eth
+					{auctionInfo?.stage === 'premint' ? (
+						<>
+							<br />
+							🏥👮🪑
+							<br />
+							<br />X ⇥ 🖥 33 CM ↦ ☠
+						</>
+					) : (
+						<>
+							Time: 23:55:04
+							<br />
+							Price: {price} Eth
+						</>
+					)}
 				</p>
 			</div>
 			<div>
@@ -60,7 +76,7 @@ export default function MintCTA(): JSX.Element {
 					salt={'cucumber'}
 					size="lg"
 				>
-					Mint fall
+					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint fall'}
 				</Button>
 			</div>
 
