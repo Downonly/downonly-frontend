@@ -20,8 +20,7 @@ export default function MintYourFall(props: {
 			tag="section"
 		>
 			<header className="text-display mb-12 text-4xl">
-				<h1>Mint your own fall</h1>
-				<p>choose now</p>
+				<h1>Choose your fall</h1>
 			</header>
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">

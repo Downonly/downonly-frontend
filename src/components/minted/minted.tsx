@@ -20,8 +20,6 @@ export default function Minted(props: {
 			style={props.style}
 		>
 			<h2 className="do-fall do-fall-6 text-display mb-12 px-6 text-4xl">
-				Currently
-				<br />
 				Minted
 			</h2>
 

@@ -123,7 +123,7 @@ export default function Controls(props: {
 			style={props.style}
 		>
 			<Progress
-				className="mb-3"
+				className={`mb-3 ${hideGoToControls ? 'hidden' : ''}`}
 				bufferSize={props.bufferSize}
 				currentIndex={props.currentIndex}
 				loaded={props.loaded}

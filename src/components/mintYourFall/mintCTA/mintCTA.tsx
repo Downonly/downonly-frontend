@@ -14,6 +14,7 @@ export default function MintCTA(): JSX.Element {
 	}
 
 	const auctionInfo = useAuctionInfo()
+
 	const [isMinting, setIsMinting] = useState(false)
 
 	const handleMintFall = async () => {
@@ -48,19 +49,21 @@ export default function MintCTA(): JSX.Element {
 
 	return (
 		<>
-			<div className="pt-8">
-				<p className="text-display mb-2 text-sm">Dutch Auction</p>
-				<p className="text-sm text-carbon dark:text-iron">
-					{auctionInfo?.stage === 'premint' ? (
+			<div className="pt-6">
+				<p className="text-sm">
+					{auctionInfo?.stage === 'premint' && (
 						<>
-							<div className="my-3">🏥👮🪑</div>X ⇥ 🖥 33 CM ↦ ☠
+							<div className="my-3">🏥 👮 🪑</div>X ↦ 🖥 33 CM ↦ ☠️
 						</>
-					) : (
-						<>
-							Time: 23:55:04
-							<br />
-							Price: {price} Eth
-						</>
+					)}
+
+					{auctionInfo?.stage === 'mint' && (
+						<div className="text-xs">
+							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
+							<p>2:10:23 / 2.3 Eth</p>
+							<p className="my-3">🏥 👮 🪑</p>
+							<p className="mb-3">2.3 cm ↦ 🖥 33 cm ↦ ☠️</p>
+						</div>
 					)}
 				</p>
 			</div>
@@ -73,7 +76,7 @@ export default function MintCTA(): JSX.Element {
 					salt={'cucumber'}
 					size="lg"
 				>
-					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint fall'}
+					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint'}
 				</Button>
 			</div>
 
