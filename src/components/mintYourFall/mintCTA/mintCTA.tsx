@@ -53,10 +53,7 @@ export default function MintCTA(): JSX.Element {
 				<p className="text-sm text-carbon dark:text-iron">
 					{auctionInfo?.stage === 'premint' ? (
 						<>
-							<br />
-							🏥👮🪑
-							<br />
-							<br />X ⇥ 🖥 33 CM ↦ ☠
+							<div className="my-3">🏥👮🪑</div>X ⇥ 🖥 33 CM ↦ ☠
 						</>
 					) : (
 						<>

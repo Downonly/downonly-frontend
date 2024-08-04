@@ -1,4 +1,7 @@
+'use client'
+
 import Polaroid from '@/components/polaroid/polaroid'
+import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 export default function Minted(props: {
 	className?: string
@@ -6,6 +9,10 @@ export default function Minted(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
+	const auctionInfo = useAuctionInfo()
+
+	if (auctionInfo?.stage === 'premint') return <></>
+
 	return (
 		<section
 			id={props.id}

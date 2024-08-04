@@ -24,8 +24,8 @@ export default function Button(props: {
 	return (
 		<Tag
 			aria-busy={props.loading ? 'true' : undefined}
-			className={`interactive text-display inline-flex rounded-full border-current leading-tight ${
-				props.size === 'lg' ? 'px-8 pb-2.5 pt-3' : 'px-6 pb-1 pt-1.5 text-sm'
+			className={`interactive text-display inline-flex rounded-full border-current px-6 leading-tight ${
+				props.size === 'lg' ? 'pb-2.5 pt-3' : 'pb-1 pt-1.5 text-sm'
 			} ${
 				props.mode === 'secondary' ? '' : 'text-sm text-snow dark:text-cole'
 			} ${
