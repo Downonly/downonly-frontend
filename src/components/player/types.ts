@@ -7,10 +7,14 @@ export interface Row {
 	obstacle: string
 	figure: string
 	ipfsVideo: string | undefined
-	openSea: string
+	openSea: string | undefined
 	ipfsSound: string | undefined
 	fullname: string
 	mintdate: string
+	mintprice: number | undefined
+	blockHeight: number
+	buytxHash: string | undefined
+	buyerAddress: string | undefined
 }
 
 export interface Take

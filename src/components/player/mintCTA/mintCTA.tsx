@@ -1,14 +1,30 @@
 'use client'
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
+import { Take } from '@/components/player/types'
+import { useCallback } from 'react'
+import { useTakes } from '@/components/player/hooks/useTakes'
 
 export default function MintCTA(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
+	currentTake: Take | undefined
 }): JSX.Element {
 	const auctionInfo = useAuctionInfo()
+
+	const renderEmojies = useCallback(() => {
+		if (!props.currentTake) return <></>
+		return (
+			<p className="my-3">
+				{props.currentTake.surface} {props.currentTake.figure}{' '}
+				{props.currentTake.obstacle}
+			</p>
+		)
+	}, [props.currentTake])
+
+	const takes = useTakes()
+	if (!takes) return <></>
 
 	return (
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
@@ -18,8 +34,7 @@ export default function MintCTA(props: {
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
 					<br />
-					<p className="my-3">🏥 👮 🪑</p>
-					<p className="font-display">cop-hospital-chair</p>
+					{renderEmojies()}
 				</>
 			)}
 
@@ -29,7 +44,7 @@ export default function MintCTA(props: {
 					<p className="font-display">2:10:23 / 2.3 ETH</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
-					<p className="my-3">🟨 🏊 🔗</p>
+					{renderEmojies()}
 					<p className="font-display">↓ 322,4</p>
 					<br />
 					<div className="text-xs leading-relaxed text-carbon dark:text-iron">

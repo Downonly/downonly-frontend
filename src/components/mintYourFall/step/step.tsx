@@ -6,6 +6,7 @@ export default function Step(props: {
 	className?: string
 	id?: string
 	label: string
+	noPadding?: boolean
 	num: `${number}`
 	operator?: string
 	salt: string
@@ -33,6 +34,7 @@ export default function Step(props: {
 			<Card
 				salt={`card-${props.salt}`}
 				className="relative aspect-square"
+				noPadding={props.noPadding}
 				bgClassName="bg-gradient-to-r from-snow to-snow dark:from-nickel dark:to-nickel"
 			>
 				<Circle

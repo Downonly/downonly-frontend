@@ -4,7 +4,7 @@ import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import gsap from 'gsap'
@@ -37,6 +37,15 @@ export default function Player(props: {
 
 	const loaded = useLoaded(currentIndex, takes, getNextTakes, BUFFER_SIZE)
 	const isPreloading = usePreloading(currentIndex, takes, loaded, getNextTakes)
+
+	const distanceToDeath = useMemo(() => {
+		const totalDistance = 33
+		return (
+			takes?.reduce((acc, current) => {
+				return acc - (current.mintprice ?? 0)
+			}, totalDistance) ?? totalDistance
+		)
+	}, [takes])
 
 	const handleFinished = () => {
 		if (!takes?.length) return
@@ -156,7 +165,7 @@ export default function Player(props: {
 				</div>
 			</div>
 			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
-				<MintCTA />
+				<MintCTA currentTake={takes?.[currentIndex]} />
 			</div>
 		</section>
 	)

@@ -6,6 +6,7 @@ export default function Card(props: {
 	className?: string
 	id?: string
 	mode?: 'secondary'
+	noPadding?: boolean
 	salt: string
 	style?: React.CSSProperties
 	tag?: keyof JSX.IntrinsicElements
@@ -15,7 +16,9 @@ export default function Card(props: {
 		className: string
 	}>
 	return (
-		<Tag className={`relative z-0 p-6 ${props.className}`}>
+		<Tag
+			className={`relative z-0 ${props.noPadding ? '' : 'p-6 '}${props.className}`}
+		>
 			{props.children}
 			<div
 				className={`absolute inset-0 -z-10 size-full ${props.bgClassName} ${

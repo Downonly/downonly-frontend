@@ -35,7 +35,6 @@ export default function MintCTA(): JSX.Element {
 	const [price, setPrice] = useState<string>()
 
 	useEffect(() => {
-		console.info('auctionInfo', auctionInfo)
 		if (auctionInfo?.stage === 'mint') {
 			void (async () => {
 				try {
@@ -50,7 +49,7 @@ export default function MintCTA(): JSX.Element {
 	return (
 		<>
 			<div className="pt-6">
-				<p className="text-sm">
+				<div className="text-sm">
 					{auctionInfo?.stage === 'premint' && (
 						<>
 							<div className="my-3">🏥 👮 🪑</div>X ↦ 🖥 33 CM ↦ ☠️
@@ -65,7 +64,7 @@ export default function MintCTA(): JSX.Element {
 							<p className="mb-3">2.3 cm ↦ 🖥 33 cm ↦ ☠️</p>
 						</div>
 					)}
-				</p>
+				</div>
 			</div>
 			<div>
 				<Button
@@ -76,6 +75,7 @@ export default function MintCTA(): JSX.Element {
 					salt={'cucumber'}
 					size="lg"
 				>
+					{/* TODO: */}
 					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint'}
 				</Button>
 			</div>

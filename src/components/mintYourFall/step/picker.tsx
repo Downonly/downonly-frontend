@@ -2,7 +2,8 @@
 
 import Circle from '@/components/circle/circle'
 import Arrow from '@/components/arrow/arrow'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Loading from '@/components/loading/loading'
 
 export default function Picker(props: {
@@ -12,11 +13,17 @@ export default function Picker(props: {
 	children?: React.ReactNode
 	options: {
 		emoji: string
+		gif: string
 	}[]
 }): JSX.Element {
 	const { options } = props
 
 	const [currentPick, setCurrentPick] = useState(0)
+	const [loaded, setLoaded] = useState(false)
+
+	useEffect(() => {
+		setLoaded(false)
+	}, [currentPick])
 
 	return (
 		<div
@@ -28,7 +35,21 @@ export default function Picker(props: {
 				{options[currentPick]?.emoji}
 			</div>
 
-			<Loading className="-translate-y-3" />
+			<Loading className={`-translate-y-3${loaded ? ' invisible' : ''}`} />
+			<Image
+				onLoad={() => {
+					console.info('onload')
+					setLoaded(true)
+				}}
+				src={options[currentPick]?.gif}
+				width={250}
+				height={250}
+				alt=""
+				style={{
+					position: 'absolute',
+					visibility: loaded ? 'inherit' : 'hidden',
+				}}
+			/>
 
 			<button
 				disabled={options.length <= 1}
