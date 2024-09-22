@@ -47,6 +47,8 @@ export default function Player(props: {
 		)
 	}, [takes])
 
+	console.info('distanceToDeath', distanceToDeath)
+
 	const handleFinished = () => {
 		if (!takes?.length) return
 		if (currentIndex === takes.length - 1) {
