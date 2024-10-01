@@ -51,7 +51,7 @@
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "globals": "^15.9.0",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.47",
     "postcss-preset-env": "^9.6.0",
     "prettier": "^3.3.3",
     "prisma": "^5.17.0",
