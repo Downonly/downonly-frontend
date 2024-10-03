@@ -1,31 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_initialPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minimumPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_stablePriceDuration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_priceDecreaseDuration",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -38,6 +12,18 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "mintID",
         "type": "uint256"
       },
       {
@@ -87,24 +73,67 @@
   },
   {
     "inputs": [],
-    "name": "endAuction",
+    "name": "emergencyPause",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "startAuction",
+    "name": "endAuctionCycle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "withdrawFunds",
+    "name": "startAuctionCycle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_startingPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_secondsAtBottom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_decreasingDuration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_cooldown",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_initialPause",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
     "inputs": [
@@ -127,7 +156,7 @@
   },
   {
     "inputs": [],
-    "name": "auctionActive",
+    "name": "auctionCycleActive",
     "outputs": [
       {
         "internalType": "bool",
@@ -139,45 +168,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "auctionCooldown",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "auctionEnded",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "auctionStartTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -185,7 +175,7 @@
         "type": "uint256"
       }
     ],
-    "name": "availableCharacters",
+    "name": "characters",
     "outputs": [
       {
         "internalType": "string",
@@ -197,38 +187,13 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "cooldown",
+    "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "name": "availableObstacles",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "availableSurfaces",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -249,7 +214,59 @@
   },
   {
     "inputs": [],
-    "name": "elapsedTime",
+    "name": "decreasingDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "elapsed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "emergencyPaused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ended",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "epauseStartTime",
     "outputs": [
       {
         "internalType": "uint256",
@@ -300,6 +317,45 @@
   },
   {
     "inputs": [],
+    "name": "getMotorPushesWithoutBuy",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getnextPriceIncrease",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPhase",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getRemainingLivesForAllCharacters",
     "outputs": [
       {
@@ -339,7 +395,7 @@
   },
   {
     "inputs": [],
-    "name": "initialPrice",
+    "name": "getRemainingPause",
     "outputs": [
       {
         "internalType": "uint256",
@@ -352,12 +408,12 @@
   },
   {
     "inputs": [],
-    "name": "isPaused",
+    "name": "initialPause",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -365,7 +421,7 @@
   },
   {
     "inputs": [],
-    "name": "minimumPrice",
+    "name": "minPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -391,12 +447,31 @@
   },
   {
     "inputs": [],
-    "name": "owner",
+    "name": "nextMintID",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "obstacles",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -404,12 +479,25 @@
   },
   {
     "inputs": [],
-    "name": "priceDecreaseDuration",
+    "name": "onCooldown",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "bool",
         "name": "",
-        "type": "uint256"
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -443,7 +531,7 @@
   },
   {
     "inputs": [],
-    "name": "stablePriceDuration",
+    "name": "secondsAtBottom",
     "outputs": [
       {
         "internalType": "uint256",
@@ -456,7 +544,7 @@
   },
   {
     "inputs": [],
-    "name": "timeAfterDeathTime",
+    "name": "startingPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -469,7 +557,52 @@
   },
   {
     "inputs": [],
-    "name": "timeInCycleTime",
+    "name": "startTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "surfaces",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "timeAfterDeath",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "timeInCycle",
     "outputs": [
       {
         "internalType": "uint256",

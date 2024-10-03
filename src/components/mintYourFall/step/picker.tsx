@@ -38,7 +38,6 @@ export default function Picker(props: {
 			<Loading className={`-translate-y-3${loaded ? ' invisible' : ''}`} />
 			<Image
 				onLoad={() => {
-					console.info('onload')
 					setLoaded(true)
 				}}
 				src={options[currentPick]?.gif}

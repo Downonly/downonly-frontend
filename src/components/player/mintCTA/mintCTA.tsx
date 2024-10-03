@@ -30,6 +30,7 @@ export default function MintCTA(props: {
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
 			{auctionInfo?.stage === 'premint' && (
 				<>
+					{/* TODO: replace with real values */}
 					<p className="font-display">2D 18H 45M 03S</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
@@ -41,6 +42,7 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'mint' && (
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
+					{/* TODO: replace with real values */}
 					<p className="font-display">2:10:23 / 2.3 ETH</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>

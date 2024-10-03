@@ -35,7 +35,7 @@ interface AuctionInfoWithPrice extends AuctionInfoBase {
 }
 
 export interface AuctionInfoPremint extends AuctionInfoBase {
-	countdown: number
+	countdown: number // -> getRemainingPause
 	stage: 'premint'
 }
 
@@ -138,7 +138,16 @@ export async function getCurrentPrice() {
 	}
 
 	await initContract()
-	const currentPrice = (await contract.currentPrice()) as number
+	console.info('y0olo')
+	let currentPrice: number
+	try {
+		currentPrice = (await contract.currentPrice()) as number
+	} catch (err) {
+		console.error('Whooopsi', err)
+		currentPrice = 0
+	}
+
+	console.info('currentPrice', currentPrice)
 	return formatEther(currentPrice)
 }
 
