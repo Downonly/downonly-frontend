@@ -75,7 +75,7 @@ export default function MintCTA(): JSX.Element {
 					salt={'cucumber'}
 					size="lg"
 				>
-					{/* TODO: */}
+					{/* TODO: Use read countdown data for premint phase */}
 					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint'}
 				</Button>
 			</div>

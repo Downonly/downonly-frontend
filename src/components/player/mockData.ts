@@ -10,9 +10,9 @@ export const getMockData = () => {
 		if (i < 5) {
 			jobState = 'done' // already finished transaction
 		} else if (i === 5) {
-			jobState = 'minting' // TODO ???
+			jobState = 'minting'
 		} else {
-			jobState = 'paid' // TODO ???
+			jobState = 'paid'
 		}
 
 		const done = jobState === 'done' || undefined
