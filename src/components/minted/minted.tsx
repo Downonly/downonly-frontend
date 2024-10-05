@@ -8,7 +8,7 @@ export default function Minted(props: {
 	style?: React.CSSProperties
 	id?: string
 }): JSX.Element {
-	const auctionInfo = useAuctionInfo()
+	const auctionInfo = useAuctionInfo('minted')
 
 	if (auctionInfo?.stage === 'premint') return <></>
 

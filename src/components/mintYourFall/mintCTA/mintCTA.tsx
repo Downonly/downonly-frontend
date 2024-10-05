@@ -13,7 +13,7 @@ export default function MintCTA(): JSX.Element {
 		setModalOpen(false)
 	}
 
-	const auctionInfo = useAuctionInfo()
+	const auctionInfo = useAuctionInfo('mintCTA')
 
 	const [isMinting, setIsMinting] = useState(false)
 

@@ -31,7 +31,7 @@ export default function Controls(props: {
 	const [controlsHidden, setControlsHidden] = useState(false)
 	const [canFullscreen, setCanFullscreen] = useState(false)
 
-	const auctionInfo = useAuctionInfo()
+	const auctionInfo = useAuctionInfo('playerControls')
 	const hideGoToControls = auctionInfo?.stage === 'premint'
 
 	const onFullScreenChange = () => {

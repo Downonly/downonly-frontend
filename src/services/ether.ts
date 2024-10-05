@@ -134,7 +134,17 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	const phase: unknown = await contract.getPhase()
 	console.info('phase', phase)
 
-	return Promise.resolve({ stage: 'mint' } as AuctionInfoMint) // TODO: fetch auction info
+	if (phase === 'auctionNotStarted') {
+		const countdown = Number(await contract.initialPause())
+		const info: AuctionInfoPremint = {
+			countdown,
+			stage: 'premint',
+		}
+		console.info('auctionInfo', info)
+		return info
+	}
+
+	return { stage: 'mint' } as AuctionInfoMint // TODO: fetch auction info
 }
 
 export async function getCurrentPrice() {

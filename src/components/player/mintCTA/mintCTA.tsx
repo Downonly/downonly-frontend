@@ -4,6 +4,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { useCallback } from 'react'
 import { useTakes } from '@/components/player/hooks/useTakes'
+import Countdown from '@/components/countdown/countdown'
 
 export default function MintCTA(props: {
 	className?: string
@@ -11,7 +12,7 @@ export default function MintCTA(props: {
 	id?: string
 	currentTake: Take | undefined
 }): JSX.Element {
-	const auctionInfo = useAuctionInfo()
+	const auctionInfo = useAuctionInfo('playerCTA')
 
 	const renderEmojies = useCallback(() => {
 		if (!props.currentTake) return <></>
@@ -30,12 +31,13 @@ export default function MintCTA(props: {
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
 			{auctionInfo?.stage === 'premint' && (
 				<>
-					{/* TODO: replace with real values */}
-					<p className="font-display">2D 18H 45M 03S</p>
+					<p className="font-display">
+						<Countdown seconds={auctionInfo.countdown} />
+					</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
 					<br />
-					{renderEmojies()}
+					{renderEmojies()} {/* TODO: Show randomized GLBs */}
 				</>
 			)}
 
@@ -58,6 +60,8 @@ export default function MintCTA(props: {
 					</div>
 				</>
 			)}
+
+			{/* TODO: add other stages */}
 		</div>
 	)
 }

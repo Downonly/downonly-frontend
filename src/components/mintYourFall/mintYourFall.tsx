@@ -10,24 +10,21 @@ export default function MintYourFall(props: {
 	style?: React.CSSProperties
 	id?: string
 }): JSX.Element {
+	// prettier-ignore
 	const settings = [
 		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },
 		{ emoji: '🎡', gif: '/gifs/environment_DO_ferris_10fps_6sec_300x300.gif' },
-		{
-			emoji: '❄️',
-			gif: '/gifs/environment_DO_snowPark_10fps_6sec_300x300.gif',
-		},
+		{ emoji: '❄️', gif: '/gifs/environment_DO_snowPark_10fps_6sec_300x300.gif' },
 	]
+	// prettier-ignore
 	const characters = [
 		{ emoji: '🧑‍🚀', gif: '/gifs/character_DO_astronaut_300x300.gif' },
 		{ emoji: '🧖', gif: '/gifs/character_DO_bath_300x300.gif' },
 		{ emoji: '🧑‍🍳', gif: '/gifs/character_DO_chef_300x300.gif' },
 	]
+	// prettier-ignore
 	const obstacles = [
-		{
-			emoji: '🎈',
-			gif: '/gifs/obstacle_DO_balloons_seq_10fps_6sec_300x300.gif',
-		},
+		{ emoji: '🎈', gif: '/gifs/obstacle_DO_balloons_seq_10fps_6sec_300x300.gif' },
 		{ emoji: '📚', gif: '/gifs/obstacle_DO_books_seq_10fps_6sec_300x300.gif' },
 		{ emoji: '🎹', gif: '/gifs/obstacle_DO_piano_seq_10fps_6sec_300x300.gif' },
 	]
