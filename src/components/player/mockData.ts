@@ -23,13 +23,16 @@ export const getMockData = () => {
 			id: i + 1,
 			jobState,
 			surface: '547',
+			surfaceSmiley: '🙈',
 			obstacle: 'wc1',
 			figure: 'rk2',
-			ipfsVideo: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
+			ipfsMP3: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.mp3`,
+			ipfsGLB: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
+			ipfsJPG: undefined,
+			ipfsMP4: undefined,
 			openSea:
 				done &&
 				'https://testnets.opensea.io/assets/goerli/0x410a2a13c7847321d66cae97c0b2b70706f1f483/5',
-			ipfsSound: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.mp3`,
 			fullname: 'COP-HOSPITAL-CHAIR-FALL',
 			mintprice: done && Math.random(),
 			blockHeight: 10035551,
@@ -37,6 +40,8 @@ export const getMockData = () => {
 			buytxHash:
 				'0xf05b5ab0c5a900556c3333458eeb2991d91339f084fd77c6ddd63860cc9c51bc',
 			mintdate: '2023-01-15T13:45:30.000Z',
+			obstacleSmiley: '',
+			figureSmiley: '',
 		})
 	}
 	return data

@@ -22,7 +22,6 @@ export default function Player(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
 	const ocRef = useRef<OCs>()
 	const [isPlaying, setIsPlaying] = useState(true)

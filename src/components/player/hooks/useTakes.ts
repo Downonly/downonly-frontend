@@ -17,12 +17,12 @@ export const useTakes = () => {
 				import('../mockData').then((module) => {
 					return module
 						.getMockData()
-						.filter((row) => row.ipfsVideo && row.ipfsSound)
+						.filter((row) => row.ipfsGLB && row.ipfsMP3)
 						.map<Take>((row) => {
-							const { ipfsVideo, ipfsSound, mintdate, ...rest } = row
+							const { ipfsGLB, ipfsMP3, mintdate, ...rest } = row
 							return {
-								modelURL: ipfsVideo,
-								soundURL: ipfsSound,
+								modelURL: ipfsGLB,
+								soundURL: ipfsMP3,
 								mintDate: new Date(mintdate),
 								...rest,
 							} as Take
@@ -31,17 +31,16 @@ export const useTakes = () => {
 		} else {
 			result =
 				result ??
-				fetch(`/api/mints`, { cache: 'force-cache' })
+				fetch(`/api/mints`)
 					.then((response) => response.json())
 					.then((data: Row[]) => {
 						return data
-							.filter((row) => row.ipfsVideo && row.ipfsSound)
+							.filter((row) => row.ipfsGLB && row.ipfsMP3)
 							.map<Take>((row) => {
-								const { ipfsVideo, ipfsSound, mintdate, mintprice, ...rest } =
-									row
+								const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
 								return {
-									modelURL: ipfsVideo!,
-									soundURL: ipfsSound!,
+									modelURL: ipfsGLB!,
+									soundURL: ipfsMP3!,
 									mintDate: new Date(mintdate),
 									mintprice: mintprice,
 									...rest,

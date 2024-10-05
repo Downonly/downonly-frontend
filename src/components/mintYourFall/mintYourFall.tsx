@@ -9,7 +9,6 @@ export default function MintYourFall(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
 	const settings = [
 		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },

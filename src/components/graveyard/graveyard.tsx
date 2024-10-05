@@ -2,8 +2,29 @@ export default function Graveyard(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
+	// TODO: fetch getAllAssetsRemainingLives
+
+	const deadEmoji = [
+		'❄️',
+		'🏰',
+		'🧑‍🚀',
+		'🧖',
+		'🧑‍🍳',
+		'🎡',
+		'🎹',
+		'📚',
+		'🎈',
+		'❄️',
+		'🏰',
+		'🧑‍🚀',
+		'🧖',
+		'🧑‍🍳',
+	].map((emoji, i) => ({
+		key: i,
+		emoji,
+	}))
+
 	return (
 		<section
 			id={props.id}
@@ -27,51 +48,9 @@ export default function Graveyard(props: {
 				<h2 className="text-display -mt-2 mb-6 px-6 text-4xl">Graveyard</h2>
 
 				<div className="flex max-w-96 flex-wrap justify-center gap-2 text-2xl grayscale">
-					<div>❄️</div>
-					<div>🏰</div>
-					<div>🧑‍🚀</div>
-					<div>🧖</div>
-					<div>🧑‍🍳</div>
-					<div>🎡</div>
-					<div>🎹</div>
-					<div>📚</div>
-					<div>🎈</div>
-					<div>❄️</div>
-					<div>🏰</div>
-					<div>🧑‍🚀</div>
-					<div>🧖</div>
-					<div>🧑‍🍳</div>
-					<div>🎡</div>
-					<div>🎹</div>
-					<div>📚</div>
-					<div>🎈</div>
-					<div>❄️</div>
-					<div>🏰</div>
-					<div>🧑‍🚀</div>
-					<div>🧖</div>
-					<div>🧑‍🍳</div>
-					<div>🎡</div>
-					<div>🎹</div>
-					<div>📚</div>
-					<div>🎈</div>
-					<div>❄️</div>
-					<div>🏰</div>
-					<div>🧑‍🚀</div>
-					<div>🧖</div>
-					<div>🧑‍🍳</div>
-					<div>🎡</div>
-					<div>🎹</div>
-					<div>📚</div>
-					<div>🎈</div>
-					<div>❄️</div>
-					<div>🏰</div>
-					<div>🧑‍🚀</div>
-					<div>🧖</div>
-					<div>🧑‍🍳</div>
-					<div>🎡</div>
-					<div>🎹</div>
-					<div>📚</div>
-					<div>🎈</div>
+					{deadEmoji.map((emoji) => (
+						<div key={emoji.key}>{emoji.emoji}</div>
+					))}
 				</div>
 			</div>
 		</section>

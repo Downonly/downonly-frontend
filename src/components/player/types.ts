@@ -4,21 +4,25 @@ export interface Row {
 	id: string | number
 	jobState: 'paid' | 'minting' | 'done'
 	surface: string
+	surfaceSmiley: string
 	obstacle: string
+	obstacleSmiley: string
 	figure: string
-	ipfsVideo: string | undefined
+	figureSmiley: string
 	openSea: string | undefined
-	ipfsSound: string | undefined
+	ipfsMP3: string | undefined
+	ipfsJPG: string | undefined
+	ipfsMP4: string | undefined
+	ipfsGLB: string | undefined
+	mintprice: number | undefined
 	fullname: string
 	mintdate: string
-	mintprice: number | undefined
-	blockHeight: number
-	buytxHash: string | undefined
 	buyerAddress: string | undefined
+	buytxHash: string | undefined
+	blockHeight: number
 }
 
-export interface Take
-	extends Omit<Row, 'ipfsSound' | 'ipfsVideo' | 'mintdate'> {
+export interface Take extends Omit<Row, 'ipfsMP3' | 'ipfsGLB' | 'mintdate'> {
 	model?: GLTF | null
 	modelURL: string
 	sound?: Howl | null

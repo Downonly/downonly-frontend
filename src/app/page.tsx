@@ -8,6 +8,7 @@ import Faq from '@/components/faq/faq'
 
 // TODO: Deployment + Domain
 // TODO: Gifs und Zuordnung
+// TODO: Emergency Pause
 
 export default function Home() {
 	return (

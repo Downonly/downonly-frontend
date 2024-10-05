@@ -6,10 +6,10 @@
 	@typescript-eslint/no-unsafe-return
 */
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '@/services/db'
+import { table } from '@/services/db'
 
 async function allMints() {
-	const allMints = await prisma.mints.findMany()
+	const allMints = await table.findMany()
 	return allMints
 }
 

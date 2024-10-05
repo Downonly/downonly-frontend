@@ -64,7 +64,7 @@ export type AuctionInfo =
 
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
-const contractAddress = '0xc05CD9F2b6C23374D6557EC39DbfD5531FC5156E'
+const contractAddress: string = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!
 let signer: JsonRpcSigner
 let provider: JsonRpcApiProvider
 let contract: MyContract
@@ -106,28 +106,33 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		| undefined
 	if (mockedAuctionStage) {
 		switch (mockedAuctionStage) {
-			case 'premint':
+			case 'premint': // auctionNotStarted
 				return {
 					stage: mockedAuctionStage,
 				} as AuctionInfoPremint
-			case 'mint':
+			case 'mint': // auctionActive
 				return {
 					stage: mockedAuctionStage,
 				} as AuctionInfoMint
-			case 'inbetween-mint-push':
+			case 'inbetween-mint-push': // (jobState wechselt zu done / getMotorPushWithoutBuy geht hoch) + ~1min
 				return {
 					stage: mockedAuctionStage,
 				} as AuctionInfoInbetweenMintPush
-			case 'inbetween-mint-play':
+			case 'inbetween-mint-play': // getPhase ist cooldown und getRemainingPause ist größer 0
 				return {
 					stage: mockedAuctionStage,
 				} as AuctionInfoInbetweenMintPlay
-			case 'postmint':
+			case 'postmint': // auctionsEnded
 				return {
 					stage: mockedAuctionStage,
 				} as AuctionInfoPostmint
 		}
 	}
+
+	await initContract()
+
+	const phase: unknown = await contract.getPhase()
+	console.info('phase', phase)
 
 	return Promise.resolve({ stage: 'mint' } as AuctionInfoMint) // TODO: fetch auction info
 }
@@ -138,7 +143,7 @@ export async function getCurrentPrice() {
 	}
 
 	await initContract()
-	console.info('y0olo')
+
 	let currentPrice: number
 	try {
 		currentPrice = (await contract.currentPrice()) as number

@@ -2,7 +2,6 @@ export default function HowItWorks(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
 	return (
 		<section

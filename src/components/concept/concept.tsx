@@ -5,7 +5,6 @@ export default function Concept(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
 	return (
 		<section

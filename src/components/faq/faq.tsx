@@ -4,7 +4,6 @@ export default function Faq(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-	children?: React.ReactNode
 }): JSX.Element {
 	return (
 		<section

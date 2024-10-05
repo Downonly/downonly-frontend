@@ -1,25 +1,18 @@
-/*
-	eslint-disable
-	@typescript-eslint/no-unsafe-call,
-	@typescript-eslint/no-unsafe-member-access,
-	@typescript-eslint/no-unsafe-return
-*/
-
-import { Context } from '@/pages/api/graphql'
+import { table } from '@/services/db'
 
 export const resolvers = {
 	Query: {
 		// get mint by id
-		mint: async (_parent: never, args: { id: number }, context: Context) => {
-			return await context.prisma.mints.findUnique({
+		mint: async (_parent: never, args: { id: number }) => {
+			return await table.findUnique({
 				where: {
 					id: args.id,
 				},
 			})
 		},
 		// get all mints
-		mints: async (_parent: never, _args: never, context: Context) => {
-			return await context.prisma.mints.findMany()
+		mints: async () => {
+			return await table.findMany()
 		},
 	},
 }
