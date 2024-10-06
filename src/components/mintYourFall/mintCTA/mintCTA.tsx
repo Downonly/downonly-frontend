@@ -44,7 +44,6 @@ const MintCTA: FC<{
 				<div className="text-sm">
 					{auctionInfo?.stage === 'premint' && (
 						<>
-							{/* TODO: replace emoji with selected emoji */}
 							<div className="my-3">{selectedEmoji}</div>X ↦ 🖥 33 CM ↦ ☠️
 						</>
 					)}
@@ -53,7 +52,6 @@ const MintCTA: FC<{
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
 							<p>2:10:23 / {formatUnits(auctionInfo.price, 'wei')} wei</p>{' '}
-							{/* TODO: replace emoji with selected emoji */}
 							<p className="my-3">{selectedEmoji}</p>
 							<p className="mb-3">
 								{auctionInfo.distanceCurrent} cm ↦ 🖥{' '}
@@ -74,7 +72,7 @@ const MintCTA: FC<{
 					salt={'cucumber'}
 					size="lg"
 				>
-					{/* TODO: Use read countdown data for premint phase */}
+					{/* TODO: Use real countdown data for premint phase */}
 					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint'}
 				</Button>
 			</div>

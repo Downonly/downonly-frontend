@@ -1,29 +1,53 @@
+'use client'
+
+import useAuctionInfo from '@/hooks/useAuctionInfo'
+import { useMemo } from 'react'
+
 export default function Graveyard(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
 }): JSX.Element {
-	// TODO: fetch getAllAssetsRemainingLives
+	const auctionInfo = useAuctionInfo('graveyard')
 
-	const deadEmoji = [
-		'❄️',
-		'🏰',
-		'🧑‍🚀',
-		'🧖',
-		'🧑‍🍳',
-		'🎡',
-		'🎹',
-		'📚',
-		'🎈',
-		'❄️',
-		'🏰',
-		'🧑‍🚀',
-		'🧖',
-		'🧑‍🍳',
-	].map((emoji, i) => ({
-		key: i,
-		emoji,
-	}))
+	// const deadEmoji = [
+	// 	'❄️',
+	// 	'🏰',
+	// 	'🧑‍🚀',
+	// 	'🧖',
+	// 	'🧑‍🍳',
+	// 	'🎡',
+	// 	'🎹',
+	// 	'📚',
+	// 	'🎈',
+	// 	'❄️',
+	// 	'🏰',
+	// 	'🧑‍🚀',
+	// 	'🧖',
+	// 	'🧑‍🍳',
+	// ].map((emoji, i) => ({
+	// 	key: i,
+	// 	emoji,
+	// }))
+
+	const deadEmoji = useMemo(() => {
+		if (!auctionInfo || auctionInfo.stage === 'premint') return []
+
+		return (
+			auctionInfo.remainingLives
+				? Array.from(auctionInfo.remainingLives.keys()).filter((emoji) => {
+						return auctionInfo.remainingLives!.get(emoji) === 0
+					})
+				: []
+		).map((emoji, i) => ({
+			key: i,
+			emoji,
+		}))
+	}, [auctionInfo])
+
+	if (!deadEmoji.length) {
+		return <></>
+	}
 
 	return (
 		<section

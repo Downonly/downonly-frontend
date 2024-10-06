@@ -13,6 +13,7 @@ import {
 import abi from './abi/dutchauction.json'
 import { DepositError } from '@/errors/errorEther'
 import { Row } from '@/components/player/types'
+import { emojiNameMap } from '@/utils/emoji'
 
 declare const window: Window &
 	typeof globalThis & {
@@ -26,8 +27,14 @@ export type AuctionStage =
 	| 'inbetween-mint-play'
 	| 'postmint'
 
+type RemainingLives = Map<string, number>
+
+type RemainingLivesRawItem = string[] | number[]
+type RemainingLivesRaw = RemainingLivesRawItem[]
+
 interface AuctionInfoBase {
 	stage: AuctionStage
+	remainingLives?: RemainingLives
 }
 
 interface AuctionInfoWithPrice extends AuctionInfoBase {
@@ -146,6 +153,32 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		return info
 	}
 
+	let remainingLives: RemainingLives | undefined = undefined
+	try {
+		const remainingLivesRaw =
+			(await contract.getAllAssetsRemainingLives()) as RemainingLivesRaw
+		remainingLives = remainingLivesRaw.reduce<RemainingLives>(
+			(acc, current, i) => {
+				if (i % 2 !== 0) {
+					return acc
+				}
+
+				current.forEach((emojiName, j) => {
+					const emoji = emojiNameMap.get(emojiName as string)
+					if (!emoji) return
+					acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
+				})
+
+				return acc
+			},
+			new Map<string, number>()
+		)
+	} catch (err) {
+		console.error('Failed to retrieve remaining lives.', err)
+	}
+
+	console.info('remainingLives', remainingLives)
+
 	if (phase === 'auctionActive') {
 		const price = await getCurrentPrice()
 		const distanceToDeath = await getDistanceToDeath(price)
@@ -155,6 +188,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			price,
 			distanceToDeath,
 			distanceCurrent,
+			remainingLives,
 		}
 		return info
 	}
@@ -169,6 +203,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		const info: AuctionInfoPostmint = {
 			stage: 'postmint',
 			price: await getCurrentPrice(),
+			remainingLives,
 		}
 		return info
 	}

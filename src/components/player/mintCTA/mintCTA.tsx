@@ -58,7 +58,7 @@ export default function MintCTA(props: {
 					</p>
 					<p className="font-display">---</p>
 					{getStoreState().selectedEmoji}
-					{/* TODO: get current fall */}
+					{/* TODO: get current fall distance */}
 					<p className="font-display">↓ 322,4</p>
 					<br />
 
