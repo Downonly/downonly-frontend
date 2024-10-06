@@ -22,10 +22,9 @@ export const getMockData = () => {
 		data.push({
 			id: i + 1,
 			jobState,
-			surface: '547',
-			surfaceSmiley: '🙈',
-			obstacle: 'wc1',
-			figure: 'rk2',
+			surface: 'cruise',
+			obstacle: 'books',
+			figure: 'chef',
 			ipfsMP3: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.mp3`,
 			ipfsGLB: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
 			ipfsJPG: undefined,
@@ -40,8 +39,6 @@ export const getMockData = () => {
 			buytxHash:
 				'0xf05b5ab0c5a900556c3333458eeb2991d91339f084fd77c6ddd63860cc9c51bc',
 			mintdate: '2023-01-15T13:45:30.000Z',
-			obstacleSmiley: '',
-			figureSmiley: '',
 		})
 	}
 	return data

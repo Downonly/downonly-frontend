@@ -3,11 +3,8 @@ export const typeDefs = `#graphql
     id:               ID!
     jobState:         String
     surface:          String
-    surfaceSmiley:    String
     obstacle:         String
-    obstacleSmiley:   String
     figure:           String
-    figureSmiley:     String
     openSea:          String
     ipfsMP3:          String
     ipfsJPG:          String

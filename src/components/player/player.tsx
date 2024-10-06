@@ -41,7 +41,7 @@ export default function Player(props: {
 		const totalDistance = 33
 		return (
 			takes?.reduce((acc, current) => {
-				return acc - (current.mintprice ?? 0)
+				return acc - (Number(current.mintprice) ?? 0)
 			}, totalDistance) ?? totalDistance
 		)
 	}, [takes])

@@ -42,7 +42,7 @@ export const useTakes = () => {
 									modelURL: ipfsGLB!,
 									soundURL: ipfsMP3!,
 									mintDate: new Date(mintdate),
-									mintprice: mintprice,
+									mintprice,
 									...rest,
 								}
 							})

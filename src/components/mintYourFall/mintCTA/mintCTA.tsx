@@ -51,11 +51,13 @@ const MintCTA: FC<{
 					{auctionInfo?.stage === 'mint' && (
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
-							<p>2:10:23 / {formatUnits(auctionInfo.price, 'wei')} wei</p>{' '}
+							<p>
+								2:10:23 / {formatUnits(auctionInfo.price, 'ether')} ETH
+							</p>{' '}
 							<p className="my-3">{selectedEmoji}</p>
 							<p className="mb-3">
-								{auctionInfo.distanceCurrent} cm ↦ 🖥{' '}
-								{auctionInfo.distanceToDeath} cm ↦ ☠️
+								{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+								{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 							</p>
 						</div>
 					)}

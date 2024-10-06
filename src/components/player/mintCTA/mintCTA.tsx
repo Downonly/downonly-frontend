@@ -48,28 +48,51 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'mint' && (
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
+					<pre>{auctionInfo.countdown}</pre>
 					<p className="font-display">
 						{/* TODO: get real time until action ends */}
-						2:10:23 / {formatUnits(auctionInfo.price, 'wei')} wei
+						2:10:23 / {formatUnits(auctionInfo.price, 'ether')} ETH
 					</p>
 					<p className="font-display">
-						{auctionInfo.distanceCurrent} cm ↦ 🖥 {auctionInfo.distanceToDeath}{' '}
-						cm ↦ ☠️
+						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+						{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 					</p>
 					<p className="font-display">---</p>
 					{getStoreState().selectedEmoji}
 					{/* TODO: get current fall distance */}
-					<p className="font-display">↓ 322,4</p>
+					<p className="font-display">↓ 322.4</p>
 					<br />
 
-					{/* TODO: get last mint info */}
-					<div className="text-xs leading-relaxed text-carbon dark:text-iron">
-						<p>1.7 E / -1.7cm</p>
-						<p>name / address owner</p>
-						<p>01.01.2023 2:52pm GMT</p>
-						<p>link Etherscan</p>
-						<p>link Market</p>
-					</div>
+					{auctionInfo.lastMinted && (
+						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+							<p>
+								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} ETH / -
+								{Number(auctionInfo.lastMinted.mintPrice).toFixed(1)} cm
+							</p>
+							<p>{auctionInfo.lastMinted.fullName}</p>
+							<p>{auctionInfo.lastMinted.buyerAddress}</p>
+							<p>
+								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
+									'en-US',
+									{
+										hour: '2-digit',
+										minute: '2-digit',
+										second: '2-digit',
+									}
+								)}
+							</p>
+							<p>
+								<a
+									href={auctionInfo.lastMinted.openSea}
+									target="_blank"
+									className="link"
+									rel="noreferrer noopener"
+								>
+									Open Sea
+								</a>
+							</p>
+						</div>
+					)}
 				</>
 			)}
 

@@ -64,7 +64,7 @@ export default function MintYourFall(props: {
 					<Picker options={obstacles} onChange={setObstacle} />
 				</Step>
 				<Step salt="onion" num="4" label="Push down" operator="=">
-					<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
+					<div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-6 text-2xl">
 						☝️
 					</div>
 					<div className="grid h-full grid-rows-[1fr_auto] text-center">

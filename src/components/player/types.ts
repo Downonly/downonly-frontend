@@ -4,17 +4,14 @@ export interface Row {
 	id: string | number
 	jobState: 'paid' | 'minting' | 'done'
 	surface: string
-	surfaceSmiley: string
 	obstacle: string
-	obstacleSmiley: string
 	figure: string
-	figureSmiley: string
 	openSea: string | undefined
 	ipfsMP3: string | undefined
 	ipfsJPG: string | undefined
 	ipfsMP4: string | undefined
 	ipfsGLB: string | undefined
-	mintprice: number | undefined
+	mintprice: bigint | undefined
 	fullname: string
 	mintdate: string
 	buyerAddress: string | undefined

@@ -37,10 +37,21 @@ interface AuctionInfoBase {
 	remainingLives?: RemainingLives
 }
 
+// 1.1 Eth = 1.1cm
+
+interface LastMinted {
+	mintPrice: bigint
+	fullName: string
+	mintDate: Date
+	buyerAddress: string
+	openSea: string
+}
+
 interface AuctionInfoWithPrice extends AuctionInfoBase {
 	price: bigint
 	distanceCurrent: number
 	distanceToDeath: number
+	lastMinted?: LastMinted
 }
 
 export interface AuctionInfoPremint extends AuctionInfoBase {
@@ -50,6 +61,7 @@ export interface AuctionInfoPremint extends AuctionInfoBase {
 
 export interface AuctionInfoMint extends AuctionInfoWithPrice {
 	stage: 'mint'
+	countdown: number
 }
 
 export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
@@ -63,6 +75,7 @@ export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
 export interface AuctionInfoPostmint extends AuctionInfoBase {
 	stage: 'postmint'
 	price?: bigint
+	lastMinted?: LastMinted
 }
 
 export type AuctionInfo =
@@ -142,7 +155,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	await initContract()
 
 	const phase: unknown = await contract.getPhase()
-	console.info('phase', phase)
 
 	if (phase === 'auctionNotStarted') {
 		const countdown = Number(await contract.initialPause())
@@ -151,6 +163,13 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			stage: 'premint',
 		}
 		return info
+	}
+
+	let lastMinted: LastMinted | undefined = undefined
+	try {
+		lastMinted = await getLastMinted()
+	} catch (err) {
+		console.error('Failed to get last minted', err)
 	}
 
 	let remainingLives: RemainingLives | undefined = undefined
@@ -177,18 +196,19 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		console.error('Failed to retrieve remaining lives.', err)
 	}
 
-	console.info('remainingLives', remainingLives)
-
 	if (phase === 'auctionActive') {
 		const price = await getCurrentPrice()
 		const distanceToDeath = await getDistanceToDeath(price)
-		const distanceCurrent = Number(formatUnits(price, 'wei')) / 10000
+		const countdown = await getCountdown()
+		const distanceCurrent = Number(formatUnits(price, 'ether'))
 		const info: AuctionInfoMint = {
 			stage: 'mint',
+			countdown,
 			price,
 			distanceToDeath,
 			distanceCurrent,
 			remainingLives,
+			lastMinted,
 		}
 		return info
 	}
@@ -204,6 +224,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			stage: 'postmint',
 			price: await getCurrentPrice(),
 			remainingLives,
+			lastMinted,
 		}
 		return info
 	}
@@ -211,7 +232,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	return { stage: 'premint', countdown: 0 } as AuctionInfoPremint
 }
 
-export async function getCurrentPrice(): Promise<bigint> {
+async function getCurrentPrice(): Promise<bigint> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return BigInt(parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0'))
 	}
@@ -222,15 +243,14 @@ export async function getCurrentPrice(): Promise<bigint> {
 	try {
 		currentPrice = (await contract.currentPrice()) as bigint
 	} catch (err) {
-		console.error('Whooopsi', err)
+		console.error('Failed to get current price.', err)
 		currentPrice = 0n
 	}
 
-	console.info('currentPrice', currentPrice)
 	return currentPrice
 }
 
-export async function getDistanceToDeath(price: bigint): Promise<number> {
+async function getDistanceToDeath(price: bigint): Promise<number> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return 28
 	}
@@ -239,15 +259,63 @@ export async function getDistanceToDeath(price: bigint): Promise<number> {
 		response.json()
 	)) as Row[]
 
-	// TODO: check if calculation of distance to death is correct (probably not)
-
 	const distanceDone = mints.reduce<number>((acc: number, current: Row) => {
-		return acc + (current.mintprice ?? 0) / 100_000
+		return acc + Number(formatUnits(current.mintprice ?? 0n, 'ether'))
 	}, 0)
 
-	const distanceCurrent = Number(formatUnits(price, 'wei')) / 10000
+	const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 	return 33 - distanceDone - distanceCurrent
+}
+
+async function getLastMinted(): Promise<LastMinted | undefined> {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return {
+			mintPrice: 500000n,
+			fullName: '1_clown_hospital_chair',
+			mintDate: new Date('2024-10-01 21:55:17'),
+			buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
+			openSea:
+				'https://opensea.io/assets/matic/0x251be3a17af4892035c37ebf5890f4a4d889dcad/71963690523115271825980614777540498807129498027807337614090170855822999748645',
+		}
+	}
+
+	const mints = (await fetch(`/api/mints`).then((response) =>
+		response.json()
+	)) as Row[]
+
+	const lastMintedRow = mints
+		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
+		.findLast((row) => row.jobState === 'done')
+
+	if (!lastMintedRow) return undefined
+
+	return {
+		mintPrice: lastMintedRow.mintprice ?? 0n,
+		fullName: '1_clown_hospital_chair',
+		mintDate: new Date(lastMintedRow.mintdate),
+		buyerAddress: lastMintedRow.buyerAddress ?? '',
+		openSea: lastMintedRow.openSea ?? '',
+	}
+}
+
+async function getCountdown(): Promise<number> {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return 123
+	}
+
+	let countdown = 0
+	try {
+		// TODO: use contract.remainingTimeUntilPriceReset as soon as fixed
+		countdown = await Promise.resolve(0)
+		// countdown = Number(
+		// 	(await contract.remainingTimeUntilPriceReset()) as bigint
+		// )
+	} catch (err) {
+		console.error('Failed to get countdown.', err)
+	}
+
+	return countdown
 }
 
 export async function getIsPaused() {
