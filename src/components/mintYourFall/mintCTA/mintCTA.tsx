@@ -2,12 +2,16 @@
 
 import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
-import { useEffect, useState } from 'react'
-import { buy, getCurrentPrice } from '@/services/ether'
+import { FC, ReactElement, ReactNode, useState } from 'react'
+import { buy } from '@/services/ether'
 import { DepositError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 
-export default function MintCTA(): JSX.Element {
+import { formatUnits } from 'ethers'
+
+const MintCTA: FC<{
+	selectedEmoji: ReactNode
+}> = ({ selectedEmoji }): ReactElement => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const handleDismiss = () => {
 		setModalOpen(false)
@@ -18,9 +22,11 @@ export default function MintCTA(): JSX.Element {
 	const [isMinting, setIsMinting] = useState(false)
 
 	const handleMintFall = async () => {
+		if (auctionInfo?.stage !== 'mint') return
+
 		try {
 			setIsMinting(true)
-			await buy(price!)
+			await buy(auctionInfo.price)
 		} catch (err) {
 			if (err instanceof DepositError) {
 				setModalOpen(true)
@@ -32,36 +38,27 @@ export default function MintCTA(): JSX.Element {
 		}
 	}
 
-	const [price, setPrice] = useState<string>()
-
-	useEffect(() => {
-		if (auctionInfo?.stage === 'mint') {
-			void (async () => {
-				try {
-					setPrice(String(await getCurrentPrice()))
-				} catch (err) {
-					console.error(err)
-				}
-			})()
-		}
-	}, [auctionInfo])
-
 	return (
 		<>
 			<div className="pt-6">
 				<div className="text-sm">
 					{auctionInfo?.stage === 'premint' && (
 						<>
-							<div className="my-3">🏥 👮 🪑</div>X ↦ 🖥 33 CM ↦ ☠️
+							{/* TODO: replace emoji with selected emoji */}
+							<div className="my-3">{selectedEmoji}</div>X ↦ 🖥 33 CM ↦ ☠️
 						</>
 					)}
 
 					{auctionInfo?.stage === 'mint' && (
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
-							<p>2:10:23 / 2.3 Eth</p>
-							<p className="my-3">🏥 👮 🪑</p>
-							<p className="mb-3">2.3 cm ↦ 🖥 33 cm ↦ ☠️</p>
+							<p>2:10:23 / {formatUnits(auctionInfo.price, 'wei')} wei</p>{' '}
+							{/* TODO: replace emoji with selected emoji */}
+							<p className="my-3">{selectedEmoji}</p>
+							<p className="mb-3">
+								{auctionInfo.distanceCurrent} cm ↦ 🖥{' '}
+								{auctionInfo.distanceToDeath} cm ↦ ☠️
+							</p>
 						</div>
 					)}
 				</div>
@@ -69,7 +66,9 @@ export default function MintCTA(): JSX.Element {
 			<div>
 				<Button
 					onClick={handleMintFall}
-					disabled={!price}
+					disabled={
+						!auctionInfo || !('price' in auctionInfo) || !auctionInfo.price
+					}
 					loading={isMinting}
 					className="relative z-10"
 					salt={'cucumber'}
@@ -121,3 +120,5 @@ export default function MintCTA(): JSX.Element {
 		</>
 	)
 }
+
+export default MintCTA

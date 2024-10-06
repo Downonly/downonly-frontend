@@ -4,6 +4,8 @@ import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 import Picker from '@/components/mintYourFall/step/picker'
+import { useEffect, useState } from 'react'
+import useStore from '@/hooks/useStore'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -29,6 +31,16 @@ export default function MintYourFall(props: {
 		{ emoji: '🎹', gif: '/gifs/obstacle_DO_piano_seq_10fps_6sec_300x300.gif' },
 	]
 
+	const [setting, setSetting] = useState(settings[0].emoji)
+	const [character, setCharacter] = useState(characters[0].emoji)
+	const [obstacle, setObstacle] = useState(obstacles[0].emoji)
+
+	const { setStoreState } = useStore()
+
+	useEffect(() => {
+		setStoreState({ selectedEmoji: `${setting} ${character} ${obstacle}` })
+	}, [character, obstacle, props, setStoreState, setting])
+
 	return (
 		<Card
 			id={props.id}
@@ -43,20 +55,20 @@ export default function MintYourFall(props: {
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
 				<Step salt="potato" noPadding num="1" label="Setting">
-					<Picker options={settings} />
+					<Picker options={settings} onChange={setSetting} />
 				</Step>
 				<Step salt="tomato" noPadding num="2" label="Character" operator="+">
-					<Picker options={characters} />
+					<Picker options={characters} onChange={setCharacter} />
 				</Step>
 				<Step salt="carrot" noPadding num="3" label="Obstacle" operator="+">
-					<Picker options={obstacles} />
+					<Picker options={obstacles} onChange={setObstacle} />
 				</Step>
 				<Step salt="onion" num="4" label="Push down" operator="=">
 					<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
 						☝️
 					</div>
 					<div className="grid h-full grid-rows-[1fr_auto] text-center">
-						<MintCTA />
+						<MintCTA selectedEmoji={`${setting} ${character} ${obstacle}`} />
 					</div>
 				</Step>
 			</div>

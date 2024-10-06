@@ -38,7 +38,7 @@ export default function Step(props: {
 				bgClassName="bg-gradient-to-r from-snow to-snow dark:from-nickel dark:to-nickel"
 			>
 				<Circle
-					className="top-0 -translate-x-1/2 -translate-y-1/2 text-white dark:text-carbon"
+					className="top-0 z-10 -translate-x-1/2 -translate-y-1/2 text-white dark:text-carbon"
 					salt={`circle-2-${props.salt}`}
 					style={{ position: 'absolute' }}
 				/>

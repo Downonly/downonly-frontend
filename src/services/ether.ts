@@ -4,15 +4,15 @@ import {
 	Contract,
 	type ContractInterface,
 	type Eip1193Provider,
-	formatEther,
+	formatUnits,
 	getDefaultProvider,
 	type JsonRpcApiProvider,
 	type JsonRpcSigner,
-	parseEther,
 	TransactionResponse,
 } from 'ethers'
 import abi from './abi/dutchauction.json'
 import { DepositError } from '@/errors/errorEther'
+import { Row } from '@/components/player/types'
 
 declare const window: Window &
 	typeof globalThis & {
@@ -31,7 +31,9 @@ interface AuctionInfoBase {
 }
 
 interface AuctionInfoWithPrice extends AuctionInfoBase {
-	price: number
+	price: bigint
+	distanceCurrent: number
+	distanceToDeath: number
 }
 
 export interface AuctionInfoPremint extends AuctionInfoBase {
@@ -51,8 +53,9 @@ export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
 	stage: 'inbetween-mint-play'
 }
 
-export interface AuctionInfoPostmint extends AuctionInfoWithPrice {
+export interface AuctionInfoPostmint extends AuctionInfoBase {
 	stage: 'postmint'
+	price?: bigint
 }
 
 export type AuctionInfo =
@@ -140,30 +143,76 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			countdown,
 			stage: 'premint',
 		}
-		console.info('auctionInfo', info)
 		return info
 	}
 
-	return { stage: 'mint' } as AuctionInfoMint // TODO: fetch auction info
+	if (phase === 'auctionActive') {
+		const price = await getCurrentPrice()
+		const distanceToDeath = await getDistanceToDeath(price)
+		const distanceCurrent = Number(formatUnits(price, 'wei')) / 10000
+		const info: AuctionInfoMint = {
+			stage: 'mint',
+			price,
+			distanceToDeath,
+			distanceCurrent,
+		}
+		return info
+	}
+
+	if (phase === 'auctionCooldown') {
+	}
+
+	if (phase === 'emergencyPause') {
+	}
+
+	if (phase === 'auctionsEnded') {
+		const info: AuctionInfoPostmint = {
+			stage: 'postmint',
+			price: await getCurrentPrice(),
+		}
+		return info
+	}
+
+	return { stage: 'premint', countdown: 0 } as AuctionInfoPremint
 }
 
-export async function getCurrentPrice() {
+export async function getCurrentPrice(): Promise<bigint> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0')
+		return BigInt(parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0'))
 	}
 
 	await initContract()
 
-	let currentPrice: number
+	let currentPrice: bigint
 	try {
-		currentPrice = (await contract.currentPrice()) as number
+		currentPrice = (await contract.currentPrice()) as bigint
 	} catch (err) {
 		console.error('Whooopsi', err)
-		currentPrice = 0
+		currentPrice = 0n
 	}
 
 	console.info('currentPrice', currentPrice)
-	return formatEther(currentPrice)
+	return currentPrice
+}
+
+export async function getDistanceToDeath(price: bigint): Promise<number> {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return 28
+	}
+
+	const mints = (await fetch(`/api/mints`).then((response) =>
+		response.json()
+	)) as Row[]
+
+	// TODO: check if calculation of distance to death is correct (probably not)
+
+	const distanceDone = mints.reduce<number>((acc: number, current: Row) => {
+		return acc + (current.mintprice ?? 0) / 100_000
+	}, 0)
+
+	const distanceCurrent = Number(formatUnits(price, 'wei')) / 10000
+
+	return 33 - distanceDone - distanceCurrent
 }
 
 export async function getIsPaused() {
@@ -187,7 +236,7 @@ export async function getTimeUntilAuctionEnds() {
 	return parseInt((await contract.remainingTimeUntilPriceReset()) as string, 10)
 }
 
-export async function buy(ether: string) {
+export async function buy(wei: bigint) {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		throw new DepositError('Deposit failed.')
 	}
@@ -206,8 +255,7 @@ export async function buy(ether: string) {
 			'wc1',
 			'547',
 			{
-				value: parseEther(ether),
-				// value: parseUnits(wei.toString(), -18),
+				value: wei,
 			}
 		)) as TransactionResponse
 

@@ -15,6 +15,7 @@ export default function Picker(props: {
 		emoji: string
 		gif: string
 	}[]
+	onChange: (emoji: string) => void
 }): JSX.Element {
 	const { options } = props
 
@@ -31,7 +32,7 @@ export default function Picker(props: {
 			className={`grid h-full place-items-center ${props.className ?? ''}`}
 			style={props.style}
 		>
-			<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-6 text-2xl">
+			<div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-6 text-2xl">
 				{options[currentPick]?.emoji}
 			</div>
 
@@ -40,6 +41,7 @@ export default function Picker(props: {
 				onLoad={() => {
 					setLoaded(true)
 				}}
+				className="rounded-2xl"
 				src={options[currentPick]?.gif}
 				width={250}
 				height={250}
@@ -53,11 +55,11 @@ export default function Picker(props: {
 			<button
 				disabled={options.length <= 1}
 				className="interactive absolute left-4 top-1/2 -translate-y-1/2"
-				onClick={() =>
-					setCurrentPick(
-						currentPick === 0 ? options.length - 1 : currentPick - 1
-					)
-				}
+				onClick={() => {
+					const cp = currentPick === 0 ? options.length - 1 : currentPick - 1
+					setCurrentPick(cp)
+					props.onChange(props.options[cp].emoji)
+				}}
 			>
 				<Circle
 					salt="sugarcane"
@@ -69,11 +71,11 @@ export default function Picker(props: {
 			<button
 				disabled={options.length <= 1}
 				className="interactive absolute right-4 top-1/2 -translate-y-1/2"
-				onClick={() =>
-					setCurrentPick(
-						currentPick === options.length - 1 ? 0 : currentPick + 1
-					)
-				}
+				onClick={() => {
+					const cp = currentPick === options.length - 1 ? 0 : currentPick + 1
+					setCurrentPick(cp)
+					props.onChange(props.options[cp].emoji)
+				}}
 			>
 				<Circle salt="bean" className="scale-75 text-nickel dark:text-snow">
 					<Arrow className="text-snow dark:text-carbon">Next</Arrow>
