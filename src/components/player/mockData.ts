@@ -33,7 +33,8 @@ export const getMockData = () => {
 				done &&
 				'https://testnets.opensea.io/assets/goerli/0x410a2a13c7847321d66cae97c0b2b70706f1f483/5',
 			fullname: 'COP-HOSPITAL-CHAIR-FALL',
-			mintprice: done && Math.random(),
+			mintprice:
+				done && BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)),
 			blockHeight: 10035551,
 			buyerAddress: done && '0x6F49498A063d4AB25106aD49c1f050088633268f',
 			buytxHash:
