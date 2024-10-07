@@ -27,6 +27,13 @@ export type AuctionStage =
 	| 'inbetween-mint-play'
 	| 'postmint'
 
+type Phase =
+	| 'auctionNotStarted'
+	| 'auctionActive'
+	| 'auctionCooldown'
+	| 'auctionsEnded'
+	| 'emergencyPause'
+
 type RemainingLives = Map<string, number>
 
 type RemainingLivesRawItem = string[] | number[]
@@ -34,6 +41,7 @@ type RemainingLivesRaw = RemainingLivesRawItem[]
 
 interface AuctionInfoBase {
 	stage: AuctionStage
+	mints: Row[]
 	remainingLives?: RemainingLives
 }
 
@@ -70,6 +78,7 @@ export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
 
 export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
 	stage: 'inbetween-mint-play'
+	countdown: number
 }
 
 export interface AuctionInfoPostmint extends AuctionInfoBase {
@@ -123,82 +132,120 @@ async function initContract() {
 	contract = new Contract(contractAddress, abi, signer || provider)
 }
 
+// let lastMotorPushWithoutBuy: number | undefined
+// let lastInbetweenMintPushTime: Date | undefined
 export async function getAuctionInfo(): Promise<AuctionInfo> {
 	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
 		| AuctionStage
 		| undefined
 	if (mockedAuctionStage) {
+		const mints = (await import('./mockData')).getMockData()
+
 		switch (mockedAuctionStage) {
 			case 'premint': // auctionNotStarted
 				return {
 					stage: mockedAuctionStage,
+					mints,
 				} as AuctionInfoPremint
 			case 'mint': // auctionActive
 				return {
 					stage: mockedAuctionStage,
+					mints,
 				} as AuctionInfoMint
-			case 'inbetween-mint-push': // (jobState wechselt zu done / getMotorPushWithoutBuy geht hoch) + ~1min
+			case 'inbetween-mint-push': // (jobState wechselt zu done / getMotorPushWithoutBuy geht hoch) + ~1min // hier ist auch cooldown
 				return {
 					stage: mockedAuctionStage,
+					mints,
 				} as AuctionInfoInbetweenMintPush
 			case 'inbetween-mint-play': // getPhase ist cooldown und getRemainingPause ist größer 0
 				return {
 					stage: mockedAuctionStage,
+					mints,
 				} as AuctionInfoInbetweenMintPlay
 			case 'postmint': // auctionsEnded
 				return {
 					stage: mockedAuctionStage,
+					mints,
 				} as AuctionInfoPostmint
 		}
 	}
 
 	await initContract()
 
-	const phase: unknown = await contract.getPhase()
+	const phase = (await contract.getPhase()) as Phase
+
+	if (phase === 'emergencyPause') {
+	}
+
+	let remainingLives: RemainingLives | undefined = undefined
+	try {
+		remainingLives = await getRemainingLives()
+	} catch (err) {
+		console.error('Failed to get remaining lives', err)
+	}
+
+	let mints: Row[] = []
+	try {
+		mints = (await fetch(`/api/mints`).then((response) =>
+			response.json()
+		)) as Row[]
+	} catch (err) {
+		console.error('Failed to fetch mints from db.', err)
+	}
+
+	let lastMinted: LastMinted | undefined = undefined
+	try {
+		lastMinted = getLastMinted(mints)
+	} catch (err) {
+		console.error('Failed to get last minted', err)
+	}
+
+	if (phase === 'auctionsEnded') {
+		const info: AuctionInfoPostmint = {
+			stage: 'postmint',
+			price: await getCurrentPrice(),
+			remainingLives,
+			lastMinted,
+			mints,
+		}
+		return info
+	}
+
+	if (phase === 'auctionCooldown') {
+		if (getJobState(mints) === 'done') {
+			// TODO: return 'inbetween-mint-push' stage info
+		}
+
+		const countdown = (await contract.getRemainingPause()) as number
+		if (countdown > 0) {
+			const price = await getCurrentPrice()
+			const distanceToDeath = getDistanceToDeath(mints, price)
+			const distanceCurrent = Number(formatUnits(price, 'ether'))
+			const info: AuctionInfoInbetweenMintPlay = {
+				stage: 'inbetween-mint-play',
+				countdown,
+				price,
+				distanceCurrent,
+				distanceToDeath,
+				mints,
+			}
+			return info
+		}
+	}
 
 	if (phase === 'auctionNotStarted') {
 		const countdown = Number(await contract.initialPause())
 		const info: AuctionInfoPremint = {
 			countdown,
 			stage: 'premint',
+			mints,
 		}
 		return info
 	}
 
-	let lastMinted: LastMinted | undefined = undefined
-	try {
-		lastMinted = await getLastMinted()
-	} catch (err) {
-		console.error('Failed to get last minted', err)
-	}
-
-	let remainingLives: RemainingLives | undefined = undefined
-	try {
-		const remainingLivesRaw =
-			(await contract.getAllAssetsRemainingLives()) as RemainingLivesRaw
-		remainingLives = remainingLivesRaw.reduce<RemainingLives>(
-			(acc, current, i) => {
-				if (i % 2 !== 0) {
-					return acc
-				}
-
-				current.forEach((emojiName, j) => {
-					const emoji = emojiNameMap.get(emojiName as string)
-					if (!emoji) return
-					acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
-				})
-
-				return acc
-			},
-			new Map<string, number>()
-		)
-	} catch (err) {
-		console.error('Failed to retrieve remaining lives.', err)
-	}
-
 	if (phase === 'auctionActive') {
 		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath(price)
+		const distanceToDeath = getDistanceToDeath(mints, price)
 		const countdown = await getCountdown()
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 		const info: AuctionInfoMint = {
@@ -209,22 +256,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			distanceCurrent,
 			remainingLives,
 			lastMinted,
-		}
-		return info
-	}
-
-	if (phase === 'auctionCooldown') {
-	}
-
-	if (phase === 'emergencyPause') {
-	}
-
-	if (phase === 'auctionsEnded') {
-		const info: AuctionInfoPostmint = {
-			stage: 'postmint',
-			price: await getCurrentPrice(),
-			remainingLives,
-			lastMinted,
+			mints,
 		}
 		return info
 	}
@@ -250,14 +282,17 @@ async function getCurrentPrice(): Promise<bigint> {
 	return currentPrice
 }
 
-async function getDistanceToDeath(price: bigint): Promise<number> {
+function getJobState(mints: Row[]): Row['jobState'] | undefined {
+	return mints
+		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
+		.findLast((row) => row.jobState === 'done' || row.jobState === 'minting')
+		?.jobState
+}
+
+function getDistanceToDeath(mints: Row[], price: bigint): number {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return 28
 	}
-
-	const mints = (await fetch(`/api/mints`).then((response) =>
-		response.json()
-	)) as Row[]
 
 	const distanceDone = mints.reduce<number>((acc: number, current: Row) => {
 		return acc + Number(formatUnits(current.mintprice ?? 0n, 'ether'))
@@ -268,22 +303,29 @@ async function getDistanceToDeath(price: bigint): Promise<number> {
 	return 33 - distanceDone - distanceCurrent
 }
 
-async function getLastMinted(): Promise<LastMinted | undefined> {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return {
-			mintPrice: 500000n,
-			fullName: '1_clown_hospital_chair',
-			mintDate: new Date('2024-10-01 21:55:17'),
-			buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
-			openSea:
-				'https://opensea.io/assets/matic/0x251be3a17af4892035c37ebf5890f4a4d889dcad/71963690523115271825980614777540498807129498027807337614090170855822999748645',
-		}
-	}
+async function getRemainingLives(): Promise<RemainingLives> {
+	const remainingLivesRaw =
+		(await contract.getAllAssetsRemainingLives()) as RemainingLivesRaw
+	const remainingLives = remainingLivesRaw.reduce<RemainingLives>(
+		(acc, current, i) => {
+			if (i % 2 !== 0) {
+				return acc
+			}
 
-	const mints = (await fetch(`/api/mints`).then((response) =>
-		response.json()
-	)) as Row[]
+			current.forEach((emojiName, j) => {
+				const emoji = emojiNameMap.get(emojiName as string)
+				if (!emoji) return
+				acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
+			})
 
+			return acc
+		},
+		new Map<string, number>()
+	)
+	return remainingLives
+}
+
+function getLastMinted(mints: Row[]): LastMinted | undefined {
 	const lastMintedRow = mints
 		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
 		.findLast((row) => row.jobState === 'done')

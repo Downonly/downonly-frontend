@@ -3,7 +3,6 @@
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { useCallback } from 'react'
-import { useTakes } from '@/components/player/hooks/useTakes'
 import Countdown from '@/components/countdown/countdown'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
@@ -12,6 +11,7 @@ export default function MintCTA(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
+	takes: Take[] | undefined
 	currentTake: Take | undefined
 }): JSX.Element {
 	const auctionInfo = useAuctionInfo('playerCTA')
@@ -28,8 +28,7 @@ export default function MintCTA(props: {
 
 	const { getStoreState } = useStore()
 
-	const takes = useTakes()
-	if (!takes) return <></>
+	if (!props.takes) return <></>
 
 	return (
 		<div id={props.id} className={props.className ?? ''} style={props.style}>

@@ -4,17 +4,18 @@ import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import gsap from 'gsap'
 import Loading from '@/components/loading/loading'
 import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { Howl } from 'howler'
-import { useTakes } from '@/components/player/hooks/useTakes'
 import { usePreloading } from '@/components/player/hooks/usePreloading'
 import { useNextTakes } from '@/components/player/hooks/useNextTakes'
 import { useLoaded } from '@/components/player/hooks/useLoaded'
+import useAuctionInfo from '@/hooks/useAuctionInfo'
+import { Take } from '@/components/player/types'
 
 const BUFFER_SIZE = 4
 
@@ -28,7 +29,21 @@ export default function Player(props: {
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
 
-	const takes = useTakes()
+	const auctionInfo = useAuctionInfo('player')
+	// const takes = useTakes(auctionInfo?.mints ?? [])
+	const takes = auctionInfo?.mints
+		.filter((row) => row.ipfsGLB && row.ipfsMP3)
+		.map<Take>((row) => {
+			const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+			return {
+				modelURL: ipfsGLB!,
+				soundURL: ipfsMP3!,
+				mintDate: new Date(mintdate),
+				mintprice,
+				...rest,
+			}
+		})
+
 	const getNextTakes = useNextTakes(currentIndex, takes, BUFFER_SIZE)
 
 	const [currentGLTF, setCurrentGLTF] = useState<GLTF>()
@@ -37,16 +52,16 @@ export default function Player(props: {
 	const loaded = useLoaded(currentIndex, takes, getNextTakes, BUFFER_SIZE)
 	const isPreloading = usePreloading(currentIndex, takes, loaded, getNextTakes)
 
-	const distanceToDeath = useMemo(() => {
-		const totalDistance = 33
-		return (
-			takes?.reduce((acc, current) => {
-				return acc - (Number(current.mintprice) ?? 0)
-			}, totalDistance) ?? totalDistance
-		)
-	}, [takes])
-
-	console.info('distanceToDeath', distanceToDeath)
+	// const distanceToDeath = useMemo(() => {
+	// 	const totalDistance = 33
+	// 	return (
+	// 		takes?.reduce((acc, current) => {
+	// 			return acc - (Number(current.mintprice) ?? 0)
+	// 		}, totalDistance) ?? totalDistance
+	// 	)
+	// }, [takes])
+	//
+	// console.info('distanceToDeath', distanceToDeath)
 
 	const handleFinished = () => {
 		if (!takes?.length) return
@@ -166,7 +181,7 @@ export default function Player(props: {
 				</div>
 			</div>
 			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
-				<MintCTA currentTake={takes?.[currentIndex]} />
+				<MintCTA takes={takes} currentTake={takes?.[currentIndex]} />
 			</div>
 		</section>
 	)

@@ -95,7 +95,8 @@ export const useLoaded = (
 				const sound = loaded.get(modelURL)?.sound
 				sound?.unload()
 				removeLoaded(modelURL)
-				takes.find((take) => take.modelURL === modelURL)!.model = null
+				const toDispose = takes.find((take) => take.modelURL === modelURL)
+				if (toDispose) toDispose.model = null
 			}
 		})
 	}, [currentIndex, getNextTakes, loaded, removeLoaded, takes])

@@ -12,7 +12,7 @@ const fetchAuctionInfo = async () => {
 			subscribers.get(key)?.(info)
 		})
 	} catch (err) {
-		console.error(err)
+		console.error('Failed to get auction info.', err)
 	} finally {
 		window.setTimeout(() => void fetchAuctionInfo(), pollInterval)
 	}
