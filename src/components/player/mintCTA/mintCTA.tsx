@@ -6,6 +6,7 @@ import { useCallback } from 'react'
 import Countdown from '@/components/countdown/countdown'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
+import { formatDuration } from '@/utils/time'
 
 export default function MintCTA(props: {
 	className?: string
@@ -47,10 +48,9 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'mint' && (
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
-					<pre>{auctionInfo.countdown}</pre>
 					<p className="font-display">
-						{/* TODO: get real time until action ends */}
-						2:10:23 / {formatUnits(auctionInfo.price, 'ether')} ETH
+						{formatDuration(auctionInfo.countdown)} /{' '}
+						{formatUnits(auctionInfo.price, 'ether')} ETH
 					</p>
 					<p className="font-display">
 						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}

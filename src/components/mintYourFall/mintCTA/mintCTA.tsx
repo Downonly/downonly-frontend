@@ -8,6 +8,7 @@ import { DepositError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 import { formatUnits } from 'ethers'
+import { formatDuration } from '@/utils/time'
 
 const MintCTA: FC<{
 	selectedEmoji: ReactNode
@@ -74,8 +75,9 @@ const MintCTA: FC<{
 					salt={'cucumber'}
 					size="lg"
 				>
-					{/* TODO: Use real countdown data for premint phase */}
-					{auctionInfo?.stage === 'premint' ? '2D 18H 45M 03S' : 'Mint'}
+					{auctionInfo?.stage === 'premint'
+						? formatDuration(auctionInfo.countdown)
+						: 'Mint'}
 				</Button>
 			</div>
 

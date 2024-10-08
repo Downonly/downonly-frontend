@@ -26,6 +26,7 @@ export type AuctionStage =
 	| 'inbetween-mint-push'
 	| 'inbetween-mint-play'
 	| 'postmint'
+	| 'emergency'
 
 type Phase =
 	| 'auctionNotStarted'
@@ -74,6 +75,7 @@ export interface AuctionInfoMint extends AuctionInfoWithPrice {
 
 export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
 	stage: 'inbetween-mint-push'
+	countdown: number
 }
 
 export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
@@ -87,12 +89,17 @@ export interface AuctionInfoPostmint extends AuctionInfoBase {
 	lastMinted?: LastMinted
 }
 
+export interface AuctionInfoEmergency {
+	stage: 'emergency'
+}
+
 export type AuctionInfo =
 	| AuctionInfoPremint
 	| AuctionInfoMint
 	| AuctionInfoInbetweenMintPush
 	| AuctionInfoInbetweenMintPlay
 	| AuctionInfoPostmint
+	| AuctionInfoEmergency
 
 type MyContract = BaseContract & Omit<ContractInterface, keyof BaseContract>
 
@@ -133,7 +140,7 @@ async function initContract() {
 }
 
 // let lastMotorPushWithoutBuy: number | undefined
-// let lastInbetweenMintPushTime: Date | undefined
+let lastInbetweenMintPushTime: number | undefined
 export async function getAuctionInfo(): Promise<AuctionInfo> {
 	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
 		| AuctionStage
@@ -157,7 +164,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 					stage: mockedAuctionStage,
 					mints,
 				} as AuctionInfoInbetweenMintPush
-			case 'inbetween-mint-play': // getPhase ist cooldown und getRemainingPause ist größer 0
+			case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
 				return {
 					stage: mockedAuctionStage,
 					mints,
@@ -175,6 +182,14 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	const phase = (await contract.getPhase()) as Phase
 
 	if (phase === 'emergencyPause') {
+		const info: AuctionInfoEmergency = {
+			stage: 'emergency',
+		}
+		return info
+	}
+
+	if (phase !== 'auctionCooldown') {
+		lastInbetweenMintPushTime = undefined
 	}
 
 	let remainingLives: RemainingLives | undefined = undefined
@@ -212,17 +227,27 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	if (phase === 'auctionCooldown') {
-		if (getJobState(mints) === 'done') {
-			// TODO: return 'inbetween-mint-push' stage info
+		let countdown = 0
+		try {
+			countdown = (await contract.getRemainingPause()) as number
+		} catch (err) {
+			console.error('Failed to get countdown.', err)
 		}
 
-		const countdown = (await contract.getRemainingPause()) as number
-		if (countdown > 0) {
-			const price = await getCurrentPrice()
-			const distanceToDeath = getDistanceToDeath(mints, price)
-			const distanceCurrent = Number(formatUnits(price, 'ether'))
-			const info: AuctionInfoInbetweenMintPlay = {
-				stage: 'inbetween-mint-play',
+		const price = await getCurrentPrice()
+		const distanceToDeath = getDistanceToDeath(mints, price)
+		const distanceCurrent = Number(formatUnits(price, 'ether'))
+
+		if (lastInbetweenMintPushTime === undefined) {
+			lastInbetweenMintPushTime = Number(new Date())
+		}
+
+		if (
+			getJobState(mints) === 'done' &&
+			Number(new Date()) - lastInbetweenMintPushTime < 60_000
+		) {
+			const info: AuctionInfoInbetweenMintPush = {
+				stage: 'inbetween-mint-push',
 				countdown,
 				price,
 				distanceCurrent,
@@ -231,6 +256,16 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			}
 			return info
 		}
+
+		const info: AuctionInfoInbetweenMintPlay = {
+			stage: 'inbetween-mint-play',
+			countdown,
+			price,
+			distanceCurrent,
+			distanceToDeath,
+			mints,
+		}
+		return info
 	}
 
 	if (phase === 'auctionNotStarted') {
