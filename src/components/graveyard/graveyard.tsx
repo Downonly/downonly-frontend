@@ -31,7 +31,13 @@ export default function Graveyard(props: {
 	// }))
 
 	const deadEmoji = useMemo(() => {
-		if (!auctionInfo || auctionInfo.stage === 'premint') return []
+		if (
+			!auctionInfo ||
+			auctionInfo.stage === 'premint' ||
+			auctionInfo.stage === 'emergency'
+		) {
+			return []
+		}
 
 		return (
 			auctionInfo.remainingLives

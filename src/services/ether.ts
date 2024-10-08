@@ -177,6 +177,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		}
 	}
 
+	// TODO: handle init contract failure.
 	await initContract()
 
 	const phase = (await contract.getPhase()) as Phase

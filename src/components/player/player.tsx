@@ -4,7 +4,7 @@ import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import gsap from 'gsap'
@@ -30,19 +30,24 @@ export default function Player(props: {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	const auctionInfo = useAuctionInfo('player')
-	// const takes = useTakes(auctionInfo?.mints ?? [])
-	const takes = auctionInfo?.mints
-		.filter((row) => row.ipfsGLB && row.ipfsMP3)
-		.map<Take>((row) => {
-			const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
-			return {
-				modelURL: ipfsGLB!,
-				soundURL: ipfsMP3!,
-				mintDate: new Date(mintdate),
-				mintprice,
-				...rest,
-			}
-		})
+	const takes = useMemo(
+		() =>
+			auctionInfo?.stage === 'emergency'
+				? []
+				: auctionInfo?.mints
+						.filter((row) => row.ipfsGLB && row.ipfsMP3)
+						.map<Take>((row) => {
+							const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+							return {
+								modelURL: ipfsGLB!,
+								soundURL: ipfsMP3!,
+								mintDate: new Date(mintdate),
+								mintprice,
+								...rest,
+							}
+						}),
+		[auctionInfo]
+	)
 
 	const getNextTakes = useNextTakes(currentIndex, takes, BUFFER_SIZE)
 
