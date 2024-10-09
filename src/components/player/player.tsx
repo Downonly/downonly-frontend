@@ -32,7 +32,9 @@ export default function Player(props: {
 	const auctionInfo = useAuctionInfo('player')
 	const takes = useMemo(
 		() =>
-			auctionInfo?.stage === 'emergency'
+			process.env.NEXT_PUBLIC_PLAYER_DISABLED ||
+			auctionInfo?.stage === 'emergency' ||
+			!auctionInfo?.mints?.length
 				? []
 				: auctionInfo?.mints
 						.filter((row) => row.ipfsGLB && row.ipfsMP3)

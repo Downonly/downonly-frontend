@@ -53,7 +53,8 @@ const MintCTA: FC<{
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
 							<p>
-								2:10:23 / {formatUnits(auctionInfo.price, 'ether')} ETH
+								{formatDuration(auctionInfo.countdown)} /{' '}
+								{formatUnits(auctionInfo.price, 'ether')} ETH
 							</p>{' '}
 							<p className="my-3">{selectedEmoji}</p>
 							<p className="mb-3">

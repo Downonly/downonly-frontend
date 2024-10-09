@@ -3,7 +3,6 @@
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { useCallback } from 'react'
-import Countdown from '@/components/countdown/countdown'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import { formatDuration } from '@/utils/time'
@@ -36,7 +35,8 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'premint' && (
 				<>
 					<p className="font-display">
-						<Countdown seconds={auctionInfo.countdown} />
+						{formatDuration(auctionInfo.countdown)}
+						{/*<Countdown seconds={auctionInfo.countdown} />*/}
 					</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>

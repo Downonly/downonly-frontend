@@ -14,7 +14,7 @@ const fetchAuctionInfo = async () => {
 	} catch (err) {
 		console.error('Failed to get auction info.', err)
 	} finally {
-		window.setTimeout(() => void fetchAuctionInfo(), pollInterval)
+		setTimeout(() => void fetchAuctionInfo(), pollInterval)
 	}
 }
 void fetchAuctionInfo()
