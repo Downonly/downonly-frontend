@@ -32,7 +32,7 @@ export default function Player(props: {
 	const auctionInfo = useAuctionInfo('player')
 	const takes = useMemo(
 		() =>
-			process.env.NEXT_PUBLIC_PLAYER_DISABLED ||
+			!!process.env.NEXT_PUBLIC_PLAYER_DISABLED ||
 			auctionInfo?.stage === 'emergency' ||
 			!auctionInfo?.mints?.length
 				? []
