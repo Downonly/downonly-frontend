@@ -63,15 +63,31 @@ const MintCTA: FC<{
 							</p>
 						</div>
 					)}
+
+					{(auctionInfo?.stage === 'inbetween-mint-push' ||
+						auctionInfo?.stage === 'inbetween-mint-play') && (
+						<div className="text-xs">
+							<p className="text-display mb-1 uppercase">Pushing</p>
+							<p className="my-3">{selectedEmoji}</p>
+						</div>
+					)}
 				</div>
 			</div>
 			<div>
 				<Button
 					onClick={handleMintFall}
 					disabled={
-						!auctionInfo || !('price' in auctionInfo) || !auctionInfo.price
+						!auctionInfo ||
+						!('price' in auctionInfo) ||
+						!auctionInfo.price ||
+						auctionInfo?.stage === 'inbetween-mint-push' ||
+						auctionInfo?.stage === 'inbetween-mint-play'
 					}
-					loading={isMinting}
+					loading={
+						isMinting ||
+						auctionInfo?.stage === 'inbetween-mint-push' ||
+						auctionInfo?.stage === 'inbetween-mint-play'
+					}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"

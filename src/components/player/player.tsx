@@ -2,6 +2,7 @@
 
 import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
+import Stream from '@/components/player/stream/stream'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -58,17 +59,6 @@ export default function Player(props: {
 
 	const loaded = useLoaded(currentIndex, takes, getNextTakes, BUFFER_SIZE)
 	const isPreloading = usePreloading(currentIndex, takes, loaded, getNextTakes)
-
-	// const distanceToDeath = useMemo(() => {
-	// 	const totalDistance = 33
-	// 	return (
-	// 		takes?.reduce((acc, current) => {
-	// 			return acc - (Number(current.mintprice) ?? 0)
-	// 		}, totalDistance) ?? totalDistance
-	// 	)
-	// }, [takes])
-	//
-	// console.info('distanceToDeath', distanceToDeath)
 
 	const handleFinished = () => {
 		if (!takes?.length) return
@@ -150,25 +140,30 @@ export default function Player(props: {
 						style={isPreloading ? {} : { visibility: 'hidden' }}
 						className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
 					/>
-					<Canvas
-						id="canvas"
-						className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
-					>
-						<Scene ocRef={ocRef}>
-							{takes?.length && (
-								<group>
-									<Model
-										gltf={currentGLTF}
-										isPlaying={!isPreloading && isPlaying}
-										isSounding={isSounding}
-										ocRef={ocRef}
-										onFinished={handleFinished}
-										sound={currentSound}
-									/>
-								</group>
-							)}
-						</Scene>
-					</Canvas>
+					{auctionInfo?.stage === 'inbetween-mint-push' ||
+					auctionInfo?.stage === 'inbetween-mint-play' ? (
+						<Stream className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square" />
+					) : (
+						<Canvas
+							id="canvas"
+							className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
+						>
+							<Scene ocRef={ocRef}>
+								{takes?.length && (
+									<group>
+										<Model
+											gltf={currentGLTF}
+											isPlaying={!isPreloading && isPlaying}
+											isSounding={isSounding}
+											ocRef={ocRef}
+											onFinished={handleFinished}
+											sound={currentSound}
+										/>
+									</group>
+								)}
+							</Scene>
+						</Canvas>
+					)}
 				</div>
 				<div className="do-fall do-fall-0">
 					<Controls

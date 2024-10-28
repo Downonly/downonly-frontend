@@ -163,28 +163,55 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			case 'premint': // auctionNotStarted
 				return {
 					stage: mockedAuctionStage,
+					countdown: 123,
 					mints,
-				} as AuctionInfoPremint
+				} satisfies AuctionInfoPremint
 			case 'mint': // auctionActive
 				return {
 					stage: mockedAuctionStage,
 					mints,
-				} as AuctionInfoMint
+					countdown: 123,
+					price: 123n,
+					distanceCurrent: 0.123,
+					distanceToDeath: 23,
+				} satisfies AuctionInfoMint
 			case 'inbetween-mint-push': // (jobState wechselt zu done / getMotorPushWithoutBuy geht hoch) + ~1min // hier ist auch cooldown
 				return {
 					stage: mockedAuctionStage,
 					mints,
-				} as AuctionInfoInbetweenMintPush
+					countdown: 123,
+					price: 123n,
+					distanceCurrent: 0.123,
+					distanceToDeath: 23,
+					lastMinted: {
+						mintPrice: 123n,
+						fullName: 'Yolo',
+						mintDate: new Date(),
+						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
+						openSea: 'https://testnets.opensea.io/assets/...',
+					},
+				} satisfies AuctionInfoInbetweenMintPush
 			case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
 				return {
 					stage: mockedAuctionStage,
 					mints,
-				} as AuctionInfoInbetweenMintPlay
+					countdown: 123,
+					price: 123n,
+					distanceCurrent: 0.123,
+					distanceToDeath: 23,
+					lastMinted: {
+						mintPrice: 123n,
+						fullName: 'Yolo',
+						mintDate: new Date(),
+						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
+						openSea: 'https://testnets.opensea.io/assets/...',
+					},
+				} satisfies AuctionInfoInbetweenMintPlay
 			case 'postmint': // auctionsEnded
 				return {
 					stage: mockedAuctionStage,
 					mints,
-				} as AuctionInfoPostmint
+				} satisfies AuctionInfoPostmint
 		}
 	}
 
@@ -197,7 +224,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		console.error('Failed to fetch mints from db.', err)
 	}
 
-	// TODO: handle init contract failure.
 	try {
 		await initContract()
 	} catch (err) {

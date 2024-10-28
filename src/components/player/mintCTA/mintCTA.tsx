@@ -95,6 +95,53 @@ export default function MintCTA(props: {
 				</>
 			)}
 
+			{(auctionInfo?.stage === 'inbetween-mint-push' ||
+				auctionInfo?.stage === 'inbetween-mint-play') && (
+				<>
+					<p className="font-display uppercase">Push</p>
+					<p className="font-display">
+						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+						{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
+					</p>
+					<p className="font-display">---</p>
+					{getStoreState().selectedEmoji}
+					{/* TODO: get current fall distance */}
+					<p className="font-display">↓ 322.4</p>
+					<br />
+
+					{auctionInfo.lastMinted && (
+						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+							<p>
+								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} ETH / -
+								{Number(auctionInfo.lastMinted.mintPrice).toFixed(1)} cm
+							</p>
+							<p>{auctionInfo.lastMinted.fullName}</p>
+							<p>{auctionInfo.lastMinted.buyerAddress}</p>
+							<p>
+								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
+									'en-US',
+									{
+										hour: '2-digit',
+										minute: '2-digit',
+										second: '2-digit',
+									}
+								)}
+							</p>
+							<p>
+								<a
+									href={auctionInfo.lastMinted.openSea}
+									target="_blank"
+									className="link"
+									rel="noreferrer noopener"
+								>
+									Open Sea
+								</a>
+							</p>
+						</div>
+					)}
+				</>
+			)}
+
 			{/* TODO: add other stages */}
 		</div>
 	)
