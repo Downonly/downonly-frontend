@@ -44,16 +44,18 @@ export default function Model(props: {
 		if (!hipRef.current) return
 		if (!oc) return
 
-		scene.position.setY(-hipRef.current.position.y / 2.5)
-		// oc.setX(hip.current.position.x / 1.5)
-		// oc.setY(hip.current.position.y / 4)
-		// oc.setZ(hip.current.position.z / 1.5)
-		// oc.setX(hip.current.position.x / 1.5)
+		// TODO: Fine-tune camera
+		scene.position.setY(-hipRef.current.position.y)
 		oc.set(
-			hipRef.current.position.x,
-			hipRef.current.position.y,
-			hipRef.current.position.z / 2
+			hipRef.current.position.x / 1.5,
+			hipRef.current.position.y / -4,
+			hipRef.current.position.z / 1.5
 		)
+		// oc.set(
+		// 	hipRef.current.position.x,
+		// 	hipRef.current.position.y,
+		// 	hipRef.current.position.z / 2
+		// )
 	}, [props.gltf, props.ocRef])
 
 	useEffect(() => {
