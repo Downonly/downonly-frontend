@@ -4,6 +4,7 @@ import { processGlb } from 'gltf-pipeline'
 import glob from 'glob'
 import { readFile, writeFile } from 'fs/promises'
 
+/* eslint-disable @typescript-eslint/no-misused-promises */
 glob('./public/NewFallExamples/*.glb', (err, files) => {
 	if (err) throw err
 
@@ -20,9 +21,11 @@ glob('./public/NewFallExamples/*.glb', (err, files) => {
 				},
 				binary: true,
 			}
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
 			const result = await processGlb(gltf, options)
 			await writeFile(
 				`./public/NewFallExamples/${iPadded}.draco.glb`,
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
 				result.glb,
 				{
 					encoding: 'utf8',
