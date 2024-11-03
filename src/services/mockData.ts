@@ -2,7 +2,8 @@ import { Row } from '@/components/player/types'
 
 export const getMockData = () => {
 	const data: Row[] = []
-	const total = 23
+	// const total = 23
+	const total = 5
 	for (let i = 0; i < total; i++) {
 		const numStr = (i + 1 + '').padStart(2, '0')
 
@@ -26,7 +27,8 @@ export const getMockData = () => {
 			obstacle: 'books',
 			figure: 'chef',
 			ipfsMP3: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.mp3`,
-			ipfsGLB: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
+			// ipfsGLB: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
+			ipfsGLB: done && `/NewFallExamples/${numStr}.draco.glb`,
 			ipfsJPG: undefined,
 			ipfsMP4: undefined,
 			openSea:

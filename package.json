@@ -8,6 +8,8 @@
     "dev": "next dev",
     "graphql": "open http://localhost:3000/api/graphql",
     "lint": "next lint",
+    "compress": "npx ts-node -O '{\"module\":\"commonjs\"}' scripts/compress.ts",
+    "compress:cli": "gltf-pipeline -i ./public/bf_toWeb_Exports/bf01/bf01.gltf -o ./public/bf_toWeb_Exports/bf01/bf01.draco.glb -b -d --draco.quantizeTexcoordBits 0",
     "start": "next start"
   },
   "dependencies": {
@@ -21,7 +23,7 @@
     "gsap": "^3.12.5",
     "howler": "^2.2.4",
     "leva": "^0.9.35",
-    "next": "14.2.7",
+    "next": "14.2.16",
     "nexus-prisma": "^2.0.5",
     "r3f-perf": "^7.2.1",
     "react": "18.3.1",
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/glob": "^7.2.0",
     "@types/howler": "^2.2.11",
     "@types/node": "^22.1.0",
     "@types/react": "^18.3.10",
@@ -50,7 +53,9 @@
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
+    "glob": "^7.2.0",
     "globals": "^15.9.0",
+    "gltf-pipeline": "^4.1.0",
     "postcss": "^8.4.47",
     "postcss-preset-env": "^9.6.0",
     "prettier": "^3.3.3",
@@ -58,6 +63,7 @@
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "tailwindcss": "^3.4.14",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "utf-8-validate": "^5.0.10"
   }
