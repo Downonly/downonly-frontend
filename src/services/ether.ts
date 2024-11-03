@@ -19,7 +19,6 @@ import { emojiNameMap } from '@/utils/emoji'
 // 	}
 
 export type AuctionStage =
-	| 'no-contract'
 	| 'premint'
 	| 'mint'
 	| 'inbetween-mint-push'
@@ -60,10 +59,6 @@ interface AuctionInfoWithPrice extends AuctionInfoBase {
 	lastMinted?: LastMinted
 }
 
-export interface AuctionInfoNoContract extends AuctionInfoBase {
-	stage: 'no-contract'
-}
-
 export interface AuctionInfoPremint extends AuctionInfoBase {
 	countdown: number // -> getRemainingPause
 	stage: 'premint'
@@ -95,7 +90,6 @@ export interface AuctionInfoEmergency {
 }
 
 export type AuctionInfo =
-	| AuctionInfoNoContract
 	| AuctionInfoPremint
 	| AuctionInfoMint
 	| AuctionInfoInbetweenMintPush
@@ -216,19 +210,31 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	let mints: Row[] = []
+	let res: Response | undefined = undefined
 	try {
-		mints = (await fetch(`/api/mints`).then((response) =>
-			response.json()
-		)) as Row[]
+		res = await fetch(`${process.env.NEXT_PUBLIC_BASE}api/mints`)
+		mints = (await res.json()) as Row[]
 	} catch (err) {
 		console.error('Failed to fetch mints from db.', err)
 	}
 
 	try {
 		await initContract()
+
+		if (!contract) {
+			return {
+				stage: 'premint',
+				countdown: 0,
+				mints: [],
+			} satisfies AuctionInfoPremint
+		}
 	} catch (err) {
 		console.error('Failed to init contract.', err)
-		return { stage: 'premint', countdown: 0 } as AuctionInfoPremint
+		return {
+			stage: 'premint',
+			countdown: 0,
+			mints: [],
+		} satisfies AuctionInfoPremint
 	}
 
 	let phase: Phase | undefined = undefined
@@ -236,7 +242,11 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		phase = (await contract.getPhase()) as Phase
 	} catch (err) {
 		console.error('Failed to get phase.', err)
-		return { stage: 'premint', countdown: 0 } as AuctionInfoPremint
+		return {
+			stage: 'premint',
+			countdown: 0,
+			mints: [],
+		} satisfies AuctionInfoPremint
 	}
 
 	if (phase === 'emergencyPause') {
@@ -348,7 +358,11 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		return info
 	}
 
-	return { stage: 'premint', countdown: 0 } as AuctionInfoPremint
+	return {
+		stage: 'premint',
+		countdown: 0,
+		mints: [],
+	} satisfies AuctionInfoPremint
 }
 
 async function getCurrentPrice(): Promise<bigint> {

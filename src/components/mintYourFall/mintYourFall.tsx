@@ -4,14 +4,15 @@ import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 import Picker from '@/components/mintYourFall/step/picker'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import useStore from '@/hooks/useStore'
+import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 export default function MintYourFall(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-}): JSX.Element {
+}): ReactNode {
 	// prettier-ignore
 	const settings = [
 		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },
@@ -40,6 +41,17 @@ export default function MintYourFall(props: {
 	useEffect(() => {
 		setStoreState({ selectedEmoji: `${setting} ${character} ${obstacle}` })
 	}, [character, obstacle, props, setStoreState, setting])
+
+	const auctionInfo = useAuctionInfo('playerCTA')
+
+	if (
+		!auctionInfo ||
+		!['premint', 'mint', 'inbetween-mint-push', 'inbetween-mint-play'].includes(
+			auctionInfo?.stage
+		)
+	) {
+		return null
+	}
 
 	return (
 		<Card
