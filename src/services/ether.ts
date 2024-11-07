@@ -148,6 +148,8 @@ async function initContract() {
 // let lastMotorPushWithoutBuy: number | undefined
 let lastInbetweenMintPushTime: number | undefined
 export async function getAuctionInfo(): Promise<AuctionInfo> {
+	console.info('getAuctionInfo')
+
 	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
 		| AuctionStage
 		| undefined
@@ -251,6 +253,8 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			mints: [],
 		} satisfies AuctionInfoPremint
 	}
+
+	console.info('phase', phase)
 
 	if (phase === 'emergencyPause') {
 		const info: AuctionInfoEmergency = {
