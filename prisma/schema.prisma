@@ -11,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model mints24 {
+model mints25 {
   id           Int       @unique(map: "id") @default(autoincrement())
   jobState     String?   @db.VarChar(255)
   surface      String?   @db.VarChar(255)

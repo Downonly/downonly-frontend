@@ -115,9 +115,7 @@ async function initContract() {
 
 	if (typeof window === 'undefined') return
 
-	provider = new JsonRpcProvider(
-		'https://sepolia.infura.io/v3/94bbbcf29d2b4b42aa1ca46a47d7e09c'
-	)
+	provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_PROVIDER)
 
 	// if (!window.ethereum) {
 	// 	// If MetaMask is not installed, we use the default provider,
