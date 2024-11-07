@@ -344,6 +344,8 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	if (phase === 'auctionActive') {
+		console.info('yadayada')
+
 		const price = await getCurrentPrice()
 		const distanceToDeath = getDistanceToDeath(mints, price)
 		const countdown = await getCountdown()
