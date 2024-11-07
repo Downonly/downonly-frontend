@@ -88,57 +88,6 @@
     "inputs": [
       {
         "internalType": "string",
-        "name": "character",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "obstacle",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "surface",
-        "type": "string"
-      }
-    ],
-    "name": "buy",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "emergencyPause",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "endAuctionCycle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "startAuctionCycle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
         "name": "",
         "type": "string"
       }
@@ -165,6 +114,29 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "character",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "obstacle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "surface",
+        "type": "string"
+      }
+    ],
+    "name": "buy",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -240,6 +212,13 @@
   },
   {
     "inputs": [],
+    "name": "emergencyPause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "emergencyPaused",
     "outputs": [
       {
@@ -249,6 +228,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "endAuctionCycle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -518,7 +504,14 @@
   },
   {
     "inputs": [],
-    "name": "startingPrice",
+    "name": "startAuctionCycle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "startTime",
     "outputs": [
       {
         "internalType": "uint256",
@@ -531,7 +524,7 @@
   },
   {
     "inputs": [],
-    "name": "startTime",
+    "name": "startingPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -572,6 +565,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

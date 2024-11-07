@@ -8,14 +8,6 @@ export default function Canvas(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	const gl = {
-		antialias: false,
-		// logarithmicDepthBuffer: true,
-		// toneMapping: ACESFilmicToneMapping, // default
-		// pixelRatio: Math.min(window.devicePixelRatio, 2),
-		pixelRatio: 1,
-	}
-
 	return (
 		<FiberCanvas
 			dpr={[1, 2]}
@@ -23,7 +15,14 @@ export default function Canvas(props: {
 			className={`size-full ${props.className ?? ''}`}
 			style={props.style}
 			camera={{ fov: 40, near: 0.1, far: 200, position: [1, -1, 9] }}
-			gl={gl}
+			gl={{
+				powerPreference: 'high-performance',
+				antialias: false,
+				// logarithmicDepthBuffer: true,
+				// toneMapping: ACESFilmicToneMapping, // default
+				// pixelRatio: Math.min(window.devicePixelRatio, 2),
+				pixelRatio: 1,
+			}}
 			resize={{ scroll: false }}
 		>
 			{props.children}
