@@ -120,7 +120,7 @@ export default function MintCTA(props: {
 						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
 							<p>
 								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} ETH / -
-								{Number(auctionInfo.lastMinted.mintPrice).toFixed(1)} cm
+								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
 							</p>
 							<p>{auctionInfo.lastMinted.fullName}</p>
 							<p>{auctionInfo.lastMinted.buyerAddress}</p>
