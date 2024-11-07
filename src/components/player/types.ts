@@ -17,6 +17,7 @@ export interface Row {
 	buyerAddress: string | undefined
 	buytxHash: string | undefined
 	blockHeight: number
+	fallDistance: string | undefined
 }
 
 export interface Take extends Omit<Row, 'ipfsMP3' | 'ipfsGLB' | 'mintdate'> {

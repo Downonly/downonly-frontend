@@ -58,8 +58,11 @@ export default function MintCTA(props: {
 					</p>
 					<p className="font-display">---</p>
 					{getStoreState().selectedEmoji}
-					{/* TODO: get current fall distance */}
-					<p className="font-display">↓ 322.4</p>
+					{auctionInfo.lastMinted?.fallDistance && (
+						<p className="font-display">
+							↓ {auctionInfo.lastMinted?.fallDistance}
+						</p>
+					)}
 					<br />
 
 					{auctionInfo.lastMinted && (
@@ -105,8 +108,11 @@ export default function MintCTA(props: {
 					</p>
 					<p className="font-display">---</p>
 					{getStoreState().selectedEmoji}
-					{/* TODO: get current fall distance */}
-					<p className="font-display">↓ 322.4</p>
+					{auctionInfo.lastMinted?.fallDistance && (
+						<p className="font-display">
+							↓ {auctionInfo.lastMinted?.fallDistance}
+						</p>
+					)}
 					<br />
 
 					{auctionInfo.lastMinted && (

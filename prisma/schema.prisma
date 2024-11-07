@@ -11,24 +11,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model mints6 {
-  id             Int       @unique(map: "id") @default(autoincrement())
-  jobState       String?   @db.VarChar(255)
-  surface        String?   @db.VarChar(255)
-  surfaceSmiley  String?   @db.VarChar(255)
-  obstacle       String?   @db.VarChar(255)
-  obstacleSmiley String?   @db.VarChar(255)
-  figure         String?   @db.VarChar(255)
-  figureSmiley   String?   @db.VarChar(255)
-  openSea        String?   @db.VarChar(255)
-  ipfsMP3        String?   @db.VarChar(255)
-  ipfsJPG        String?   @db.VarChar(255)
-  ipfsMP4        String?   @db.VarChar(255)
-  ipfsGLB        String?   @db.VarChar(255)
-  mintprice      String?   @db.VarChar(255)
-  fullname       String?   @db.VarChar(255)
-  mintdate       DateTime? @default(now()) @db.DateTime
-  buyerAddress   String?   @db.VarChar(255)
-  buytxHash      String?   @db.VarChar(255)
-  blockHeight    Int?      @db.Int
+model mints21 {
+  id           Int       @unique(map: "id") @default(autoincrement())
+  jobState     String?   @db.VarChar(255)
+  surface      String?   @db.VarChar(255)
+  obstacle     String?   @db.VarChar(255)
+  figure       String?   @db.VarChar(255)
+  openSea      String?   @db.VarChar(255)
+  ipfsMP3      String?   @db.VarChar(255)
+  ipfsJPG      String?   @db.VarChar(255)
+  ipfsMP4      String?   @db.VarChar(255)
+  ipfsGLB      String?   @db.VarChar(255)
+  mintprice    String?   @db.VarChar(255)
+  fullname     String?   @db.VarChar(255)
+  mintdate     DateTime? @default(now()) @db.DateTime
+  buyerAddress String?   @db.VarChar(255)
+  buytxHash    String?   @db.VarChar(255)
+  blockHeight  Int?      @db.Int
+  fallDistance String?   @db.VarChar(255)
 }

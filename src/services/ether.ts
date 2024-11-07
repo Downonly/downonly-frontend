@@ -50,6 +50,7 @@ interface LastMinted {
 	mintDate: Date
 	buyerAddress: string
 	openSea: string
+	fallDistance: string
 }
 
 interface AuctionInfoWithPrice extends AuctionInfoBase {
@@ -183,6 +184,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 						mintDate: new Date(),
 						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
 						openSea: 'https://testnets.opensea.io/assets/...',
+						fallDistance: '23.4',
 					},
 				} satisfies AuctionInfoInbetweenMintPush
 			case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
@@ -199,6 +201,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 						mintDate: new Date(),
 						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
 						openSea: 'https://testnets.opensea.io/assets/...',
+						fallDistance: '23.4',
 					},
 				} satisfies AuctionInfoInbetweenMintPlay
 			case 'postmint': // auctionsEnded
@@ -438,6 +441,7 @@ function getLastMinted(mints: Row[]): LastMinted | undefined {
 		mintDate: new Date(lastMintedRow.mintdate),
 		buyerAddress: lastMintedRow.buyerAddress ?? '',
 		openSea: lastMintedRow.openSea ?? '',
+		fallDistance: lastMintedRow.fallDistance ?? '',
 	}
 }
 

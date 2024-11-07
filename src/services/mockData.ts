@@ -43,6 +43,7 @@ export const getMockData = () => {
 			buytxHash:
 				'0xf05b5ab0c5a900556c3333458eeb2991d91339f084fd77c6ddd63860cc9c51bc',
 			mintdate: '2023-01-15T13:45:30.000Z',
+			fallDistance: '23.4',
 		})
 	}
 	return data

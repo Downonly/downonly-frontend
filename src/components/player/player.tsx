@@ -41,6 +41,7 @@ export default function Player(props: {
 						.filter((row) => row.ipfsGLB && row.ipfsMP3)
 						.map<Take>((row) => {
 							const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+
 							return {
 								modelURL: ipfsGLB!,
 								soundURL: ipfsMP3!,
