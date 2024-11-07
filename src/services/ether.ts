@@ -116,7 +116,7 @@ async function initContract() {
 	if (typeof window === 'undefined') return
 
 	provider = new JsonRpcProvider(
-		'https://sepolia-ethereum.infura.io/v3/94bbbcf29d2b4b42aa1ca46a47d7e09c'
+		'https://sepolia.infura.io/v3/94bbbcf29d2b4b42aa1ca46a47d7e09c'
 	)
 
 	// if (!window.ethereum) {
