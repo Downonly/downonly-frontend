@@ -155,7 +155,6 @@ export default function Player(props: {
 											gltf={currentGLTF}
 											isPlaying={!isPreloading && isPlaying}
 											isSounding={isSounding}
-											ocRef={ocRef}
 											onFinished={handleFinished}
 											sound={currentSound}
 										/>
