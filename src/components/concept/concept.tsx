@@ -1,5 +1,6 @@
 import Card from '@/components/card/card'
 import Circle from '@/components/circle/circle'
+import Stream from '@/components/player/stream/stream'
 
 export default function Concept(props: {
 	className?: string
@@ -32,7 +33,7 @@ export default function Concept(props: {
 					</header>
 
 					<div className="gap-x grid gap-y-8 sm:grid-cols-2">
-						<div className="aspect-video bg-silver" />
+						<Stream className="aspect-video bg-silver" />
 						<div>
 							<h3 className="text-display mb-6 text-2xl">
 								CCTV Sim PC

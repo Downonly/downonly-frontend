@@ -164,22 +164,25 @@ export default function Player(props: {
 						</Canvas>
 					)}
 				</div>
-				<div className="do-fall do-fall-0">
-					<Controls
-						bufferSize={BUFFER_SIZE}
-						currentIndex={currentIndex}
-						isPlaying={isPlaying}
-						isSounding={isSounding}
-						loaded={new Set(loaded.keys())}
-						onNext={handleNext}
-						onPause={handlePause}
-						onPlay={handlePlay}
-						onPrev={handlePrev}
-						onSeek={handleSeek}
-						onSound={handleSound}
-						takes={takes}
-					/>
-				</div>
+				{auctionInfo?.stage !== 'inbetween-mint-push' &&
+					auctionInfo?.stage !== 'inbetween-mint-play' && (
+						<div className="do-fall do-fall-0">
+							<Controls
+								bufferSize={BUFFER_SIZE}
+								currentIndex={currentIndex}
+								isPlaying={isPlaying}
+								isSounding={isSounding}
+								loaded={new Set(loaded.keys())}
+								onNext={handleNext}
+								onPause={handlePause}
+								onPlay={handlePlay}
+								onPrev={handlePrev}
+								onSeek={handleSeek}
+								onSound={handleSound}
+								takes={takes}
+							/>
+						</div>
+					)}
 			</div>
 			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
 				<MintCTA takes={takes} currentTake={takes?.[currentIndex]} />
