@@ -16,7 +16,7 @@ glob('./public/NewFallExamples/*.glb', (err, files) => {
 					const options = {
 						resourceDirectory: `./public/NewFallExamples/${iPadded}/`,
 						dracoOptions: {
-							quantizeTexcoordBits: 0,
+							// quantizeTexcoordBits: 0,
 							compressionLevel: 10,
 						},
 						binary: true,

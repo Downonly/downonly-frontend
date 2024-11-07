@@ -1,10 +1,4 @@
-import {
-	type MutableRefObject,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
 	type AnimationAction,
 	AnimationMixer,
@@ -12,14 +6,12 @@ import {
 	LoopOnce,
 	type Object3D,
 } from 'three'
-import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default function Model(props: {
 	gltf?: GLTF
 	isPlaying: boolean
 	isSounding: boolean
-	ocRef: MutableRefObject<OCs | undefined>
 	onFinished: () => void
 	sound?: Howl
 }) {
@@ -38,25 +30,14 @@ export default function Model(props: {
 
 	const updateOCs = useCallback(() => {
 		const { scene } = props.gltf ?? {}
-		const oc = props.ocRef.current?.target
 
 		if (!scene) return
 		if (!hipRef.current) return
-		if (!oc) return
 
-		// TODO: Fine-tune camera
+		scene.position.setX(-hipRef.current.position.x)
 		scene.position.setY(-hipRef.current.position.y)
-		oc.set(
-			hipRef.current.position.x / 1.5,
-			hipRef.current.position.y / -4,
-			hipRef.current.position.z / 1.5
-		)
-		// oc.set(
-		// 	hipRef.current.position.x,
-		// 	hipRef.current.position.y,
-		// 	hipRef.current.position.z / 2
-		// )
-	}, [props.gltf, props.ocRef])
+		scene.position.setZ(hipRef.current.position.z)
+	}, [props.gltf])
 
 	useEffect(() => {
 		isPlayingRef.current = props.isPlaying

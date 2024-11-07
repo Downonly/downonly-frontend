@@ -2,7 +2,7 @@ import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export interface Row {
 	id: string | number
-	jobState: 'paid' | 'minting' | 'done'
+	jobState: 'paid' | 'minting' | 'done' // there is no minting, only paid and done, everything elese is minting
 	surface: string
 	obstacle: string
 	figure: string

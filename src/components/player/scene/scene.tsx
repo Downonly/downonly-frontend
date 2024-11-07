@@ -16,7 +16,6 @@ export default function Scene(props: {
 			<Orbit ocRef={props.ocRef as unknown as MutableRefObject<null>} />
 
 			<ambientLight />
-			{/*<pointLight position={[10, 10, 10]} />*/}
 			<directionalLight
 				position={[1, 2, 3]}
 				intensity={1.5}

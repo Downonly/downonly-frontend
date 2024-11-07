@@ -24,7 +24,7 @@ export default function Orbit(props: {
 
 	const { minDistance, maxDistance, enableZoom, enablePan } = isDebug()
 		? // eslint-disable-next-line react-hooks/rules-of-hooks
-		  useControls(
+			useControls(
 				'Orbit Controls',
 				{
 					minDistance: {
@@ -49,13 +49,13 @@ export default function Orbit(props: {
 				{
 					collapsed: true,
 				}
-		  )
+			)
 		: {
 				minDistance: MIN_DISTANCE,
 				maxDistance: MAX_DISTANCE,
 				enableZoom: false,
 				enablePan: false,
-		  }
+			}
 
 	const onFullScreenChange = useCallback(() => {
 		const isFS = document.fullscreenElement !== null

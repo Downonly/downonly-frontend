@@ -386,8 +386,7 @@ async function getCurrentPrice(): Promise<bigint> {
 function getJobState(mints: Row[]): Row['jobState'] | undefined {
 	return mints
 		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
-		.findLast((row) => row.jobState === 'done' || row.jobState === 'minting')
-		?.jobState
+		.findLast((row) => row.jobState !== 'paid')?.jobState
 }
 
 function getDistanceToDeath(mints: Row[], price: bigint): number {

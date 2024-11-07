@@ -9,9 +9,11 @@ export default function Canvas(props: {
 	children?: React.ReactNode
 }): JSX.Element {
 	const gl = {
-		// antialias: false,
+		antialias: false,
+		// logarithmicDepthBuffer: true,
 		// toneMapping: ACESFilmicToneMapping, // default
-		logarithmicDepthBuffer: true,
+		// pixelRatio: Math.min(window.devicePixelRatio, 2),
+		pixelRatio: 1,
 	}
 
 	return (
