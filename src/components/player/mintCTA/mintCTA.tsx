@@ -6,6 +6,7 @@ import { useCallback } from 'react'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import { formatDuration } from '@/utils/time'
+import Countdown from '@/components/countdown/countdown'
 
 export default function MintCTA(props: {
 	className?: string
@@ -35,8 +36,8 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'premint' && (
 				<>
 					<p className="font-display">
-						{formatDuration(auctionInfo.countdown)}
-						{/*<Countdown seconds={auctionInfo.countdown} />*/}
+						{/*{formatDuration(auctionInfo.countdown)}*/}
+						<Countdown seconds={auctionInfo.countdown} />
 					</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
@@ -147,8 +148,6 @@ export default function MintCTA(props: {
 					)}
 				</>
 			)}
-
-			{/* TODO: add other stages */}
 		</div>
 	)
 }
