@@ -36,4 +36,3 @@ next-env.d.ts
 
 dev/resources
 .env
-public/draco
