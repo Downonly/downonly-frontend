@@ -2,7 +2,7 @@
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
-import { useCallback } from 'react'
+import { ReactNode, useCallback } from 'react'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import { formatDuration } from '@/utils/time'
@@ -14,7 +14,7 @@ export default function MintCTA(props: {
 	id?: string
 	takes: Take[] | undefined
 	currentTake: Take | undefined
-}): JSX.Element {
+}): ReactNode {
 	const auctionInfo = useAuctionInfo('playerCTA')
 
 	const renderEmojiesCurrentTake = useCallback(() => {
@@ -29,7 +29,9 @@ export default function MintCTA(props: {
 
 	const { getStoreState } = useStore()
 
-	if (!props.takes) return <></>
+	if (!props.takes) {
+		return null
+	}
 
 	return (
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
@@ -45,7 +47,6 @@ export default function MintCTA(props: {
 					{renderEmojiesCurrentTake()} {/* TODO: Show randomized GLBs */}
 				</>
 			)}
-
 			{auctionInfo?.stage === 'mint' && (
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
@@ -98,7 +99,6 @@ export default function MintCTA(props: {
 					)}
 				</>
 			)}
-
 			{(auctionInfo?.stage === 'inbetween-mint-push' ||
 				auctionInfo?.stage === 'inbetween-mint-play') && (
 				<>

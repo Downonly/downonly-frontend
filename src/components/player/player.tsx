@@ -186,7 +186,11 @@ export default function Player(props: {
 					)}
 			</div>
 			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
-				<MintCTA takes={takes} currentTake={takes?.[currentIndex]} />
+				<MintCTA
+					key={`${auctionInfo?.stage}`}
+					takes={takes}
+					currentTake={takes?.[currentIndex]}
+				/>
 			</div>
 		</section>
 	)
