@@ -3,7 +3,7 @@ import { Row } from '@/components/player/types'
 export const getMockData = () => {
 	const data: Row[] = []
 	// const total = 23
-	const total = 3
+	const total = 2
 	for (let i = 0; i < total; i++) {
 		const numStr = (i + 1 + '').padStart(2, '0')
 

@@ -11,6 +11,7 @@ import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 export default function Model(props: {
 	gltf?: GLTF
 	isPlaying: boolean
+	isSingle?: boolean
 	isSounding: boolean
 	onFinished: () => void
 	sound?: Howl
@@ -52,7 +53,9 @@ export default function Model(props: {
 		const deltaTime = elapsedTime - oldElapsedTime.current
 		oldElapsedTime.current = elapsedTime
 
-		if (isPlayingRef.current) mixerRef.current?.update(deltaTime)
+		if (isPlayingRef.current) {
+			mixerRef.current?.update(deltaTime)
+		}
 		updateOCs()
 
 		raf.current = window.requestAnimationFrame(() => {
@@ -82,7 +85,15 @@ export default function Model(props: {
 
 		const mx = new AnimationMixer(scene)
 		const ac = mx.clipAction(animations[0])
-		mx.addEventListener('finished', handleFinishedRef.current!)
+		mx.addEventListener('finished', () => {
+			if (props.isSingle) {
+				ac.reset()
+				ac.play()
+				snd.seek(0)
+				snd.play()
+			}
+			handleFinishedRef.current!()
+		})
 		ac.setLoop(LoopOnce, 0)
 		actionRef.current = ac
 		mixerRef.current = mx
@@ -100,7 +111,7 @@ export default function Model(props: {
 		})
 
 		ac.play()
-	}, [props.sound, props.gltf])
+	}, [props.sound, props.gltf, props.isSingle])
 
 	useEffect(() => {
 		if (actionRef.current) {

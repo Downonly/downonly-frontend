@@ -250,8 +250,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		} satisfies AuctionInfoPremint
 	}
 
-	console.info('phase', phase)
-
 	if (phase === 'emergencyPause') {
 		const info: AuctionInfoEmergency = {
 			stage: 'emergency',

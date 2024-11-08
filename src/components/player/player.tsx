@@ -158,6 +158,7 @@ export default function Player(props: {
 										<Model
 											gltf={currentGLTF}
 											isPlaying={!isPreloading && isPlaying}
+											isSingle={takes?.length === 1}
 											isSounding={isSounding}
 											onFinished={handleFinished}
 											sound={currentSound}

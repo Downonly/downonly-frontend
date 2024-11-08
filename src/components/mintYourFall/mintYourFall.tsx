@@ -44,8 +44,6 @@ export default function MintYourFall(props: {
 
 	const auctionInfo = useAuctionInfo('playerCTA')
 
-	console.info('auctionInfo', auctionInfo)
-
 	if (
 		!auctionInfo ||
 		!['premint', 'mint', 'inbetween-mint-push', 'inbetween-mint-play'].includes(

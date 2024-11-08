@@ -41,6 +41,7 @@ export default function Picker(props: {
 				onLoad={() => {
 					setLoaded(true)
 				}}
+				unoptimized
 				className="rounded-2xl"
 				src={options[currentPick]?.gif}
 				width={250}
