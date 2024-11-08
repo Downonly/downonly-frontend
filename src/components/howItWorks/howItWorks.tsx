@@ -1,3 +1,5 @@
+import Stream from '@/components/player/stream/stream'
+
 export default function HowItWorks(props: {
 	className?: string
 	style?: React.CSSProperties
@@ -18,7 +20,10 @@ export default function HowItWorks(props: {
 					of this works
 				</h2>
 
-				<div className="do-fall do-fall-0 aspect-video bg-silver" />
+				<Stream
+					src={process.env.NEXT_PUBLIC_YOUTUBE_HOW_SRC}
+					className="do-fall do-fall-0 aspect-video bg-silver"
+				/>
 			</div>
 		</section>
 	)
