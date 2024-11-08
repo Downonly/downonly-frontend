@@ -33,7 +33,10 @@ export default function Concept(props: {
 					</header>
 
 					<div className="gap-x grid gap-y-8 sm:grid-cols-2">
-						<Stream className="aspect-video bg-silver" />
+						<Stream
+							src={process.env.NEXT_PUBLIC_YOUTUBE_CONCEPT_SRC}
+							className="aspect-video bg-silver"
+						/>
 						<div>
 							<h3 className="text-display mb-6 text-2xl">
 								CCTV Sim PC

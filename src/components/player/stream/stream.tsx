@@ -1,6 +1,7 @@
 'use client'
 
 export default function Stream(props: {
+	src: string | undefined
 	className?: string
 	style?: React.CSSProperties
 	id?: string
@@ -10,7 +11,7 @@ export default function Stream(props: {
 			id={props.id}
 			className={`size-full ${props.className ?? ''}`}
 			style={props.style}
-			src={`https://www.youtube-nocookie.com/embed/${process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID}`}
+			src={props.src}
 			title="Downonly"
 			frameBorder="0"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

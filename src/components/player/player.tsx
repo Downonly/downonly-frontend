@@ -143,7 +143,10 @@ export default function Player(props: {
 					/>
 					{auctionInfo?.stage === 'inbetween-mint-push' ||
 					auctionInfo?.stage === 'inbetween-mint-play' ? (
-						<Stream className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square" />
+						<Stream
+							src={process.env.NEXT_PUBLIC_YOUTUBE_STREAM_SRC}
+							className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square"
+						/>
 					) : (
 						<Canvas
 							id="canvas"
