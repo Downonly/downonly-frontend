@@ -7,6 +7,7 @@ import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import { formatDuration } from '@/utils/time'
 import Countdown from '@/components/countdown/countdown'
+import Loading from '@/components/loading/loading'
 
 export default function MintCTA(props: {
 	className?: string
@@ -35,7 +36,7 @@ export default function MintCTA(props: {
 
 	return (
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
-			{auctionInfo?.stage === 'premint' && (
+			{auctionInfo?.stage === 'premint' ? (
 				<>
 					<p className="font-display">
 						{/*{formatDuration(auctionInfo.countdown)}*/}
@@ -46,8 +47,7 @@ export default function MintCTA(props: {
 					<br />
 					{renderEmojiesCurrentTake()} {/* TODO: Show randomized GLBs */}
 				</>
-			)}
-			{auctionInfo?.stage === 'mint' && (
+			) : auctionInfo?.stage === 'mint' ? (
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
 					<p className="font-display">
@@ -98,9 +98,8 @@ export default function MintCTA(props: {
 						</div>
 					)}
 				</>
-			)}
-			{(auctionInfo?.stage === 'inbetween-mint-push' ||
-				auctionInfo?.stage === 'inbetween-mint-play') && (
+			) : auctionInfo?.stage === 'inbetween-mint-push' ||
+			  auctionInfo?.stage === 'inbetween-mint-play' ? (
 				<>
 					<p className="font-display uppercase">Push</p>
 					<p className="font-display">
@@ -147,6 +146,12 @@ export default function MintCTA(props: {
 						</div>
 					)}
 				</>
+			) : (
+				<div className="-translate-y-8">
+					<p className="font-display uppercase">Dutch ↓ Auction</p>
+					<br />
+					<Loading className="mx-auto" />
+				</div>
 			)}
 		</div>
 	)
