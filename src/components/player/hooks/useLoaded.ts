@@ -7,6 +7,7 @@ import { Take } from '@/components/player/types'
 import {
 	FrontSide,
 	LoadingManager,
+	Material,
 	Mesh,
 	MeshStandardMaterial,
 	NearestFilter,
@@ -52,15 +53,21 @@ export const useLoaded = (
 				gltf.scene.traverse((child) => {
 					child.frustumCulled = false
 					// Improve performance of textures.
-					if (
-						child instanceof Mesh &&
-						child.material instanceof MeshStandardMaterial
-					) {
-						child.material.side = FrontSide
-						if (child.material.map) {
-							child.material.map.generateMipmaps = false
-							child.material.map.minFilter = NearestFilter
+					if (child instanceof Mesh) {
+						if (child.material instanceof Material) {
+							child.material.side = FrontSide
 						}
+
+						if (child.material instanceof MeshStandardMaterial) {
+							if (child.material.map) {
+								child.material.map.generateMipmaps = false
+								child.material.map.minFilter = NearestFilter
+							}
+						}
+
+						// if (child.material instanceof ShaderMaterial) {
+						// 	child.material.precision = 'lowp'
+						// }
 					}
 				})
 				if (!loadedRef.current!.has(take.modelURL)) {
