@@ -23,11 +23,7 @@ export default function useAuctionInfo(key: string) {
 	const [auctionInfo, setAuctionInfo] = useState<AuctionInfo>()
 
 	useEffect(() => {
-		if (subscribers.has(key)) {
-			console.warn(`Subscriber with key ${key} already exists. Skipping`)
-		} else {
-			subscribers.set(key, setAuctionInfo)
-		}
+		subscribers.set(key, setAuctionInfo)
 
 		return () => {
 			subscribers.delete(key)
