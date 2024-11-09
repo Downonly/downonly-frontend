@@ -33,6 +33,7 @@ export default function Minted(props: {
 					.filter(
 						(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
 					)
+					// .slice(2)
 					.map((mint) => (
 						<Polaroid
 							key={mint.id}

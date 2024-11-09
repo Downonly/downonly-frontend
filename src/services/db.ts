@@ -17,7 +17,7 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
-export const table = prisma.mints27
+export const table = prisma.mints28
 
 export default prisma
 
