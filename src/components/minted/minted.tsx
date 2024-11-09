@@ -5,6 +5,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { ReactNode } from 'react'
 import { emojiNameMap } from '@/utils/emoji'
 import { formatUnits } from 'ethers'
+import Video from '@/components/minted/video'
 
 export default function Minted(props: {
 	className?: string
@@ -61,16 +62,12 @@ export default function Minted(props: {
 								</>
 							}
 						>
-							<video
+							<Video
 								className="aspect-square w-full bg-snow dark:bg-nickel"
-								controls
-								width="250"
 								loop
+								src={mint.ipfsMP4!}
 								poster={mint.ipfsJPEG}
-							>
-								<source src={mint.ipfsMP4} type="video/mp4" />
-								Download the <a href={mint.ipfsMP4}>video</a>.
-							</video>
+							/>
 						</Polaroid>
 					))}
 			</div>
