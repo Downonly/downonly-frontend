@@ -12,6 +12,7 @@ import Faq from '@/components/faq/faq'
 
 // TODO: Empty DB
 // TODO: Show vids of minted
+// TODO: premint stage video not showing
 
 export default function Home() {
 	return (

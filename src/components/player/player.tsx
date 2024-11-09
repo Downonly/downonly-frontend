@@ -137,6 +137,7 @@ export default function Player(props: {
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 			>
 				<div className="do-fall do-fall-1 h-full">
+					{/* TODO: show video during premint */}
 					{auctionInfo?.stage === 'inbetween-mint-push' ||
 					auctionInfo?.stage === 'inbetween-mint-play' ? (
 						<Stream
@@ -198,6 +199,12 @@ export default function Player(props: {
 
 			<div>
 				<pre>Stage: {JSON.stringify(auctionInfo?.stage, null, 2)}</pre>
+				<pre>
+					Countdown:{' '}
+					{auctionInfo && 'countdown' in auctionInfo
+						? JSON.stringify(auctionInfo?.countdown, null, 2)
+						: 'undefined'}
+				</pre>
 				<pre>
 					Mints:{' '}
 					{auctionInfo && 'mints' in auctionInfo
