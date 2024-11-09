@@ -7,6 +7,7 @@ import Picker from '@/components/mintYourFall/step/picker'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import useStore from '@/hooks/useStore'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
+import { emojiNameMap } from '@/utils/emoji'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -40,26 +41,74 @@ export default function MintYourFall(props: {
 		return new Set(deadEmoji.map((item) => item.emoji))
 	}, [deadEmoji])
 
-	// TODO: Gifs map
+	const characters = useMemo(
+		() =>
+			[
+				'astronaut',
+				'bath',
+				'business',
+				'chef',
+				'clown',
+				'construction',
+				'farm',
+				'judge',
+				'knight',
+				'police',
+				'ski',
+			]
+				.map((item) => ({
+					emoji: emojiNameMap.get(item)!,
+					gif: `/gifs/characters/${item}.gif`,
+				}))
+				.filter((item) => !deadEmojiSet.has(item.emoji)),
+		[deadEmojiSet]
+	)
 
-	// prettier-ignore
-	const settings = useMemo(()=> [
-		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },
-		{ emoji: '🎡', gif: '/gifs/environment_DO_ferris_10fps_6sec_300x300.gif' },
-		{ emoji: '❄️', gif: '/gifs/environment_DO_snowPark_10fps_6sec_300x300.gif' },
-	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
-	// prettier-ignore
-	const characters = useMemo(()=> [
-		{ emoji: '🚀', gif: '/gifs/character_DO_astronaut_300x300.gif' },
-		{ emoji: '🧖', gif: '/gifs/character_DO_bath_300x300.gif' },
-		{ emoji: '🧑‍🍳', gif: '/gifs/character_DO_chef_300x300.gif' },
-	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
-	// prettier-ignore
-	const obstacles = useMemo(()=> [
-		{ emoji: '🎈', gif: '/gifs/obstacle_DO_balloons_seq_10fps_6sec_300x300.gif' },
-		{ emoji: '📚', gif: '/gifs/obstacle_DO_books_seq_10fps_6sec_300x300.gif' },
-		{ emoji: '🎹', gif: '/gifs/obstacle_DO_piano_seq_10fps_6sec_300x300.gif' },
-	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
+	const settings = useMemo(
+		() =>
+			[
+				'antenna',
+				'castle',
+				'court',
+				'cruise',
+				'escalator',
+				'ferris',
+				'livingRoom',
+				'scaffolding',
+				'snowPark',
+				'victoryColumn',
+				'windPark',
+			]
+				.map((item) => ({
+					emoji: emojiNameMap.get(item)!,
+					gif: `/gifs/settings/${item}.gif`,
+				}))
+				.filter((item) => !deadEmojiSet.has(item.emoji)),
+		[deadEmojiSet]
+	)
+
+	const obstacles = useMemo(
+		() =>
+			[
+				'balloons',
+				'books',
+				'horse',
+				'money',
+				'piano',
+				'satellite',
+				'shoppingCart',
+				'snowCannon',
+				'stove',
+				'toilet',
+				'transporter',
+			]
+				.map((item) => ({
+					emoji: emojiNameMap.get(item)!,
+					gif: `/gifs/obstacles/${item}.gif`,
+				}))
+				.filter((item) => !deadEmojiSet.has(item.emoji)),
+		[deadEmojiSet]
+	)
 
 	const [setting, setSetting] = useState(settings[0].emoji)
 	const [character, setCharacter] = useState(characters[0].emoji)
