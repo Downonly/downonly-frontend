@@ -119,28 +119,13 @@ async function initContract() {
 
 	provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_PROVIDER)
 
-	// if (!window.ethereum) {
-	// 	// If MetaMask is not installed, we use the default provider,
-	// 	// which is backed by a variety of third-party services (such
-	// 	// as INFURA). They do not have private keys installed and
-	// 	// only have read-only access.
-	// 	provider = getDefaultProvider('sepolia') as JsonRpcApiProvider
-	//
-	// 	// Alternatively we can use the InfuraProvider.
-	// 	// provider = new InfuraProvider('matic', '45967322314d46219179ada7e414c389')
-	// } else {
-	// Connect to the MetaMask EIP-1193 object. This is a standard
-	// protocol that allows Ethers access to make all read-only
-	// requests through MetaMask.
-	const browserProvider = new BrowserProvider(window.ethereum)
+	try {
+		const browserProvider = new BrowserProvider(window.ethereum)
 
-	// It also provides an opportunity to request access to write
-	// operations, which will be performed by the private key
-	// that MetaMask manages for the user.
-	signer = await browserProvider.getSigner()
-
-	// 	provider = browserProvider
-	// }
+		signer = await browserProvider.getSigner()
+	} catch (err) {
+		console.warn('No signer.', err)
+	}
 
 	contract = new Contract(contractAddress, abi, signer || provider)
 }
