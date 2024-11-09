@@ -47,6 +47,7 @@ export const useLoaded = (
 		takesToPreload.forEach((take) => {
 			const sound = new Howl({
 				src: [take.soundURL],
+				format: 'mp3',
 			})
 
 			gltfLoader.load(take.modelURL, (gltf: GLTF) => {
