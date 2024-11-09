@@ -6,13 +6,9 @@ import Player from '@/components/player/player'
 import Concept from '@/components/concept/concept'
 import Faq from '@/components/faq/faq'
 
-// TODO: Deployment + Domain
-// TODO: Gifs und Zuordnung
+// TODO: Use pro plan on vercel?
 // TODO: Emergency Pause
-
 // TODO: Empty DB
-// TODO: Show vids of minted
-// TODO: premint stage video not showing
 
 export default function Home() {
 	return (

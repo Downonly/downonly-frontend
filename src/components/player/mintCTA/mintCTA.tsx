@@ -5,7 +5,6 @@ import { Take } from '@/components/player/types'
 import { ReactNode } from 'react'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
-import { formatDuration } from '@/utils/time'
 import Countdown from '@/components/countdown/countdown'
 import Loading from '@/components/loading/loading'
 
@@ -49,7 +48,7 @@ export default function MintCTA(props: {
 				<>
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
 					<p className="font-display">
-						{formatDuration(auctionInfo.countdown)} /{' '}
+						<Countdown seconds={auctionInfo.countdown} /> /{' '}
 						{formatUnits(auctionInfo.price, 'ether')} ETH
 					</p>
 					<p className="font-display">

@@ -10,6 +10,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { formatUnits } from 'ethers'
 import { formatDuration } from '@/utils/time'
 import { nameEmojiMap } from '@/utils/emoji'
+import Countdown from '@/components/countdown/countdown'
 
 const MintCTA: FC<{
 	selectedEmoji: string
@@ -72,7 +73,7 @@ const MintCTA: FC<{
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
 							<p>
-								{formatDuration(auctionInfo.countdown)} /{' '}
+								<Countdown seconds={auctionInfo.countdown} /> /{' '}
 								{formatUnits(auctionInfo.price, 'ether')} ETH
 							</p>{' '}
 							<p className="my-3">{selectedEmoji}</p>

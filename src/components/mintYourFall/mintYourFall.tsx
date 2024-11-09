@@ -40,6 +40,8 @@ export default function MintYourFall(props: {
 		return new Set(deadEmoji.map((item) => item.emoji))
 	}, [deadEmoji])
 
+	// TODO: Gifs map
+
 	// prettier-ignore
 	const settings = useMemo(()=> [
 		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },
