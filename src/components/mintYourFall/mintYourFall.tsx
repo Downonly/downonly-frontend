@@ -4,7 +4,7 @@ import Card from '@/components/card/card'
 import Step from '@/components/mintYourFall/step/step'
 import MintCTA from '@/components/mintYourFall/mintCTA/mintCTA'
 import Picker from '@/components/mintYourFall/step/picker'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import useStore from '@/hooks/useStore'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 
@@ -13,24 +13,51 @@ export default function MintYourFall(props: {
 	style?: React.CSSProperties
 	id?: string
 }): ReactNode {
+	const auctionInfo = useAuctionInfo('playerCTA')
+
+	const deadEmoji = useMemo(() => {
+		if (
+			!auctionInfo ||
+			auctionInfo.stage === 'premint' ||
+			auctionInfo.stage === 'emergency'
+		) {
+			return []
+		}
+
+		return (
+			auctionInfo.remainingLives
+				? Array.from(auctionInfo.remainingLives.keys()).filter((emoji) => {
+						return auctionInfo.remainingLives!.get(emoji) === 0
+					})
+				: []
+		).map((emoji, i) => ({
+			key: i,
+			emoji,
+		}))
+	}, [auctionInfo])
+
+	const deadEmojiSet = useMemo(() => {
+		return new Set(deadEmoji.map((item) => item.emoji))
+	}, [deadEmoji])
+
 	// prettier-ignore
-	const settings = [
+	const settings = useMemo(()=> [
 		{ emoji: '🏰', gif: '/gifs/environment_DO_castle_10fps_6sec_300x300.gif' },
 		{ emoji: '🎡', gif: '/gifs/environment_DO_ferris_10fps_6sec_300x300.gif' },
 		{ emoji: '❄️', gif: '/gifs/environment_DO_snowPark_10fps_6sec_300x300.gif' },
-	]
+	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
 	// prettier-ignore
-	const characters = [
+	const characters = useMemo(()=> [
 		{ emoji: '🚀', gif: '/gifs/character_DO_astronaut_300x300.gif' },
 		{ emoji: '🧖', gif: '/gifs/character_DO_bath_300x300.gif' },
 		{ emoji: '🧑‍🍳', gif: '/gifs/character_DO_chef_300x300.gif' },
-	]
+	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
 	// prettier-ignore
-	const obstacles = [
+	const obstacles = useMemo(()=> [
 		{ emoji: '🎈', gif: '/gifs/obstacle_DO_balloons_seq_10fps_6sec_300x300.gif' },
 		{ emoji: '📚', gif: '/gifs/obstacle_DO_books_seq_10fps_6sec_300x300.gif' },
 		{ emoji: '🎹', gif: '/gifs/obstacle_DO_piano_seq_10fps_6sec_300x300.gif' },
-	]
+	].filter(item => !deadEmojiSet.has(item.emoji)), [deadEmojiSet])
 
 	const [setting, setSetting] = useState(settings[0].emoji)
 	const [character, setCharacter] = useState(characters[0].emoji)
@@ -41,8 +68,6 @@ export default function MintYourFall(props: {
 	useEffect(() => {
 		setStoreState({ selectedEmoji: `${setting} ${character} ${obstacle}` })
 	}, [character, obstacle, props, setStoreState, setting])
-
-	const auctionInfo = useAuctionInfo('playerCTA')
 
 	if (
 		!auctionInfo ||

@@ -11,6 +11,7 @@ import Faq from '@/components/faq/faq'
 // TODO: Emergency Pause
 
 // TODO: Empty DB
+// TODO: Show vids of minted
 
 export default function Home() {
 	return (
