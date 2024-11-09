@@ -17,7 +17,7 @@ const Countdown: FC<{ seconds: number }> = ({ seconds }) => {
 		return () => {
 			window.clearTimeout(timeout.current)
 		}
-	}, [localSeconds])
+	}, [localSeconds, seconds])
 
 	return <>{formatDuration(localSeconds)}</>
 }
