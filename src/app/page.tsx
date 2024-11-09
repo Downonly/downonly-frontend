@@ -9,7 +9,7 @@ import Faq from '@/components/faq/faq'
 // TODO: Deployment + Domain
 // TODO: Gifs und Zuordnung
 // TODO: Emergency Pause
-// TODO: Single glb mode
+// TODO: Empty DB
 
 export default function Home() {
 	return (
