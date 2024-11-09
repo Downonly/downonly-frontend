@@ -132,7 +132,6 @@ export default function Player(props: {
 			}`}
 			style={props.style}
 		>
-			<pre>{JSON.stringify(auctionInfo, null, 2)}</pre>
 			<div
 				id="full-screen-container"
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
@@ -196,6 +195,9 @@ export default function Player(props: {
 					takes={takes}
 					currentTake={takes?.[currentIndex]}
 				/>
+			</div>
+			<div>
+				<pre>Stage: {JSON.stringify(auctionInfo?.stage, null, 2)}</pre>
 			</div>
 		</section>
 	)
