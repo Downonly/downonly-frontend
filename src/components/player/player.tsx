@@ -137,10 +137,6 @@ export default function Player(props: {
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 			>
 				<div className="do-fall do-fall-1 h-full">
-					<Loading
-						style={isPreloading ? {} : { visibility: 'hidden' }}
-						className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
-					/>
 					{auctionInfo?.stage === 'inbetween-mint-push' ||
 					auctionInfo?.stage === 'inbetween-mint-play' ? (
 						<Stream
@@ -148,46 +144,49 @@ export default function Player(props: {
 							className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square"
 						/>
 					) : (
-						<Canvas
-							id="canvas"
-							className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
-						>
-							<Scene ocRef={ocRef}>
-								{takes?.length && (
-									<group>
-										<Model
-											gltf={currentGLTF}
-											isPlaying={!isPreloading && isPlaying}
-											isSingle={takes?.length === 1}
-											isSounding={isSounding}
-											onFinished={handleFinished}
-											sound={currentSound}
-										/>
-									</group>
-								)}
-							</Scene>
-						</Canvas>
+						<>
+							<Loading
+								style={isPreloading ? {} : { visibility: 'hidden' }}
+								className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
+							/>
+							<Canvas
+								id="canvas"
+								className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
+							>
+								<Scene ocRef={ocRef}>
+									{takes?.length && (
+										<group>
+											<Model
+												gltf={currentGLTF}
+												isPlaying={!isPreloading && isPlaying}
+												isSingle={takes?.length === 1}
+												isSounding={isSounding}
+												onFinished={handleFinished}
+												sound={currentSound}
+											/>
+										</group>
+									)}
+								</Scene>
+							</Canvas>
+							<div className="do-fall do-fall-0">
+								<Controls
+									bufferSize={BUFFER_SIZE}
+									currentIndex={currentIndex}
+									isPlaying={isPlaying}
+									isSounding={isSounding}
+									loaded={new Set(loaded.keys())}
+									onNext={handleNext}
+									onPause={handlePause}
+									onPlay={handlePlay}
+									onPrev={handlePrev}
+									onSeek={handleSeek}
+									onSound={handleSound}
+									takes={takes}
+								/>
+							</div>
+						</>
 					)}
 				</div>
-				{auctionInfo?.stage !== 'inbetween-mint-push' &&
-					auctionInfo?.stage !== 'inbetween-mint-play' && (
-						<div className="do-fall do-fall-0">
-							<Controls
-								bufferSize={BUFFER_SIZE}
-								currentIndex={currentIndex}
-								isPlaying={isPlaying}
-								isSounding={isSounding}
-								loaded={new Set(loaded.keys())}
-								onNext={handleNext}
-								onPause={handlePause}
-								onPlay={handlePlay}
-								onPrev={handlePrev}
-								onSeek={handleSeek}
-								onSound={handleSound}
-								takes={takes}
-							/>
-						</div>
-					)}
 			</div>
 			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
 				<MintCTA
