@@ -19,7 +19,7 @@ export default function Home() {
 			<Player className="mb-24" />
 			<MintYourFall className="mb-24" />
 			<Graveyard />
-			<Minted className="mb-24" />
+			<Minted className="mb-24" max={3} />
 			<HowItWorks />
 			<Concept />
 			<Faq />

@@ -2,15 +2,20 @@
 
 import Polaroid from '@/components/polaroid/polaroid'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
+import { ReactNode } from 'react'
+import { emojiNameMap } from '@/utils/emoji'
+import { formatUnits } from 'ethers'
 
 export default function Minted(props: {
 	className?: string
+	max?: number
 	style?: React.CSSProperties
 	id?: string
-}): JSX.Element {
+}): ReactNode {
 	const auctionInfo = useAuctionInfo('minted')
 
-	if (auctionInfo?.stage === 'premint') return <></>
+	if (auctionInfo?.stage === 'premint' || auctionInfo?.stage === 'emergency')
+		return null
 
 	return (
 		<section
@@ -23,53 +28,51 @@ export default function Minted(props: {
 			</h2>
 
 			<div className="gap-x grid gap-y-6 md:grid-cols-3">
-				<Polaroid
-					className="do-fall do-fall-3"
-					salt="olives"
-					emoji="👮‍🏥🪑"
-					label="Label"
-					description={
-						<span>
-							Lorem Ipsum
-							<br />
-							Price: 4.7 Eth
-						</span>
-					}
-				>
-					<div className="aspect-square bg-snow dark:bg-nickel" />
-				</Polaroid>
-
-				<Polaroid
-					className="do-fall do-fall-7"
-					salt="honeymelon"
-					emoji="👮‍🏥🪑"
-					label="Label"
-					description={
-						<span>
-							Lorem Ipsum
-							<br />
-							Price: 4.7 Eth
-						</span>
-					}
-				>
-					<div className="aspect-square bg-snow dark:bg-nickel" />
-				</Polaroid>
-
-				<Polaroid
-					className="do-fall do-fall-0"
-					salt="grapes"
-					emoji="👮‍🏥🪑"
-					label="Label"
-					description={
-						<span>
-							Lorem Ipsum
-							<br />
-							Price: 4.7 Eth
-						</span>
-					}
-				>
-					<div className="aspect-square bg-snow dark:bg-nickel" />
-				</Polaroid>
+				{auctionInfo?.mints
+					.filter(
+						(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
+					)
+					.map((mint) => (
+						<Polaroid
+							key={mint.id}
+							className="do-fall do-fall-3"
+							salt={mint.fullname}
+							emoji={`${emojiNameMap.get(mint.surface)!} ${emojiNameMap.get(mint.figure)!} ${emojiNameMap.get(mint.obstacle)!}`}
+							label="Label"
+							description={
+								<>
+									<p>
+										{formatUnits(mint.mintprice!, 'ether')} ETH / -
+										{formatUnits(mint.mintprice!, 'ether')} cm
+									</p>
+									<p className="truncate" title={mint.buyerAddress}>
+										{mint.buyerAddress}
+									</p>
+									<p>
+										<a
+											href={mint.openSea}
+											target="_blank"
+											className="link"
+											rel="noreferrer noopener"
+										>
+											Open Sea
+										</a>
+									</p>
+								</>
+							}
+						>
+							<video
+								className="aspect-square w-full bg-snow dark:bg-nickel"
+								controls
+								width="250"
+								loop
+								poster={mint.ipfsJPEG}
+							>
+								<source src={mint.ipfsMP4} type="video/mp4" />
+								Download the <a href={mint.ipfsMP4}>video</a>.
+							</video>
+						</Polaroid>
+					))}
 			</div>
 		</section>
 	)
