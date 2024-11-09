@@ -11,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model mints25 {
+model mints27 {
   id           Int       @unique(map: "id") @default(autoincrement())
   jobState     String?   @db.VarChar(255)
   surface      String?   @db.VarChar(255)
@@ -19,7 +19,7 @@ model mints25 {
   figure       String?   @db.VarChar(255)
   openSea      String?   @db.VarChar(255)
   ipfsMP3      String?   @db.VarChar(255)
-  ipfsJPG      String?   @db.VarChar(255)
+  ipfsJPEG     String?   @db.VarChar(255)
   ipfsMP4      String?   @db.VarChar(255)
   ipfsGLB      String?   @db.VarChar(255)
   mintprice    String?   @db.VarChar(255)

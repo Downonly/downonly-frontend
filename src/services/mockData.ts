@@ -30,7 +30,7 @@ export const getMockData = () => {
 			ipfsMP3: done && `/NewFallExamples/${numStr}.mp3`,
 			// ipfsGLB: done && `/bf_toWeb_Exports/bf${numStr}/bf${numStr}.draco.glb`,
 			ipfsGLB: done && `/NewFallExamples/${numStr}.draco.glb`,
-			ipfsJPG: undefined,
+			ipfsJPEG: undefined,
 			ipfsMP4: undefined,
 			openSea:
 				done &&

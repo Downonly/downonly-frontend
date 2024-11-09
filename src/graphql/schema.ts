@@ -7,7 +7,7 @@ export const typeDefs = `#graphql
     figure:           String
     openSea:          String
     ipfsMP3:          String
-    ipfsJPG:          String
+    ipfsJPEG:         String
     ipfsMP4:          String
     ipfsGLB:          String
     mintprice:        String

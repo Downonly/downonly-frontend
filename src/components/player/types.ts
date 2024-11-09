@@ -8,7 +8,7 @@ export interface Row {
 	figure: string
 	openSea: string | undefined
 	ipfsMP3: string | undefined
-	ipfsJPG: string | undefined
+	ipfsJPEG: string | undefined
 	ipfsMP4: string | undefined
 	ipfsGLB: string | undefined
 	mintprice: bigint | undefined
