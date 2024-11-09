@@ -4,7 +4,7 @@ import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
 import { FC, ReactElement, useState } from 'react'
 import { buy } from '@/services/ether'
-import { DepositError } from '@/errors/errorEther'
+import { DepositError, InsufficientFundsError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 import { formatUnits } from 'ethers'
@@ -17,6 +17,9 @@ const MintCTA: FC<{
 	const [setting, character, obstacle] = selectedEmoji.split(' ')
 
 	const [modalOpen, setModalOpen] = useState(false)
+	const [modalSubject, setModalSubject] = useState<
+		'insufficient-funds' | undefined
+	>()
 	const handleDismiss = () => {
 		setModalOpen(false)
 	}
@@ -41,6 +44,11 @@ const MintCTA: FC<{
 		} catch (err) {
 			if (err instanceof DepositError) {
 				console.warn(err)
+				setModalSubject(undefined)
+				setModalOpen(true)
+			} else if (err instanceof InsufficientFundsError) {
+				console.warn(err)
+				setModalSubject('insufficient-funds')
 				setModalOpen(true)
 			} else {
 				console.error(err)
@@ -113,29 +121,39 @@ const MintCTA: FC<{
 				<strong className="text-display mb-4 block text-2xl">
 					Looks like you
 					<br />
-					don&apos;t have a wallet
+					{modalSubject === 'insufficient-funds' ? (
+						<>don&apos;t have sufficient funds</>
+					) : (
+						<>don&apos;t have a wallet</>
+					)}
 				</strong>
 				<p className="mb-4 leading-relaxed">
-					In order to perform transactions on the Ethereum network safely, you
-					need a wallet, such as{' '}
-					<a
-						className="link"
-						href="https://metamask.io/"
-						target="_blank"
-						rel="noreferrer noopener"
-					>
-						MetaMask
-					</a>{' '}
-					or{' '}
-					<a
-						className="link"
-						href="https://trustwallet.com/"
-						target="_blank"
-						rel="noreferrer noopener"
-					>
-						Trust Wallet
-					</a>{' '}
-					(for mobile).
+					{modalSubject === 'insufficient-funds' ? (
+						<>The funds in you wallet do not suffice to make a purchase.</>
+					) : (
+						<>
+							In order to perform transactions on the Ethereum network safely,
+							you need a wallet, such as{' '}
+							<a
+								className="link"
+								href="https://metamask.io/"
+								target="_blank"
+								rel="noreferrer noopener"
+							>
+								MetaMask
+							</a>{' '}
+							or{' '}
+							<a
+								className="link"
+								href="https://trustwallet.com/"
+								target="_blank"
+								rel="noreferrer noopener"
+							>
+								Trust Wallet
+							</a>{' '}
+							(for mobile).
+						</>
+					)}
 				</p>
 				<Button
 					style={{ display: 'block' }}
