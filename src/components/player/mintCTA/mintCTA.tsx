@@ -2,7 +2,7 @@
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
-import { ReactNode, useCallback } from 'react'
+import { ReactNode } from 'react'
 import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import { formatDuration } from '@/utils/time'
@@ -18,15 +18,15 @@ export default function MintCTA(props: {
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('playerCTA')
 
-	const renderEmojiesCurrentTake = useCallback(() => {
-		if (!props.currentTake) return <></>
-		return (
-			<p className="my-3">
-				{props.currentTake.surface} {props.currentTake.figure}{' '}
-				{props.currentTake.obstacle}
-			</p>
-		)
-	}, [props.currentTake])
+	// const renderEmojiesCurrentTake = useCallback(() => {
+	// 	if (!props.currentTake) return <></>
+	// 	return (
+	// 		<p className="my-3">
+	// 			{props.currentTake.surface} {props.currentTake.figure}{' '}
+	// 			{props.currentTake.obstacle}
+	// 		</p>
+	// 	)
+	// }, [props.currentTake])
 
 	const { getStoreState } = useStore()
 
