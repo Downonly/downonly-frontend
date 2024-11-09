@@ -7,7 +7,11 @@ const Countdown: FC<{ seconds: number }> = ({ seconds }) => {
 
 	useEffect(() => {
 		timeout.current = window.setTimeout(() => {
-			setLocalSeconds(Math.max(0, localSeconds - 1))
+			if (localSeconds <= 1) {
+				setLocalSeconds(seconds)
+			} else {
+				setLocalSeconds(Math.max(0, localSeconds - 1))
+			}
 		}, 1000)
 
 		return () => {
