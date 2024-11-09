@@ -9,7 +9,9 @@ import Faq from '@/components/faq/faq'
 // TODO: Deployment + Domain
 // TODO: Gifs und Zuordnung
 // TODO: Emergency Pause
+
 // TODO: Empty DB
+// FIXME: loading indicator visible over video
 
 export default function Home() {
 	return (

@@ -304,6 +304,15 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			lastInbetweenMintPushTime = Number(new Date())
 		}
 
+		if (mints.length === 0) {
+			const info: AuctionInfoPremint = {
+				stage: 'premint',
+				countdown,
+				mints,
+			}
+			return info
+		}
+
 		if (
 			getJobState(mints) === 'done' &&
 			Number(new Date()) - lastInbetweenMintPushTime < 60_000
