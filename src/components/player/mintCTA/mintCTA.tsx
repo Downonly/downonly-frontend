@@ -44,8 +44,6 @@ export default function MintCTA(props: {
 					</p>
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
-					<br />
-					{renderEmojiesCurrentTake()} {/* TODO: Show randomized GLBs */}
 				</>
 			) : auctionInfo?.stage === 'mint' ? (
 				<>
