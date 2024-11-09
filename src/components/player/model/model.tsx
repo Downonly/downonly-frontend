@@ -37,7 +37,7 @@ export default function Model(props: {
 
 		scene.position.setX(-hipRef.current.position.x)
 		scene.position.setY(-hipRef.current.position.y)
-		scene.position.setZ(hipRef.current.position.z)
+		scene.position.setZ(-hipRef.current.position.z)
 	}, [props.gltf])
 
 	useEffect(() => {
