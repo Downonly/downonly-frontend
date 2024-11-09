@@ -188,7 +188,7 @@ export default function Player(props: {
 					)}
 				</div>
 			</div>
-			<div className="do-fall do-fall-3 flex items-center justify-center p-6 text-center">
+			<div className="do-fall do-fall-3 mt-16 flex items-center justify-center p-6 text-center lg:mt-0">
 				<MintCTA
 					key={`${auctionInfo?.stage}`}
 					takes={takes}
