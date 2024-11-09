@@ -2,17 +2,20 @@
 
 import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
-import { FC, ReactElement, ReactNode, useState } from 'react'
+import { FC, ReactElement, useState } from 'react'
 import { buy } from '@/services/ether'
 import { DepositError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 import { formatUnits } from 'ethers'
 import { formatDuration } from '@/utils/time'
+import { nameEmojiMap } from '@/utils/emoji'
 
 const MintCTA: FC<{
-	selectedEmoji: ReactNode
+	selectedEmoji: string
 }> = ({ selectedEmoji }): ReactElement => {
+	const [setting, character, obstacle] = selectedEmoji.split(' ')
+
 	const [modalOpen, setModalOpen] = useState(false)
 	const handleDismiss = () => {
 		setModalOpen(false)
@@ -27,9 +30,17 @@ const MintCTA: FC<{
 
 		try {
 			setIsMinting(true)
-			await buy(auctionInfo.price)
+
+			const config = {
+				setting: nameEmojiMap.get(setting)!,
+				character: nameEmojiMap.get(character)!,
+				obstacle: nameEmojiMap.get(obstacle)!,
+			}
+
+			await buy(auctionInfo.price, config)
 		} catch (err) {
 			if (err instanceof DepositError) {
+				console.warn(err)
 				setModalOpen(true)
 			} else {
 				console.error(err)

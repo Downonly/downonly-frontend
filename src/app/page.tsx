@@ -12,6 +12,7 @@ import Faq from '@/components/faq/faq'
 
 // TODO: Empty DB
 // FIXME: loading indicator visible over video
+// TODO: catch Error: insufficient funds
 
 export default function Home() {
 	return (

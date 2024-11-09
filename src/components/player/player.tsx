@@ -196,6 +196,8 @@ export default function Player(props: {
 					currentTake={takes?.[currentIndex]}
 				/>
 			</div>
+
+			{/* TODO: remove dev info */}
 			<div>
 				<pre>Stage: {JSON.stringify(auctionInfo?.stage, null, 2)}</pre>
 				<pre>
@@ -204,7 +206,7 @@ export default function Player(props: {
 						? JSON.stringify(
 								auctionInfo?.mints.map((mint) => ({
 									jobState: mint.jobState,
-									figureSurfaceObstacle: `${mint.figure}-${mint.figure}-${mint.figure}`,
+									figureSurfaceObstacle: `${mint.figure}-${mint.surface}-${mint.obstacle}`,
 								})),
 								null,
 								2

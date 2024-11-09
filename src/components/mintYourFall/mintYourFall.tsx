@@ -21,7 +21,7 @@ export default function MintYourFall(props: {
 	]
 	// prettier-ignore
 	const characters = [
-		{ emoji: '🧑‍🚀', gif: '/gifs/character_DO_astronaut_300x300.gif' },
+		{ emoji: '🚀', gif: '/gifs/character_DO_astronaut_300x300.gif' },
 		{ emoji: '🧖', gif: '/gifs/character_DO_bath_300x300.gif' },
 		{ emoji: '🧑‍🍳', gif: '/gifs/character_DO_chef_300x300.gif' },
 	]

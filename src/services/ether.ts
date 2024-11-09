@@ -1,7 +1,9 @@
 import {
 	type BaseContract,
+	BrowserProvider,
 	Contract,
 	type ContractInterface,
+	type Eip1193Provider,
 	formatUnits,
 	type JsonRpcApiProvider,
 	JsonRpcProvider,
@@ -9,14 +11,14 @@ import {
 	TransactionResponse,
 } from 'ethers'
 import abi from './abi/dutchauction.json'
-import { DepositError } from '@/errors/errorEther'
+import { DepositError, InsufficientFundsError } from '@/errors/errorEther'
 import { Row } from '@/components/player/types'
 import { emojiNameMap } from '@/utils/emoji'
 
-// declare const window: Window &
-// 	typeof globalThis & {
-// 		ethereum: Eip1193Provider
-// 	}
+declare const window: Window &
+	typeof globalThis & {
+		ethereum: Eip1193Provider
+	}
 
 export type AuctionStage =
 	| 'premint'
@@ -127,16 +129,16 @@ async function initContract() {
 	// 	// Alternatively we can use the InfuraProvider.
 	// 	// provider = new InfuraProvider('matic', '45967322314d46219179ada7e414c389')
 	// } else {
-	// 	// Connect to the MetaMask EIP-1193 object. This is a standard
-	// 	// protocol that allows Ethers access to make all read-only
-	// 	// requests through MetaMask.
-	// 	const browserProvider = new BrowserProvider(window.ethereum)
-	//
-	// 	// It also provides an opportunity to request access to write
-	// 	// operations, which will be performed by the private key
-	// 	// that MetaMask manages for the user.
-	// 	signer = await browserProvider.getSigner()
-	//
+	// Connect to the MetaMask EIP-1193 object. This is a standard
+	// protocol that allows Ethers access to make all read-only
+	// requests through MetaMask.
+	const browserProvider = new BrowserProvider(window.ethereum)
+
+	// It also provides an opportunity to request access to write
+	// operations, which will be performed by the private key
+	// that MetaMask manages for the user.
+	signer = await browserProvider.getSigner()
+
 	// 	provider = browserProvider
 	// }
 
@@ -490,7 +492,14 @@ export async function getTimeUntilAuctionEnds() {
 	return parseInt((await contract.remainingTimeUntilPriceReset()) as string, 10)
 }
 
-export async function buy(wei: bigint) {
+export async function buy(
+	wei: bigint,
+	config: {
+		setting: string
+		character: string
+		obstacle: string
+	}
+) {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		throw new DepositError('Deposit failed.')
 	}
@@ -505,9 +514,9 @@ export async function buy(wei: bigint) {
 
 		// Call the deposit function on the contract.
 		const depositTx = (await (contractWithSigner as MyContract).buy(
-			'rk2',
-			'wc1',
-			'547',
+			config.character,
+			config.obstacle,
+			config.setting,
 			{
 				value: wei,
 			}
@@ -516,6 +525,9 @@ export async function buy(wei: bigint) {
 		// Wait for the transaction to be mined.
 		await depositTx.wait()
 	} catch (err) {
+		if (err instanceof Error && err.message.includes('insufficient funds')) {
+			throw new InsufficientFundsError('Deposit failed.', { cause: err })
+		}
 		throw new DepositError('Deposit failed.', { cause: err })
 	}
 }
