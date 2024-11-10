@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 const [AUTH_USER, AUTH_PASS] = (process.env.BASIC_AUTH ?? ':').split(':')
 
 export function middleware(req: NextRequest) {
-	if (process.env.NODE_ENV !== 'production') {
+	if (process.env.NODE_ENV !== 'production' || !process.env.BASIC_AUTH) {
 		return NextResponse.next()
 	}
 
