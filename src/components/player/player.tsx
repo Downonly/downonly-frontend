@@ -150,10 +150,9 @@ export default function Player(props: {
 						/>
 					) : (
 						<>
-							<Loading
-								style={isPreloading ? {} : { visibility: 'hidden' }}
-								className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2"
-							/>
+							{isPreloading && (
+								<Loading className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2" />
+							)}
 							<Canvas
 								id="canvas"
 								className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"

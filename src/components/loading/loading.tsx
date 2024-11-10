@@ -1,20 +1,23 @@
 import './loading.css'
 
 export default function Loading(props: {
-	children?: React.ReactNode
 	className?: string
 	dots?: boolean
 	id?: string
 	style?: React.CSSProperties
+	label?: string
 }): JSX.Element {
 	return (
 		<div
 			id={props.id}
-			className={`loading font-display ${props.className ?? ''} ${
-				props.dots ? '[width:_3.2ch]' : '[width:_8.2ch]'
-			}`}
-			style={props.style}
-			aria-label="Loading"
+			className={`loading font-display ${props.className ?? ''}`}
+			style={{
+				width: props.dots
+					? '3.2ch'
+					: `${1.2 * (props.label ?? 'Loading').length}ch`,
+				...props.style,
+			}}
+			aria-label={props.label ?? 'Loading'}
 		>
 			{props.dots ? (
 				<>
@@ -23,15 +26,13 @@ export default function Loading(props: {
 					<span>•</span>
 				</>
 			) : (
-				<>
-					<span>L</span>
-					<span>O</span>
-					<span>A</span>
-					<span>D</span>
-					<span>I</span>
-					<span>N</span>
-					<span>G</span>
-				</>
+				(props.label ?? 'Loading')
+					.split('')
+					.map((item: string, index: number) => (
+						<span className="uppercase" key={index}>
+							{item}
+						</span>
+					))
 			)}
 		</div>
 	)
