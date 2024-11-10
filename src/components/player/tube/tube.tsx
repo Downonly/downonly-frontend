@@ -1,6 +1,6 @@
 'use client'
 
-export default function Stream(props: {
+export default function Tube(props: {
 	src: string | undefined
 	className?: string
 	style?: React.CSSProperties

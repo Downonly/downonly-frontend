@@ -2,7 +2,7 @@
 
 import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
-import Stream from '@/components/player/stream/stream'
+import Tube from '@/components/player/tube/tube'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -137,11 +137,15 @@ export default function Player(props: {
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 			>
 				<div className="do-fall do-fall-1 h-full">
-					{/* TODO: show video during premint */}
-					{auctionInfo?.stage === 'inbetween-mint-push' ||
+					{auctionInfo?.stage === 'premint' ||
+					auctionInfo?.stage === 'inbetween-mint-push' ||
 					auctionInfo?.stage === 'inbetween-mint-play' ? (
-						<Stream
-							src={process.env.NEXT_PUBLIC_YOUTUBE_STREAM_SRC}
+						<Tube
+							src={
+								auctionInfo?.stage === 'premint'
+									? process.env.NEXT_PUBLIC_TUBE_PREMINT_SRC
+									: process.env.NEXT_PUBLIC_TUBE_STREAM_SRC
+							}
 							className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square"
 						/>
 					) : (

@@ -1,4 +1,4 @@
-import Stream from '@/components/player/stream/stream'
+import Tube from '@/components/player/tube/tube'
 
 export default function HowItWorks(props: {
 	className?: string
@@ -20,8 +20,8 @@ export default function HowItWorks(props: {
 					of this works
 				</h2>
 
-				<Stream
-					src={process.env.NEXT_PUBLIC_YOUTUBE_HOW_SRC}
+				<Tube
+					src={process.env.NEXT_PUBLIC_TUBE_HOW_SRC}
 					className="do-fall do-fall-0 aspect-video bg-silver"
 				/>
 			</div>

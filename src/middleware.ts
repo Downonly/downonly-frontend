@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-// Extract the username and password from environment variables
 const [AUTH_USER, AUTH_PASS] = (process.env.BASIC_AUTH ?? ':').split(':')
 
 export function middleware(req: NextRequest) {
