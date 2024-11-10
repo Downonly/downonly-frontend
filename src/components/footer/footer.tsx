@@ -21,11 +21,14 @@ export default function Footer(props: {
 			key={pathname}
 			style={props.style}
 		>
-			<div className="gap-x container grid grid-cols-2 px-6 text-sm lg:grid-cols-4">
-				<Link className="interactive origin-[30%_50%]" href="/">
+			<div className="gap-x container grid grid-cols-2 px-6 text-sm md:grid-cols-3 lg:grid-cols-3">
+				<Link
+					className="interactive col-span-2 origin-[30%_50%] md:col-span-1"
+					href="/"
+				>
 					<Logo className="-mt-24 mb-12 w-44 max-w-[75%]" />
 				</Link>
-				<div className="mb-12">
+				<div className="mb-12 md:pl-16">
 					<p className="text-display mb-12">Social</p>
 					<ul className="list-none">
 						<li>
@@ -54,43 +57,18 @@ export default function Footer(props: {
 					<p className="text-display mb-12 text-sm">Info</p>
 					<ul className="list-none">
 						<li>
-							<Link className="interactive" href="#">
-								AGB
+							<Link className="interactive" href="/terms">
+								Terms
 							</Link>
 						</li>
 						<li>
-							<Link className="interactive" href="#">
+							<Link className="interactive" href="/imprint">
 								Imprint
 							</Link>
 						</li>
 						<li>
-							<Link className="interactive" href="#">
+							<Link className="interactive" href="/privacy">
 								Privacy
-							</Link>
-						</li>
-					</ul>
-				</div>
-				<div className="mb-12">
-					<p className="text-display mb-12 text-sm">Sitemap</p>
-					<ul className="list-none">
-						<li>
-							<Link className="interactive" href="/">
-								Home
-							</Link>
-						</li>
-						<li>
-							<Link className="interactive" href="/team">
-								Team
-							</Link>
-						</li>
-						<li>
-							<Link className="interactive" href="/traits">
-								Traits
-							</Link>
-						</li>
-						<li>
-							<Link className="interactive" href="/playground">
-								Playground
 							</Link>
 						</li>
 					</ul>

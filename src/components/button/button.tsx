@@ -2,6 +2,7 @@
 
 import { roundedRectClipPath } from '@/utils/shape'
 import Loading from '@/components/loading/loading'
+import Arrow from '@/components/arrow/arrow'
 
 export default function Button(props: {
 	children: React.ReactNode
@@ -13,6 +14,7 @@ export default function Button(props: {
 	size?: 'lg'
 	mode?: 'secondary'
 	tag?: keyof JSX.IntrinsicElements
+	arrow?: 'left' | 'right'
 	salt: string
 }) {
 	const clipPath = roundedRectClipPath(
@@ -39,15 +41,24 @@ export default function Button(props: {
 				WebkitTapHighlightColor: 'transparent',
 			}}
 		>
-			<Loading
-				style={{
-					position: 'absolute',
-					display: props.loading ? undefined : 'none',
-				}}
-				className={`left-1/2 -translate-x-1/2 ${props.loading ? '' : 'hidden'}`}
-				dots
-			/>
-			<span className={props.loading ? 'invisible' : ''}>{props.children}</span>
+			{props.loading && (
+				<Loading
+					style={{
+						position: 'absolute',
+					}}
+					className={`left-1/2 -translate-x-1/2`}
+					dots
+				/>
+			)}
+			<span className={`inline-flex gap-2 ${props.loading ? 'invisible' : ''}`}>
+				{props.arrow === 'left' && (
+					<Arrow className="inline-flex rotate-180 text-snow dark:text-carbon" />
+				)}
+				{props.children}
+				{props.arrow === 'right' && (
+					<Arrow className="inline-flex text-snow dark:text-carbon" />
+				)}
+			</span>
 			<div
 				className="absolute inset-0 -z-10 size-full bg-cole dark:bg-snow"
 				style={{ clipPath }}

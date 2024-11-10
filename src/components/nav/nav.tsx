@@ -1,7 +1,6 @@
 'use client'
 
 import Link from '@/components/link/link'
-import Button from '@/components/button/button'
 import Logo from '@/components/logo/logo'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/themeToggle/themeToggle'
@@ -30,21 +29,11 @@ export default function Nav(props: {
 					<ThemeToggle className="do-fall do-fall-0" />
 				</div>
 			</div>
-			<Link className="do-fall do-fall-3" href="/team/">
-				<Button salt={'banana'} tag="span">
-					Team
-				</Button>
-			</Link>
-			<Link className="do-fall do-fall-2" href="/traits/">
-				<Button salt={'tomato'} tag="span">
-					Traits
-				</Button>
-			</Link>
-			<Link className="do-fall do-fall-4" href="/playground/">
-				<Button salt={'apple'} tag="span">
-					Playground
-				</Button>
-			</Link>
+			{/*<Link className="do-fall do-fall-3" href="/team/">*/}
+			{/*	<Button salt={'banana'} tag="span">*/}
+			{/*		Team*/}
+			{/*	</Button>*/}
+			{/*</Link>*/}
 		</nav>
 	)
 }
