@@ -39,17 +39,27 @@ export default function Graveyard(props: {
 			return []
 		}
 
-		// TODO: show a dead emoji for each entry
+		console.info('auctionInfo.remainingLives', auctionInfo.remainingLives)
+
 		return (
 			auctionInfo.remainingLives
-				? Array.from(auctionInfo.remainingLives.keys()).filter((emoji) => {
-						return auctionInfo.remainingLives!.get(emoji) === 0
-					})
+				? Array.from(auctionInfo.remainingLives.entries()).filter(
+						([, lives]) => {
+							return lives < 3
+						}
+					)
 				: []
-		).map((emoji, i) => ({
-			key: i,
-			emoji,
-		}))
+		).flatMap(([emoji, lives], i) => {
+			const dead: { key: string; emoji: string }[] = []
+			for (let j = 3 - lives; j--; ) {
+				dead.push({
+					key: `${i}-${j}`,
+					emoji,
+				})
+			}
+
+			return dead
+		})
 	}, [auctionInfo])
 
 	if (!deadEmoji.length) {
