@@ -447,9 +447,7 @@ async function getCountdown(): Promise<number> {
 	let countdown = 0
 	try {
 		const bigInt = (await contract.remainingTimeUntilPriceReset()) as bigint
-		console.info('bigInt', bigInt)
 		countdown = Number(bigInt) * avgBlockTime
-		console.info('countdown', countdown)
 	} catch (err) {
 		console.error('Failed to get countdown.', err)
 	}
