@@ -21,7 +21,7 @@ export const emojiNameMap = new Map<string, string>([
 	['farm', '🥕'],
 	['bath', '🫧'],
 	['judge', '⚖️'],
-	['shoppingcart', '🛒'],
+	['shoppingCart', '🛒'],
 	['balloons', '🎈'],
 	['satellite', '🛰️'],
 	['toilet', '🚻'],
