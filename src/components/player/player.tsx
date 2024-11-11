@@ -124,6 +124,10 @@ export default function Player(props: {
 		}
 	}, [currentGLTF, currentIndex, loaded, takes])
 
+	useEffect(() => {
+		console.info('contract', process.env.NEXT_PUBLIC_CONTRACT_ADDRESS)
+	}, [])
+
 	return (
 		<section
 			id={props.id}
