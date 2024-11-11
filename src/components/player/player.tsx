@@ -208,19 +208,19 @@ export default function Player(props: {
 						? JSON.stringify(auctionInfo?.countdown, null, 2)
 						: 'undefined'}
 				</pre>
-				<pre>
-					Mints:{' '}
-					{auctionInfo && 'mints' in auctionInfo
-						? JSON.stringify(
-								auctionInfo?.mints.map((mint) => ({
-									jobState: mint.jobState,
-									figureSurfaceObstacle: `${mint.figure}-${mint.surface}-${mint.obstacle}`,
-								})),
-								null,
-								2
-							)
-						: 'no mints'}
-				</pre>
+				{/*<pre>*/}
+				{/*	Mints:{' '}*/}
+				{/*	{auctionInfo && 'mints' in auctionInfo*/}
+				{/*		? JSON.stringify(*/}
+				{/*				auctionInfo?.mints.map((mint) => ({*/}
+				{/*					jobState: mint.jobState,*/}
+				{/*					figureSurfaceObstacle: `${mint.figure}-${mint.surface}-${mint.obstacle}`,*/}
+				{/*				})),*/}
+				{/*				null,*/}
+				{/*				2*/}
+				{/*			)*/}
+				{/*		: 'no mints'}*/}
+				{/*</pre>*/}
 			</div>
 		</section>
 	)

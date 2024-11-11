@@ -39,6 +39,7 @@ export default function Graveyard(props: {
 			return []
 		}
 
+		// TODO: show a dead emoji for each entry
 		return (
 			auctionInfo.remainingLives
 				? Array.from(auctionInfo.remainingLives.keys()).filter((emoji) => {
