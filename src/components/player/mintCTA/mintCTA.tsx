@@ -154,7 +154,7 @@ export default function MintCTA(props: {
 					)}
 				</>
 			) : (
-				<div className="-translate-y-8">
+				<div className="lg:-translate-y-8">
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
 					<br />
 					<Loading className="mx-auto" />
