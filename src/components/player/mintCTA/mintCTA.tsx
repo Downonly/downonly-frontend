@@ -71,7 +71,12 @@ export default function MintCTA(props: {
 								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
 							</p>
 							<p>{auctionInfo.lastMinted.fullName}</p>
-							<p>{auctionInfo.lastMinted.buyerAddress}</p>
+							<p
+								className="truncate"
+								title={auctionInfo.lastMinted.buyerAddress}
+							>
+								{auctionInfo.lastMinted.buyerAddress}
+							</p>
 							<p>
 								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
 									'en-US',
@@ -119,7 +124,12 @@ export default function MintCTA(props: {
 								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
 							</p>
 							<p>{auctionInfo.lastMinted.fullName}</p>
-							<p>{auctionInfo.lastMinted.buyerAddress}</p>
+							<p
+								className="truncate"
+								title={auctionInfo.lastMinted.buyerAddress}
+							>
+								{auctionInfo.lastMinted.buyerAddress}
+							</p>
 							<p>
 								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
 									'en-US',
