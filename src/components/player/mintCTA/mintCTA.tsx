@@ -7,6 +7,7 @@ import { formatUnits } from 'ethers'
 import useStore from '@/hooks/useStore'
 import Countdown from '@/components/countdown/countdown'
 import Loading from '@/components/loading/loading'
+import Eth from '@/components/eth/eth'
 
 export default function MintCTA(props: {
 	className?: string
@@ -49,7 +50,7 @@ export default function MintCTA(props: {
 					<p className="font-display uppercase">Dutch ↓ Auction</p>
 					<p className="font-display">
 						<Countdown seconds={auctionInfo.countdown} /> /{' '}
-						{formatUnits(auctionInfo.price, 'ether')} ETH
+						<Eth eth={auctionInfo.price} />
 					</p>
 					<p className="font-display">
 						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
@@ -67,7 +68,7 @@ export default function MintCTA(props: {
 					{auctionInfo.lastMinted && (
 						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
 							<p>
-								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} ETH / -
+								<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
 								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
 							</p>
 							<p>{auctionInfo.lastMinted.fullName}</p>
@@ -120,7 +121,7 @@ export default function MintCTA(props: {
 					{auctionInfo.lastMinted && (
 						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
 							<p>
-								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} ETH / -
+								<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
 								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
 							</p>
 							<p>{auctionInfo.lastMinted.fullName}</p>

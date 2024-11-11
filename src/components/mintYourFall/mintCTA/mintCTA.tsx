@@ -6,11 +6,10 @@ import { FC, ReactElement, useState } from 'react'
 import { buy } from '@/services/ether'
 import { DepositError, InsufficientFundsError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
-
-import { formatUnits } from 'ethers'
 import { formatDuration } from '@/utils/time'
 import { nameEmojiMap } from '@/utils/emoji'
 import Countdown from '@/components/countdown/countdown'
+import Eth from '@/components/eth/eth'
 
 const MintCTA: FC<{
 	selectedEmoji: string
@@ -74,7 +73,7 @@ const MintCTA: FC<{
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
 							<p>
 								<Countdown seconds={auctionInfo.countdown} /> /{' '}
-								{formatUnits(auctionInfo.price, 'ether')} ETH
+								<Eth eth={auctionInfo.price} />
 							</p>{' '}
 							<p className="my-3">{selectedEmoji}</p>
 							<p className="mb-3">

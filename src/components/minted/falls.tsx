@@ -6,6 +6,7 @@ import Video from '@/components/minted/video'
 import { AuctionInfo } from '@/services/ether'
 import Link from '@/components/link/link'
 import Button from '@/components/button/button'
+import Eth from '@/components/eth/eth'
 
 export default function Falls(props: {
 	className?: string
@@ -49,14 +50,14 @@ export default function Falls(props: {
 				{slicedMints.map((mint) => (
 					<Polaroid
 						key={mint.id}
-						className="do-fall do-fall-3"
+						className="do-fall do-fall-3 min-w-0"
 						salt={mint.fullname}
 						emoji={`${emojiNameMap.get(mint.surface)!} ${emojiNameMap.get(mint.figure)!} ${emojiNameMap.get(mint.obstacle)!}`}
 						label="Label"
 						description={
 							<>
 								<p>
-									{formatUnits(mint.mintprice!, 'ether')} ETH / -
+									<Eth eth={mint.mintprice!} /> / -
 									{formatUnits(mint.mintprice!, 'ether')} cm
 								</p>
 								<p className="truncate" title={mint.buyerAddress}>
