@@ -208,8 +208,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		console.error('Failed to fetch mints from db.', err)
 	}
 
-	console.info('is pushing', pushing)
-
 	try {
 		await initContract()
 
@@ -227,21 +225,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			countdown: 0,
 			mints: [],
 		} satisfies AuctionInfoPremint
-	}
-
-	if (pushing) {
-		const price = await getCurrentPrice()
-		const distanceToDeath = getDistanceToDeath(mints, price)
-		const distanceCurrent = Number(formatUnits(price, 'ether'))
-
-		const info: AuctionInfoInbetweenMintPush = {
-			stage: 'inbetween-mint-push',
-			price,
-			distanceCurrent,
-			distanceToDeath,
-			mints,
-		}
-		return info
 	}
 
 	let phase: Phase | undefined = undefined
@@ -275,6 +258,22 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		lastMinted = getLastMinted(mints)
 	} catch (err) {
 		console.error('Failed to get last minted', err)
+	}
+
+	if (pushing) {
+		const price = lastMinted?.mintPrice ?? 0n
+		const distanceToDeath = getDistanceToDeath(mints, price)
+		const distanceCurrent = Number(formatUnits(price, 'ether'))
+
+		const info: AuctionInfoInbetweenMintPush = {
+			stage: 'inbetween-mint-push',
+			remainingLives,
+			price,
+			distanceCurrent,
+			distanceToDeath,
+			mints,
+		}
+		return info
 	}
 
 	if (phase === 'auctionsEnded') {
