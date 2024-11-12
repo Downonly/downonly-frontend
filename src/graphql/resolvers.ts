@@ -1,10 +1,10 @@
-import { table } from '@/services/db'
+import { tableMints } from '@/services/db'
 
 export const resolvers = {
 	Query: {
 		// get mint by id
 		mint: async (_parent: never, args: { id: number }) => {
-			return await table.findUnique({
+			return await tableMints.findUnique({
 				where: {
 					id: args.id,
 				},
@@ -12,7 +12,7 @@ export const resolvers = {
 		},
 		// get all mints
 		mints: async () => {
-			return await table.findMany()
+			return await tableMints.findMany()
 		},
 	},
 }

@@ -30,3 +30,8 @@ model mints28 {
   blockHeight  Int?      @db.Int
   fallDistance String?   @db.VarChar(255)
 }
+
+model pushing {
+  id        Int     @id @default(autoincrement())
+  isPushing Boolean @default(false)
+}

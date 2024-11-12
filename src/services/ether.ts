@@ -74,7 +74,6 @@ export interface AuctionInfoMint extends AuctionInfoWithPrice {
 
 export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
 	stage: 'inbetween-mint-push'
-	countdown: number
 }
 
 export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
@@ -130,8 +129,6 @@ async function initContract() {
 	contract = new Contract(contractAddress, abi, signer || provider)
 }
 
-// let lastMotorPushWithoutBuy: number | undefined
-let lastInbetweenMintPushTime: number | undefined
 export async function getAuctionInfo(): Promise<AuctionInfo> {
 	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
 		| AuctionStage
@@ -155,11 +152,10 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 					distanceCurrent: 0.123,
 					distanceToDeath: 23,
 				} satisfies AuctionInfoMint
-			case 'inbetween-mint-push': // (jobState wechselt zu done / getMotorPushWithoutBuy geht hoch) + ~1min // hier ist auch cooldown
+			case 'inbetween-mint-push':
 				return {
 					stage: mockedAuctionStage,
 					mints,
-					countdown: 123,
 					price: 123n,
 					distanceCurrent: 0.123,
 					distanceToDeath: 23,
@@ -198,13 +194,21 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	let mints: Row[] = []
+	let pushing = false
 	let res: Response | undefined = undefined
 	try {
 		res = await fetch(`${process.env.NEXT_PUBLIC_BASE}api/mints`)
-		mints = (await res.json()) as Row[]
+		const json = (await res.json()) as {
+			mints: Row[]
+			pushing: boolean
+		}
+		mints = json.mints
+		pushing = json.pushing
 	} catch (err) {
 		console.error('Failed to fetch mints from db.', err)
 	}
+
+	console.info('is pushing', pushing)
 
 	try {
 		await initContract()
@@ -225,6 +229,21 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		} satisfies AuctionInfoPremint
 	}
 
+	if (pushing) {
+		const price = await getCurrentPrice()
+		const distanceToDeath = getDistanceToDeath(mints, price)
+		const distanceCurrent = Number(formatUnits(price, 'ether'))
+
+		const info: AuctionInfoInbetweenMintPush = {
+			stage: 'inbetween-mint-push',
+			price,
+			distanceCurrent,
+			distanceToDeath,
+			mints,
+		}
+		return info
+	}
+
 	let phase: Phase | undefined = undefined
 	try {
 		phase = (await contract.getPhase()) as Phase
@@ -242,10 +261,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			stage: 'emergency',
 		}
 		return info
-	}
-
-	if (phase !== 'auctionCooldown') {
-		lastInbetweenMintPushTime = undefined
 	}
 
 	let remainingLives: RemainingLives | undefined = undefined
@@ -283,14 +298,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			console.error('Failed to get countdown.', err)
 		}
 
-		const price = await getCurrentPrice()
-		const distanceToDeath = getDistanceToDeath(mints, price)
-		const distanceCurrent = Number(formatUnits(price, 'ether'))
-
-		if (lastInbetweenMintPushTime === undefined) {
-			lastInbetweenMintPushTime = Number(new Date())
-		}
-
 		if (mints.length === 0) {
 			const info: AuctionInfoPremint = {
 				stage: 'premint',
@@ -300,20 +307,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			return info
 		}
 
-		if (
-			getJobState(mints) === 'done' &&
-			Number(new Date()) - lastInbetweenMintPushTime < 60_000
-		) {
-			const info: AuctionInfoInbetweenMintPush = {
-				stage: 'inbetween-mint-push',
-				countdown,
-				price,
-				distanceCurrent,
-				distanceToDeath,
-				mints,
-			}
-			return info
-		}
+		const price = await getCurrentPrice()
+		const distanceToDeath = getDistanceToDeath(mints, price)
+		const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 		const info: AuctionInfoInbetweenMintPlay = {
 			stage: 'inbetween-mint-play',
@@ -378,12 +374,6 @@ async function getCurrentPrice(): Promise<bigint> {
 	}
 
 	return currentPrice
-}
-
-function getJobState(mints: Row[]): Row['jobState'] | undefined {
-	return mints
-		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
-		.findLast((row) => row.jobState !== 'paid')?.jobState
 }
 
 function getDistanceToDeath(mints: Row[], price: bigint): number {
