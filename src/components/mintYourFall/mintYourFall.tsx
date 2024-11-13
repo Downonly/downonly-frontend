@@ -7,7 +7,7 @@ import Picker from '@/components/mintYourFall/step/picker'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import useStore from '@/hooks/useStore'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
-import { emojiNameMap } from '@/utils/emoji'
+import { getEmoji } from '@/utils/emoji'
 
 export default function MintYourFall(props: {
 	className?: string
@@ -57,7 +57,7 @@ export default function MintYourFall(props: {
 				'ski',
 			]
 				.map((item) => ({
-					emoji: emojiNameMap.get(item)!,
+					emoji: getEmoji(item),
 					gif: `/gifs/characters/${item}.gif`,
 				}))
 				.filter((item) => !deadEmojiSet.has(item.emoji)),
@@ -80,7 +80,7 @@ export default function MintYourFall(props: {
 				'windPark',
 			]
 				.map((item) => ({
-					emoji: emojiNameMap.get(item)!,
+					emoji: getEmoji(item),
 					gif: `/gifs/settings/${item}.gif`,
 				}))
 				.filter((item) => !deadEmojiSet.has(item.emoji)),
@@ -103,7 +103,7 @@ export default function MintYourFall(props: {
 				'transporter',
 			]
 				.map((item) => ({
-					emoji: emojiNameMap.get(item)!,
+					emoji: getEmoji(item),
 					gif: `/gifs/obstacles/${item}.gif`,
 				}))
 				.filter((item) => !deadEmojiSet.has(item.emoji)),

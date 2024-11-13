@@ -13,7 +13,7 @@ import {
 import abi from './abi/dutchauction.json'
 import { DepositError, InsufficientFundsError } from '@/errors/errorEther'
 import { Row } from '@/components/player/types'
-import { emojiNameMap } from '@/utils/emoji'
+import { getEmoji } from '@/utils/emoji'
 
 declare const window: Window &
 	typeof globalThis & {
@@ -403,8 +403,7 @@ async function getRemainingLives(): Promise<RemainingLives> {
 			}
 
 			current.forEach((emojiName, j) => {
-				const emoji = emojiNameMap.get(emojiName as string)
-				if (!emoji) return
+				const emoji = getEmoji(emojiName as string)
 				acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
 			})
 

@@ -1,6 +1,6 @@
 import Polaroid from '@/components/polaroid/polaroid'
 import { ReactNode, useMemo } from 'react'
-import { emojiNameMap } from '@/utils/emoji'
+import { getEmoji } from '@/utils/emoji'
 import { formatUnits } from 'ethers'
 import Video from '@/components/minted/video'
 import { AuctionInfo } from '@/services/ether'
@@ -52,7 +52,7 @@ export default function Falls(props: {
 						key={mint.id}
 						className="do-fall do-fall-3 min-w-0"
 						salt={mint.fullname}
-						emoji={`${emojiNameMap.get(mint.surface)!} ${emojiNameMap.get(mint.figure)!} ${emojiNameMap.get(mint.obstacle)!}`}
+						emoji={`${getEmoji(mint.surface)} ${getEmoji(mint.figure)} ${getEmoji(mint.obstacle)}`}
 						label="Label"
 						description={
 							<>

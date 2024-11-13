@@ -37,3 +37,11 @@ export const emojiNameMap = new Map<string, string>([
 export const nameEmojiMap = new Map<string, string>(
 	Array.from(emojiNameMap.entries()).map(([key, value]) => [value, key])
 )
+
+export const getEmoji = (anyCaseName: string): string => {
+	return (
+		emojiNameMap.get(anyCaseName) ??
+		emojiNameMap.get(anyCaseName.toLowerCase()) ??
+		'❔'
+	)
+}
