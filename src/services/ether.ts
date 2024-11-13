@@ -498,8 +498,13 @@ export async function buy(
 		// Wait for the transaction to be mined.
 		await depositTx.wait()
 	} catch (err) {
-		if (err instanceof Error && err.message.includes('insufficient funds')) {
-			throw new InsufficientFundsError('Deposit failed.', { cause: err })
+		if (err instanceof Error) {
+			if (err.message.includes('User denied transaction')) {
+				return
+			}
+			if (err.message.includes('insufficient funds')) {
+				throw new InsufficientFundsError('Deposit failed.', { cause: err })
+			}
 		}
 		throw new DepositError('Deposit failed.', { cause: err })
 	}
