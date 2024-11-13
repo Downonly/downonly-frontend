@@ -28,7 +28,12 @@ const MintCTA: FC<{
 	const [isMinting, setIsMinting] = useState(false)
 
 	const handleMintFall = async () => {
-		if (auctionInfo?.stage !== 'mint') return
+		if (
+			auctionInfo?.stage !== 'mint' &&
+			auctionInfo?.stage !== 'inbetween-mint-push'
+		) {
+			return
+		}
 
 		try {
 			setIsMinting(true)
@@ -67,11 +72,16 @@ const MintCTA: FC<{
 						</>
 					)}
 
-					{auctionInfo?.stage === 'mint' && (
+					{(auctionInfo?.stage === 'mint' ||
+						auctionInfo?.stage === 'inbetween-mint-push') && (
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Dutch ↓ Auction</p>
 							<p>
-								<Countdown seconds={auctionInfo.countdown} /> /{' '}
+								{auctionInfo?.stage === 'mint' && (
+									<>
+										<Countdown seconds={auctionInfo.countdown} /> /{' '}
+									</>
+								)}
 								<Eth eth={auctionInfo.price} />
 							</p>{' '}
 							<p className="my-3">{selectedEmoji}</p>
@@ -82,8 +92,7 @@ const MintCTA: FC<{
 						</div>
 					)}
 
-					{(auctionInfo?.stage === 'inbetween-mint-push' ||
-						auctionInfo?.stage === 'inbetween-mint-play') && (
+					{auctionInfo?.stage === 'inbetween-mint-play' && (
 						<div className="text-xs">
 							<p className="text-display mb-1 uppercase">Pushing</p>
 							<p className="my-3">{selectedEmoji}</p>
