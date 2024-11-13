@@ -327,7 +327,8 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 
 	if (phase === 'auctionNotStarted') {
 		const countdown =
-			Number((await contract.initialPause()) as bigint) * avgBlockTime
+			Number((await contract.remainingTimeTillPauseEnds()) as bigint) *
+			avgBlockTime
 		const info: AuctionInfoPremint = {
 			countdown,
 			stage: 'premint',
