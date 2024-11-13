@@ -207,7 +207,7 @@ export default function Player(props: {
 			</div>
 
 			<div>
-				{/*<pre>Contract: {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</pre>*/}
+				<pre>Contract: {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</pre>
 				<pre>Stage: {JSON.stringify(auctionInfo?.stage, null, 2)}</pre>
 				{/*<pre>*/}
 				{/*	Countdown:{' '}*/}
