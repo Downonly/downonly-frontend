@@ -60,7 +60,7 @@ export default function MintCTA(props: {
 					{getStoreState().selectedEmoji}
 					{auctionInfo.lastMinted?.fallDistance && (
 						<p className="font-display">
-							↓ {auctionInfo.lastMinted?.fallDistance}
+							↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
 						</p>
 					)}
 					<br />
@@ -113,7 +113,7 @@ export default function MintCTA(props: {
 					{getStoreState().selectedEmoji}
 					{auctionInfo.lastMinted?.fallDistance && (
 						<p className="font-display">
-							↓ {auctionInfo.lastMinted?.fallDistance}
+							↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
 						</p>
 					)}
 					<br />
