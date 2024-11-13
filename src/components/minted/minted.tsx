@@ -15,7 +15,13 @@ export default function Minted(props: {
 		return null
 	}
 
-	if (!auctionInfo) return null
+	if (
+		!auctionInfo?.mints.filter(
+			(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
+		).length
+	) {
+		return null
+	}
 
 	return (
 		<section

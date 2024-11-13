@@ -98,14 +98,9 @@ const MintCTA: FC<{
 						!auctionInfo ||
 						!('price' in auctionInfo) ||
 						!auctionInfo.price ||
-						auctionInfo?.stage === 'inbetween-mint-push' ||
 						auctionInfo?.stage === 'inbetween-mint-play'
 					}
-					loading={
-						isMinting ||
-						auctionInfo?.stage === 'inbetween-mint-push' ||
-						auctionInfo?.stage === 'inbetween-mint-play'
-					}
+					loading={isMinting || auctionInfo?.stage === 'inbetween-mint-play'}
 					className="relative z-10"
 					salt={'cucumber'}
 					size="lg"
