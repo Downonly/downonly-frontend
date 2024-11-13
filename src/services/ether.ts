@@ -265,7 +265,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	if (pushing) {
-		const price = lastMinted?.mintPrice ?? 0n
+		const price = await getCurrentPrice()
 		const distanceToDeath = getDistanceToDeath(mints, price)
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 
