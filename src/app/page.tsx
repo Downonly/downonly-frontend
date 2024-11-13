@@ -10,7 +10,9 @@ import Emergency from '@/components/emergency/emergency'
 // TODO: Use pro plan on vercel?
 // TODO: Empty DB
 
-// TODO: allow minting during inbetween-mint-push
+// TODO: connect button
+// TODO: ended should be shown over pushing
+// TODO: handle postmint
 
 export default function Home() {
 	return (
