@@ -1,4 +1,4 @@
-export const emojiNameMap = new Map<string, string>([
+const entries: [string, string][] = [
 	['antenna', '📡'],
 	['livingRoom', '🛋️'],
 	['windPark', '🌀'],
@@ -32,7 +32,16 @@ export const emojiNameMap = new Map<string, string>([
 	['stove', '🔥'],
 	['money', '💵'],
 	['transporter', '🚨'],
-])
+]
+const lowerCaseEntries = entries.reduce<[string, string][]>((acc, curr) => {
+	if (curr[0] !== curr[0].toLowerCase()) {
+		return [...acc, [curr[0].toLowerCase(), curr[1]]]
+	}
+	return acc
+}, [])
+
+export const emojiNameMap = new Map<string, string>(entries)
+export const emojiLowerCaseNameMap = new Map<string, string>(lowerCaseEntries)
 
 export const nameEmojiMap = new Map<string, string>(
 	Array.from(emojiNameMap.entries()).map(([key, value]) => [value, key])
@@ -41,7 +50,7 @@ export const nameEmojiMap = new Map<string, string>(
 export const getEmoji = (anyCaseName: string): string => {
 	return (
 		emojiNameMap.get(anyCaseName) ??
-		emojiNameMap.get(anyCaseName.toLowerCase()) ??
+		emojiLowerCaseNameMap.get(anyCaseName.toLowerCase()) ??
 		'❔'
 	)
 }
