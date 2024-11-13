@@ -1,13 +1,13 @@
 'use client'
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
-import { useMemo } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 export default function Graveyard(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-}): JSX.Element {
+}): ReactNode {
 	const auctionInfo = useAuctionInfo('graveyard')
 
 	// const deadEmoji = [
@@ -60,8 +60,8 @@ export default function Graveyard(props: {
 		})
 	}, [auctionInfo])
 
-	if (!deadEmoji.length) {
-		return <></>
+	if (auctionInfo?.stage === 'emergency' || !deadEmoji.length) {
+		return null
 	}
 
 	return (

@@ -134,6 +134,10 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		| AuctionStage
 		| undefined
 	if (mockedAuctionStage) {
+		if (mockedAuctionStage === 'emergency') {
+			return { stage: 'emergency' } satisfies AuctionInfoEmergency
+		}
+
 		const mints = (await import('./mockData')).getMockData()
 
 		switch (mockedAuctionStage) {

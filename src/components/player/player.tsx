@@ -5,7 +5,7 @@ import Canvas from '@/components/player/canvas/canvas'
 import Tube from '@/components/player/tube/tube'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import gsap from 'gsap'
@@ -24,7 +24,7 @@ export default function Player(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
-}): JSX.Element {
+}): ReactNode {
 	const ocRef = useRef<OCs>()
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
@@ -124,6 +124,10 @@ export default function Player(props: {
 		}
 	}, [currentGLTF, currentIndex, loaded, takes])
 
+	if (auctionInfo?.stage === 'emergency') {
+		return null
+	}
+
 	return (
 		<section
 			id={props.id}
@@ -172,22 +176,24 @@ export default function Player(props: {
 									)}
 								</Scene>
 							</Canvas>
-							<div className="do-fall do-fall-0">
-								<Controls
-									bufferSize={BUFFER_SIZE}
-									currentIndex={currentIndex}
-									isPlaying={isPlaying}
-									isSounding={isSounding}
-									loaded={new Set(loaded.keys())}
-									onNext={handleNext}
-									onPause={handlePause}
-									onPlay={handlePlay}
-									onPrev={handlePrev}
-									onSeek={handleSeek}
-									onSound={handleSound}
-									takes={takes}
-								/>
-							</div>
+							{takes?.length > 0 && (
+								<div className="do-fall do-fall-0">
+									<Controls
+										bufferSize={BUFFER_SIZE}
+										currentIndex={currentIndex}
+										isPlaying={isPlaying}
+										isSounding={isSounding}
+										loaded={new Set(loaded.keys())}
+										onNext={handleNext}
+										onPause={handlePause}
+										onPlay={handlePlay}
+										onPrev={handlePrev}
+										onSeek={handleSeek}
+										onSound={handleSound}
+										takes={takes}
+									/>
+								</div>
+							)}
 						</>
 					)}
 				</div>
