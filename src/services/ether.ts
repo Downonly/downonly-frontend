@@ -63,7 +63,7 @@ interface AuctionInfoWithPrice extends AuctionInfoBase {
 }
 
 export interface AuctionInfoPremint extends AuctionInfoBase {
-	countdown: number // -> getRemainingPause
+	countdown?: number
 	stage: 'premint'
 }
 
@@ -326,11 +326,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	if (phase === 'auctionNotStarted') {
-		const countdown =
-			Number((await contract.remainingTimeTillPauseEnds()) as bigint) *
-			avgBlockTime
 		const info: AuctionInfoPremint = {
-			countdown,
 			stage: 'premint',
 			mints,
 		}

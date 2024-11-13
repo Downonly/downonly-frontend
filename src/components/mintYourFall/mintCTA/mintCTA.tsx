@@ -6,7 +6,6 @@ import { FC, ReactElement, useState } from 'react'
 import { buy } from '@/services/ether'
 import { DepositError, InsufficientFundsError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
-import { formatDuration } from '@/utils/time'
 import { nameEmojiMap } from '@/utils/emoji'
 import Countdown from '@/components/countdown/countdown'
 import Eth from '@/components/eth/eth'
@@ -111,9 +110,12 @@ const MintCTA: FC<{
 					salt={'cucumber'}
 					size="lg"
 				>
-					{auctionInfo?.stage === 'premint'
-						? formatDuration(auctionInfo.countdown)
-						: 'Mint'}
+					{auctionInfo?.stage === 'premint' &&
+					auctionInfo.countdown !== undefined ? (
+						<Countdown seconds={auctionInfo.countdown} />
+					) : (
+						'Mint'
+					)}
 				</Button>
 			</div>
 

@@ -38,10 +38,13 @@ export default function MintCTA(props: {
 		<div id={props.id} className={props.className ?? ''} style={props.style}>
 			{auctionInfo?.stage === 'premint' ? (
 				<>
-					<p className="font-display">
-						{/*{formatDuration(auctionInfo.countdown)}*/}
-						<Countdown seconds={auctionInfo.countdown} />
-					</p>
+					{auctionInfo.countdown === undefined ? (
+						<p>Waiting for some auction...</p>
+					) : (
+						<p className="font-display">
+							<Countdown seconds={auctionInfo.countdown} />
+						</p>
+					)}
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
 					<p className="font-display">---</p>
 				</>
