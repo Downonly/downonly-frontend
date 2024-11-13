@@ -35,7 +35,9 @@ export default function Mints() {
 			{auctionInfo &&
 			auctionInfo.stage !== 'emergency' &&
 			auctionInfo.stage !== 'premint' &&
-			auctionInfo.mints.length > 0 ? (
+			auctionInfo.mints.filter(
+				(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
+			).length > 0 ? (
 				<>
 					<Falls auctionInfo={auctionInfo} className="mb-12" />
 					<div className="mb-20">
