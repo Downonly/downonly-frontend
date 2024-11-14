@@ -11,8 +11,6 @@ import Emergency from '@/components/emergency/emergency'
 // TODO: Empty DB
 
 // TODO: connect button
-// TODO: ended should be shown over pushing
-// TODO: handle postmint
 
 export default function Home() {
 	return (

@@ -250,6 +250,14 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		return info
 	}
 
+	if (phase === 'auctionsEnded') {
+		const info: AuctionInfoPostmint = {
+			stage: 'postmint',
+			mints,
+		}
+		return info
+	}
+
 	let remainingLives: RemainingLives | undefined = undefined
 	try {
 		remainingLives = await getRemainingLives()
@@ -275,17 +283,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			price,
 			distanceCurrent,
 			distanceToDeath,
-			mints,
-		}
-		return info
-	}
-
-	if (phase === 'auctionsEnded') {
-		const info: AuctionInfoPostmint = {
-			stage: 'postmint',
-			price: await getCurrentPrice(),
-			remainingLives,
-			lastMinted,
 			mints,
 		}
 		return info

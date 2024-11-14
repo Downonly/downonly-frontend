@@ -8,6 +8,7 @@ import useStore from '@/hooks/useStore'
 import Countdown from '@/components/countdown/countdown'
 import Loading from '@/components/loading/loading'
 import Eth from '@/components/eth/eth'
+import { getEmoji } from '@/utils/emoji'
 
 export default function MintCTA(props: {
 	className?: string
@@ -17,16 +18,6 @@ export default function MintCTA(props: {
 	currentTake: Take | undefined
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('playerCTA')
-
-	// const renderEmojiesCurrentTake = useCallback(() => {
-	// 	if (!props.currentTake) return <></>
-	// 	return (
-	// 		<p className="my-3">
-	// 			{props.currentTake.surface} {props.currentTake.figure}{' '}
-	// 			{props.currentTake.obstacle}
-	// 		</p>
-	// 	)
-	// }, [props.currentTake])
 
 	const { getStoreState } = useStore()
 
@@ -46,7 +37,7 @@ export default function MintCTA(props: {
 						</p>
 					)}
 					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
-					<p className="font-display">---</p>
+					<p className="my-3 font-display">---</p>
 				</>
 			) : auctionInfo?.stage === 'mint' ? (
 				<>
@@ -59,7 +50,7 @@ export default function MintCTA(props: {
 						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
 						{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 					</p>
-					<p className="font-display">---</p>
+					<p className="my-3 font-display">---</p>
 					{getStoreState().selectedEmoji}
 					{auctionInfo.lastMinted?.fallDistance && (
 						<p className="font-display">
@@ -112,7 +103,7 @@ export default function MintCTA(props: {
 						{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
 						{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 					</p>
-					<p className="font-display">---</p>
+					<p className="my-3 font-display">---</p>
 					{getStoreState().selectedEmoji}
 					{auctionInfo.lastMinted?.fallDistance && (
 						<p className="font-display">
@@ -155,6 +146,61 @@ export default function MintCTA(props: {
 								</a>
 							</p>
 						</div>
+					)}
+				</>
+			) : auctionInfo?.stage === 'postmint' ? (
+				<>
+					<p className="font-display">🖥 ☠️</p>
+					<p className="my-3 font-display">---</p>
+					{props.currentTake && (
+						<>
+							<p className="my-3">
+								{getEmoji(props.currentTake.surface)}{' '}
+								{getEmoji(props.currentTake.figure)}{' '}
+								{getEmoji(props.currentTake.obstacle)}
+							</p>
+							<p className="font-display">
+								↓ {Number(props.currentTake.fallDistance).toFixed(2)} m
+							</p>
+							<p className="my-3 font-display uppercase">
+								{props.currentTake.surface}-{props.currentTake.figure}-
+								{props.currentTake.obstacle}
+							</p>
+							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+								<p>
+									{props.currentTake.mintprice && (
+										<>
+											<Eth eth={props.currentTake.mintprice} /> / -{' '}
+											{formatUnits(props.currentTake.mintprice, 'ether')} cm
+										</>
+									)}
+								</p>
+								<p>{props.currentTake.fullname}</p>
+								<p className="truncate" title={props.currentTake.buyerAddress}>
+									{props.currentTake.buyerAddress}
+								</p>
+								<p>
+									{new Date(props.currentTake.mintDate).toLocaleDateString(
+										'en-US',
+										{
+											hour: '2-digit',
+											minute: '2-digit',
+											second: '2-digit',
+										}
+									)}
+								</p>
+								<p>
+									<a
+										href={props.currentTake.openSea}
+										target="_blank"
+										className="link"
+										rel="noreferrer noopener"
+									>
+										Open Sea
+									</a>
+								</p>
+							</div>
+						</>
 					)}
 				</>
 			) : (

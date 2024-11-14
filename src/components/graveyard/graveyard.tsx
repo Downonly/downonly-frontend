@@ -2,6 +2,7 @@
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { ReactNode, useMemo } from 'react'
+import { emojiNameMap } from '@/utils/emoji'
 
 export default function Graveyard(props: {
 	className?: string
@@ -10,26 +11,6 @@ export default function Graveyard(props: {
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('graveyard')
 
-	// const deadEmoji = [
-	// 	'❄️',
-	// 	'🏰',
-	// 	'🧑‍🚀',
-	// 	'🧖',
-	// 	'🧑‍🍳',
-	// 	'🎡',
-	// 	'🎹',
-	// 	'📚',
-	// 	'🎈',
-	// 	'❄️',
-	// 	'🏰',
-	// 	'🧑‍🚀',
-	// 	'🧖',
-	// 	'🧑‍🍳',
-	// ].map((emoji, i) => ({
-	// 	key: i,
-	// 	emoji,
-	// }))
-
 	const deadEmoji = useMemo(() => {
 		if (
 			!auctionInfo ||
@@ -37,6 +18,19 @@ export default function Graveyard(props: {
 			auctionInfo.stage === 'emergency'
 		) {
 			return []
+		}
+
+		if (auctionInfo.stage === 'postmint') {
+			return Array.from(emojiNameMap.values()).flatMap((emoji, i) => {
+				const dead: { key: string; emoji: string }[] = []
+				for (let j = 3; j--; ) {
+					dead.push({
+						key: `${i}-${j}`,
+						emoji,
+					})
+				}
+				return dead
+			})
 		}
 
 		return (
@@ -55,7 +49,6 @@ export default function Graveyard(props: {
 					emoji,
 				})
 			}
-
 			return dead
 		})
 	}, [auctionInfo])
@@ -84,9 +77,8 @@ export default function Graveyard(props: {
 					<span className="inline-flex -rotate-45">✝</span>&nbsp;
 					<span className="inline-flex rotate-12">✝</span>
 				</p>
-				{/*<h2 className="text-display -mt-2 mb-6 px-6 text-4xl">Graveyard</h2>*/}
 
-				<div className="flex max-w-96 flex-wrap justify-center gap-2 text-2xl">
+				<div className="flex max-w-96 flex-wrap justify-center gap-2 text-xl">
 					{deadEmoji.map((emoji) => (
 						<div key={emoji.key}>{emoji.emoji}</div>
 					))}

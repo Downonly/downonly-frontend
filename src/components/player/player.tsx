@@ -17,6 +17,8 @@ import { useNextTakes } from '@/components/player/hooks/useNextTakes'
 import { useLoaded } from '@/components/player/hooks/useLoaded'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
+import { useControls } from 'leva'
+import { isDebug } from '@/utils/debug'
 
 const BUFFER_SIZE = 4
 
@@ -25,6 +27,13 @@ export default function Player(props: {
 	style?: React.CSSProperties
 	id?: string
 }): ReactNode {
+	isDebug()
+		? // eslint-disable-next-line react-hooks/rules-of-hooks
+			useControls({
+				contract: { value: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '' },
+			})
+		: undefined
+
 	const ocRef = useRef<OCs>()
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
@@ -204,30 +213,6 @@ export default function Player(props: {
 					takes={takes}
 					currentTake={takes?.[currentIndex]}
 				/>
-			</div>
-
-			<div>
-				<pre>Contract: {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}</pre>
-				<pre>Stage: {JSON.stringify(auctionInfo?.stage, null, 2)}</pre>
-				{/*<pre>*/}
-				{/*	Countdown:{' '}*/}
-				{/*	{auctionInfo && 'countdown' in auctionInfo*/}
-				{/*		? JSON.stringify(auctionInfo?.countdown, null, 2)*/}
-				{/*		: 'undefined'}*/}
-				{/*</pre>*/}
-				{/*<pre>*/}
-				{/*	Mints:{' '}*/}
-				{/*	{auctionInfo && 'mints' in auctionInfo*/}
-				{/*		? JSON.stringify(*/}
-				{/*				auctionInfo?.mints.map((mint) => ({*/}
-				{/*					jobState: mint.jobState,*/}
-				{/*					figureSurfaceObstacle: `${mint.figure}-${mint.surface}-${mint.obstacle}`,*/}
-				{/*				})),*/}
-				{/*				null,*/}
-				{/*				2*/}
-				{/*			)*/}
-				{/*		: 'no mints'}*/}
-				{/*</pre>*/}
 			</div>
 		</section>
 	)
