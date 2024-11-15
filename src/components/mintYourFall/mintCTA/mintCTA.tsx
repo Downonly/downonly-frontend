@@ -9,6 +9,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { nameEmojiMap } from '@/utils/emoji'
 import Countdown from '@/components/countdown/countdown'
 import Eth from '@/components/eth/eth'
+import ModalContent from '@/components/modal/modalContent'
 
 const MintCTA: FC<{
 	selectedEmoji: string
@@ -124,52 +125,7 @@ const MintCTA: FC<{
 			</div>
 
 			<Modal open={modalOpen} onDismiss={handleDismiss}>
-				<strong className="text-display mb-4 block text-2xl">
-					Looks like you
-					<br />
-					{modalSubject === 'insufficient-funds' ? (
-						<>don&apos;t have sufficient funds</>
-					) : (
-						<>don&apos;t have a wallet</>
-					)}
-				</strong>
-				<p className="mb-4 leading-relaxed">
-					{modalSubject === 'insufficient-funds' ? (
-						<>The funds in you wallet do not suffice to make a purchase.</>
-					) : (
-						<>
-							In order to perform transactions on the Ethereum network safely,
-							you need a wallet, such as{' '}
-							<a
-								className="link"
-								href="https://metamask.io/"
-								target="_blank"
-								rel="noreferrer noopener"
-							>
-								MetaMask
-							</a>{' '}
-							or{' '}
-							<a
-								className="link"
-								href="https://trustwallet.com/"
-								target="_blank"
-								rel="noreferrer noopener"
-							>
-								Trust Wallet
-							</a>{' '}
-							(for mobile).
-						</>
-					)}
-				</p>
-				<Button
-					style={{ display: 'block' }}
-					className="ml-auto"
-					size="lg"
-					salt="onion"
-					onClick={handleDismiss}
-				>
-					Got it
-				</Button>
+				<ModalContent modalSubject={modalSubject} onClose={handleDismiss} />
 			</Modal>
 		</>
 	)

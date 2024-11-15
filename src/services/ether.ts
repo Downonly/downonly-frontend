@@ -108,7 +108,6 @@ let contract: MyContract
 
 const avgBlockTime = Number(process.env.NEXT_PUBLIC_AVG_BLOCK_TIME)
 
-// eslint-disable-next-line @typescript-eslint/require-await
 async function initContract() {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
 

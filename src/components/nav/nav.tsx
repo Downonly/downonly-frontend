@@ -4,6 +4,7 @@ import Link from '@/components/link/link'
 import Logo from '@/components/logo/logo'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/themeToggle/themeToggle'
+import Connect from '@/components/connect/connect'
 
 export default function Nav(props: {
 	className?: string
@@ -24,16 +25,14 @@ export default function Nav(props: {
 			<Link href="/" className="interactive absolute left-0 origin-[30%_80%]">
 				<Logo className="do-fall do-fall-8 -mb-24 w-44" />
 			</Link>
+			<span className="do-fall do-fall-3" style={{ animationDelay: '0.5s' }}>
+				<Connect />
+			</span>
 			<div className="animate-down-new-left" style={{ animationDelay: '0.4s' }}>
 				<div className="-translate-y-0.5">
 					<ThemeToggle className="do-fall do-fall-0" />
 				</div>
 			</div>
-			{/*<Link className="do-fall do-fall-3" href="/team/">*/}
-			{/*	<Button salt={'banana'} tag="span">*/}
-			{/*		Team*/}
-			{/*	</Button>*/}
-			{/*</Link>*/}
 		</nav>
 	)
 }
