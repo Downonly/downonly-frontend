@@ -83,7 +83,14 @@ const ConnectWalletButton = () => {
 				onClick={() => void connect()}
 				salt={'banana'}
 			>
-				{!account ? 'Connect' : `Connected: ${account.slice(0, 6)}...`}
+				{!account ? (
+					'Connect'
+				) : (
+					<>
+						<span className="hidden sm:inline">Connected: </span>
+						{account.slice(0, 6)}...
+					</>
+				)}
 			</Button>
 
 			<Modal open={modalOpen} onDismiss={handleDismiss}>

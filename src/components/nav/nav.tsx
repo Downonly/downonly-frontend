@@ -15,7 +15,7 @@ export default function Nav(props: {
 
 	return (
 		<nav
-			className={`mb-44 flex flex-col flex-wrap items-end justify-end gap-4 sm:flex-row sm:items-start ${
+			className={`mb-44 flex flex-wrap items-start justify-end gap-4 ${
 				props.className ?? ''
 			}`}
 			key={pathname}

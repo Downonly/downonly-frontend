@@ -10,8 +10,6 @@ import Emergency from '@/components/emergency/emergency'
 // TODO: Use pro plan on vercel?
 // TODO: Empty DB
 
-// TODO: connect button
-
 export default function Home() {
 	return (
 		<>
