@@ -55,7 +55,7 @@ export default function Faq(props: {
 							>
 								Besides visiting its physical space, you can watch a live feed
 								of the installation on the{' '}
-								<Link className="underline" href="#📹">
+								<Link className="underline" href="/#📹">
 									&quot;Webcam&quot; section
 								</Link>{' '}
 								of downonly.xyz. You can observe the computer&apos;s position on
