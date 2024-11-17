@@ -9,7 +9,7 @@ export default function Tube(props: {
 	return (
 		<iframe
 			id={props.id}
-			className={`size-full ${props.className ?? ''}`}
+			className={`size-full bg-transparent ${props.className ?? ''}`}
 			style={props.style}
 			src={props.src}
 			title="Downonly"

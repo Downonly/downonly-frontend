@@ -28,30 +28,44 @@ export default function Concept(props: {
 							Concept
 						</h2>
 						<Circle size="lg" className="text-white dark:text-carbon">
-							<div className="-rotate-12">📹</div>
+							<div id="📹" className="-rotate-12">
+								📹
+							</div>
 						</Circle>
 					</header>
 
-					<div className="gap-x grid gap-y-8 sm:grid-cols-2">
-						<Tube
-							src={process.env.NEXT_PUBLIC_TUBE_CONCEPT_SRC}
-							className="aspect-video bg-silver"
-						/>
-						<div>
-							<h3 className="text-display mb-6 text-2xl">
-								CCTV Sim PC
-								<br />
-								Current State
-							</h3>
-
-							<p className="text-sm leading-relaxed text-carbon dark:text-iron">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-								sunt in culpa qui officia deserunt mollit anim id est laborum.
+					<div className="gap-x grid gap-y-8 lg:grid-cols-2">
+						<figure>
+							<div className="aspect-video">
+								<Tube
+									src={process.env.NEXT_PUBLIC_TUBE_CONCEPT_SRC}
+									className="bg-silver"
+								/>
+							</div>
+							<figcaption className="text-display mt-2">
+								CCTV Sim PC Current State
+							</figcaption>
+						</figure>
+						<div className="flex flex-col gap-4 text-sm leading-relaxed text-carbon dark:text-iron">
+							<p>
+								Downonly is a time-limited performative work that combines an
+								installation, an interactive game and a series of digital
+								artworks. It gives participants a chance to engage in an
+								experience centered around the concept of falling.
+							</p>
+							<p>
+								People can join on downonly.xyz, where they use blockchain
+								technology to bid on simulations. These simulations run on a
+								computer placed at the top of a staircase, which is gradually
+								pushed towards the edge. The rate of the push depends on the
+								level of user participation. Once the computer is over the edge,
+								it falls and self-destructs, marking the end of the simulation
+								and the conclusion of the work.
+							</p>
+							<p>
+								The interactive phase will take place on November 20 and 21, and
+								will continue to be available for the following month at Espacio
+								SOLO in Madrid.
 							</p>
 						</div>
 					</div>
