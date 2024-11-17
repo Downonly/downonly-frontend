@@ -69,7 +69,7 @@ export default function Concept(props: {
 								SOLO in Madrid.
 							</p>
 							<p>
-								More in{' '}
+								More details in{' '}
 								<Link
 									className="interactive text-display dark:text-snow"
 									href="/faq"
