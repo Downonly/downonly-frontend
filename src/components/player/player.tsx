@@ -60,7 +60,6 @@ export default function Player(props: {
 		? // eslint-disable-next-line react-hooks/rules-of-hooks
 			useControls({
 				contract: { value: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '' },
-				phase: { value: auctionInfo?.stage ?? '' },
 			})
 		: undefined
 
