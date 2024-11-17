@@ -19,6 +19,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { useControls } from 'leva'
 import { isDebug } from '@/utils/debug'
+import { useChanged } from '@/hooks/useChanged'
 
 const BUFFER_SIZE = 4
 
@@ -62,6 +63,10 @@ export default function Player(props: {
 				phase: { value: auctionInfo?.stage ?? '' },
 			})
 		: undefined
+
+	useChanged(auctionInfo, () => {
+		console.info('Phase', auctionInfo?.stage)
+	})
 
 	const getNextTakes = useNextTakes(currentIndex, takes, BUFFER_SIZE)
 
