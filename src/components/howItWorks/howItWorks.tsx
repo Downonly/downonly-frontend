@@ -16,7 +16,7 @@ export default function HowItWorks(props: {
 		>
 			<div className="container">
 				<h2 className="text-display do-fall do-fall-2 mb-12 px-6 text-4xl">
-					How if falls
+					How it falls
 				</h2>
 
 				<Tube
