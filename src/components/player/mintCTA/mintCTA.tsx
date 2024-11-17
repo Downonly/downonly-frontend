@@ -111,7 +111,7 @@ export default function MintCTA(props: {
 									auctionInfo.distanceToDeath + auctionInfo.distanceCurrent
 								).toFixed(1)
 							)}{' '}
-							-{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+							cm - {Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
 							{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 						</p>
 					)}
