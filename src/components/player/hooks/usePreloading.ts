@@ -25,5 +25,5 @@ export const usePreloading = (
 		setIsPreloading(nextTakes.some((take) => !loaded.get(take.modelURL)))
 	}, [currentIndex, getNextTakes, isPreloading, loaded, takes])
 
-	return isPreloading
+	return Boolean(takes && !takes.length) ? false : isPreloading
 }
