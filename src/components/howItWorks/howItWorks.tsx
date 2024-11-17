@@ -27,7 +27,7 @@ export default function HowItWorks(props: {
 				<div className="lg:px-20">
 					<Details
 						className="do-fall do-fall-2"
-						summary="Participation rules and numbers at a glance"
+						summary="Participation rules and numbers"
 						last
 					>
 						<div className="flex max-w-[84ch] flex-col gap-4 px-6 text-sm leading-relaxed">
