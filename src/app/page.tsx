@@ -1,8 +1,9 @@
 import MintYourFall from '@/components/mintYourFall/mintYourFall'
-import HowItWorks from '@/components/howItWorks/howItWorks'
+import LiveCam from '@/components/liveCam/liveCam'
 import Graveyard from '@/components/graveyard/graveyard'
 import Minted from '@/components/minted/minted'
 import Player from '@/components/player/player'
+import Tutorial from '@/components/tutorial/tutorial'
 import Concept from '@/components/concept/concept'
 import Emergency from '@/components/emergency/emergency'
 
@@ -19,7 +20,8 @@ export default function Home() {
 			<Graveyard />
 			<Minted className="mb-24" />
 			<Concept />
-			<HowItWorks className="pb-24" />
+			<Tutorial />
+			<LiveCam className="pb-24" />
 		</>
 	)
 }

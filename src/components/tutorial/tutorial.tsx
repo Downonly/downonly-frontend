@@ -1,7 +1,9 @@
+import Card from '@/components/card/card'
 import Tube from '@/components/player/tube/tube'
+import Link from '@/components/link/link'
 import Details from '@/components/details/details'
 
-export default function HowItWorks(props: {
+export default function Tutorial(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
@@ -11,18 +13,36 @@ export default function HowItWorks(props: {
 			id={props.id}
 			className={`${
 				props.className ?? ''
-			} relative left-1/2 w-screen min-w-device -translate-x-1/2 bg-white pb-14 pt-28 dark:bg-carbon`}
+			} bg-secondary relative left-1/2 z-10 w-screen min-w-device -translate-x-1/2 pt-16 `}
 			style={props.style}
 		>
 			<div className="container">
-				<h2 className="text-display do-fall do-fall-2 mb-12 px-6 text-4xl">
-					How it falls
-				</h2>
+				<Card
+					mode="secondary"
+					className="do-fall do-fall-8 mb-12 pt-12"
+					salt="orange"
+				>
+					<h2 className="text-display mb-8 mr-auto text-4xl">Tutorial</h2>
 
-				<Tube
-					src={process.env.NEXT_PUBLIC_TUBE_HOW_SRC}
-					className="do-fall do-fall-0 mb-12 aspect-video bg-silver"
-				/>
+					<figure>
+						<div className="aspect-video">
+							<Tube
+								src={process.env.NEXT_PUBLIC_TUBE_CONCEPT_SRC}
+								className="bg-silver"
+							/>
+						</div>
+						<figcaption className="mt-4 text-right">
+							More in{' '}
+							<Link
+								className="interactive text-display dark:text-snow"
+								href="/faq"
+							>
+								FAQ
+							</Link>
+							.
+						</figcaption>
+					</figure>
+				</Card>
 
 				<div className="lg:px-20">
 					<Details

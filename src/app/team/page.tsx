@@ -56,6 +56,11 @@ export default function Imprint() {
 					</p>
 
 					<p>
+						<b className="text-display">Web Design:</b>
+						<br /> Patrick Molnar
+					</p>
+
+					<p>
 						<b className="text-display">Production Management:</b>
 						<br /> Karsten Matern
 					</p>
