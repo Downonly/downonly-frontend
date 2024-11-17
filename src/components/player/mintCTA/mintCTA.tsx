@@ -30,7 +30,7 @@ export default function MintCTA(props: {
 			{auctionInfo?.stage === 'premint' ? (
 				<>
 					{auctionInfo.countdown === undefined ? (
-						<p>Waiting for some auction...</p>
+						<p>Waiting for auction...</p>
 					) : (
 						<p className="font-display">
 							<Countdown seconds={auctionInfo.countdown} />

@@ -27,13 +27,6 @@ export default function Player(props: {
 	style?: React.CSSProperties
 	id?: string
 }): ReactNode {
-	isDebug()
-		? // eslint-disable-next-line react-hooks/rules-of-hooks
-			useControls({
-				contract: { value: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '' },
-			})
-		: undefined
-
 	const ocRef = useRef<OCs>()
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
@@ -61,6 +54,14 @@ export default function Player(props: {
 						}),
 		[auctionInfo]
 	)
+
+	isDebug()
+		? // eslint-disable-next-line react-hooks/rules-of-hooks
+			useControls({
+				contract: { value: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '' },
+				phase: { value: auctionInfo?.stage ?? '' },
+			})
+		: undefined
 
 	const getNextTakes = useNextTakes(currentIndex, takes, BUFFER_SIZE)
 
