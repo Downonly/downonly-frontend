@@ -28,6 +28,7 @@ export default function HowItWorks(props: {
 					<Details
 						className="do-fall do-fall-2"
 						summary="Participation rules and numbers at a glance"
+						last
 					>
 						<div className="flex max-w-[84ch] flex-col gap-4 px-6 text-sm leading-relaxed">
 							<p>

@@ -1,22 +1,12 @@
 import Details from '@/components/details/details'
 import Link from '@/components/link/link'
 
-export default function Faq(props: {
-	className?: string
-	style?: React.CSSProperties
-	id?: string
-}): JSX.Element {
+export default function Mints() {
 	return (
-		<section
-			id={props.id}
-			className={`${
-				props.className ?? ''
-			} bg-secondary relative left-1/2 w-screen min-w-device -translate-x-1/2 pb-32 pt-14`}
-			style={props.style}
-		>
-			<div className="container px-6">
-				<h2 className="do-fall do-fall-7 text-display mb-20 text-4xl">FAQ</h2>
+		<>
+			<h1 className="do-fall do-fall-4 text-display mb-12 text-5xl">FAQ</h1>
 
+			<div className="container mb-24 px-6">
 				<div className="flex flex-col gap-20">
 					<div>
 						<h3 className="text-display do-fall do-fall-3 mb-8">
@@ -500,6 +490,6 @@ export default function Faq(props: {
 					</div>
 				</div>
 			</div>
-		</section>
+		</>
 	)
 }

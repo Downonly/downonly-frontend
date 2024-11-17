@@ -1,6 +1,7 @@
 import Card from '@/components/card/card'
 import Circle from '@/components/circle/circle'
 import Tube from '@/components/player/tube/tube'
+import Link from '@/components/link/link'
 
 export default function Concept(props: {
 	className?: string
@@ -66,6 +67,16 @@ export default function Concept(props: {
 								The interactive phase will take place on November 20 and 21, and
 								will continue to be available for the following month at Espacio
 								SOLO in Madrid.
+							</p>
+							<p>
+								For detailed infos, check out our{' '}
+								<Link
+									className="interactive text-display dark:text-snow"
+									href="/faq"
+								>
+									FAQ
+								</Link>
+								.
 							</p>
 						</div>
 					</div>
