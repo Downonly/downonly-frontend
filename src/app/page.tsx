@@ -8,6 +8,7 @@ import Emergency from '@/components/emergency/emergency'
 
 // TODO: Use pro plan on vercel?
 // TODO: Empty DB
+// TODO: ETH rounding
 
 export default function Home() {
 	return (
@@ -17,8 +18,8 @@ export default function Home() {
 			<MintYourFall className="mb-24" />
 			<Graveyard />
 			<Minted className="mb-24" />
-			<HowItWorks />
-			<Concept className="pb-24" />
+			<Concept />
+			<HowItWorks className="pb-24" />
 		</>
 	)
 }
