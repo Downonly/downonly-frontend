@@ -10,6 +10,7 @@ type Url = string | UrlObject
 export default function Link(props: {
 	children: React.ReactNode
 	className?: string
+	target?: string
 	href: Url
 	scroll?: boolean
 }): JSX.Element {
@@ -34,6 +35,14 @@ export default function Link(props: {
 			.catch((err) => {
 				console.error(err)
 			})
+	}
+
+	if (typeof props.target === 'string' && typeof props.href === 'string') {
+		return (
+			<a className={props.className} href={props.href} target={props.target}>
+				{props.children}
+			</a>
+		)
 	}
 
 	return (
