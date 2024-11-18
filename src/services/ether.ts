@@ -303,7 +303,12 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			console.error('Failed to get countdown.', err)
 		}
 
-		if (mints.length === 0) {
+		const [price, distanceToDeath] = await Promise.all([
+			getCurrentPrice(),
+			getDistanceToDeath(),
+		])
+
+		if (!distanceToDeath || distanceToDeath >= 33) {
 			const info: AuctionInfoPremint = {
 				stage: 'premint',
 				countdown,
@@ -312,10 +317,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			return info
 		}
 
-		const [price, distanceToDeath] = await Promise.all([
-			getCurrentPrice(),
-			getDistanceToDeath(),
-		])
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 		const info: AuctionInfoInbetweenMintPlay = {
