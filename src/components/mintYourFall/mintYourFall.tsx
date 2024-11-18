@@ -142,7 +142,7 @@ export default function MintYourFall(props: {
 			</header>
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-				<Step salt="potato" noPadding num="1" label="Setting">
+				<Step salt="potato" noPadding num="1" label="Environment">
 					<Picker options={settings} onChange={setSetting} />
 				</Step>
 				<Step salt="tomato" noPadding num="2" label="Character" operator="+">
