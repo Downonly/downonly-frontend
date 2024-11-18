@@ -1,5 +1,3 @@
-import Link from '@/components/link/link'
-
 export default function Concept(props: {
 	className?: string
 	style?: React.CSSProperties
@@ -38,16 +36,6 @@ export default function Concept(props: {
 						The interactive phase will take place on November 20 and 21, and
 						will continue to be available for the following month at Espacio
 						SOLO in Madrid.
-					</p>
-					<p>
-						More in{' '}
-						<Link
-							className="interactive text-display dark:text-snow"
-							href="/faq"
-						>
-							FAQ
-						</Link>
-						.
 					</p>
 				</div>
 			</div>
