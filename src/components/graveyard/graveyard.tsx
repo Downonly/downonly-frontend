@@ -78,7 +78,7 @@ export default function Graveyard(props: {
 					<span className="inline-flex rotate-12">✝</span>
 				</p>
 
-				<div className="flex max-w-96 flex-wrap justify-center gap-2 text-xl">
+				<div className="flex max-w-prose flex-wrap justify-center gap-2 text-xl">
 					{deadEmoji.map((emoji) => (
 						<div key={emoji.key}>{emoji.emoji}</div>
 					))}
