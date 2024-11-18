@@ -156,7 +156,8 @@ export default function Player(props: {
 			>
 				<div className="do-fall do-fall-1 h-full">
 					{auctionInfo?.stage === 'premint' ||
-					auctionInfo?.stage === 'inbetween-mint-push' ? (
+					auctionInfo?.stage === 'inbetween-mint-push' ||
+					takes?.length === 0 ? (
 						<Tube
 							src={
 								auctionInfo?.stage === 'premint'
@@ -170,25 +171,27 @@ export default function Player(props: {
 							{isPreloading && (
 								<Loading className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2" />
 							)}
-							<Canvas
-								id="canvas"
-								className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
-							>
-								<Scene ocRef={ocRef}>
-									{takes?.length && (
-										<group>
-											<Model
-												gltf={currentGLTF}
-												isPlaying={!isPreloading && isPlaying}
-												isSingle={takes?.length === 1}
-												isSounding={isSounding}
-												onFinished={handleFinished}
-												sound={currentSound}
-											/>
-										</group>
-									)}
-								</Scene>
-							</Canvas>
+							{takes?.length > 0 && (
+								<Canvas
+									id="canvas"
+									className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
+								>
+									<Scene ocRef={ocRef}>
+										{takes?.length && (
+											<group>
+												<Model
+													gltf={currentGLTF}
+													isPlaying={!isPreloading && isPlaying}
+													isSingle={takes?.length === 1}
+													isSounding={isSounding}
+													onFinished={handleFinished}
+													sound={currentSound}
+												/>
+											</group>
+										)}
+									</Scene>
+								</Canvas>
+							)}
 							{takes?.length > 0 && (
 								<div className="do-fall do-fall-0">
 									<Controls
