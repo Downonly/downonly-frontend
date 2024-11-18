@@ -42,7 +42,7 @@ export default function Picker(props: {
 					setLoaded(true)
 				}}
 				unoptimized
-				className="rounded-2xl"
+				className="size-full rounded-2xl"
 				src={options[currentPick]?.gif}
 				width={250}
 				height={250}
