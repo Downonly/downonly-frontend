@@ -8,8 +8,6 @@ import Concept from '@/components/concept/concept'
 import Emergency from '@/components/emergency/emergency'
 
 // TODO: Use pro plan on vercel?
-// TODO: Empty DB
-// TODO: ETH rounding
 
 export default function Home() {
 	return (
