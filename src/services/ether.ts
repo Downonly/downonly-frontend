@@ -76,9 +76,12 @@ export interface AuctionInfoInbetweenMintPush extends AuctionInfoWithPrice {
 	stage: 'inbetween-mint-push'
 }
 
-export interface AuctionInfoInbetweenMintPlay extends AuctionInfoWithPrice {
+export interface AuctionInfoInbetweenMintPlay extends AuctionInfoBase {
 	stage: 'inbetween-mint-play'
 	countdown: number
+	distanceCurrent?: number
+	distanceToDeath?: number
+	lastMinted?: LastMinted
 }
 
 export interface AuctionInfoPostmint extends AuctionInfoBase {
@@ -176,7 +179,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 					stage: mockedAuctionStage,
 					mints,
 					countdown: 123,
-					price: 123n,
 					distanceCurrent: 0.123,
 					distanceToDeath: 23,
 					lastMinted: {
@@ -273,7 +275,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 
 	if (pushing) {
 		const [price, distanceCurrent, distanceDone] = await Promise.all([
-			getCurrentPrice(),
+			getCurrentPrice(phase),
 			getDistanceCurrent(),
 			getDistanceDone(),
 		])
@@ -303,10 +305,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			console.error('Failed to get countdown.', err)
 		}
 
-		const [price, distanceToDeath] = await Promise.all([
-			getCurrentPrice(),
-			getDistanceToDeath(),
-		])
+		const distanceToDeath = await getDistanceToDeath()
 
 		if (!distanceToDeath || distanceToDeath >= 33) {
 			const info: AuctionInfoPremint = {
@@ -320,7 +319,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		const info: AuctionInfoInbetweenMintPlay = {
 			stage: 'inbetween-mint-play',
 			countdown,
-			price,
 			distanceCurrent: await getDistanceCurrent(),
 			distanceToDeath,
 			mints,
@@ -363,7 +361,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	} satisfies AuctionInfoPremint
 }
 
-async function getCurrentPrice(): Promise<bigint> {
+async function getCurrentPrice(phase?: Phase): Promise<bigint> {
+	if (phase === 'auctionCooldown') return 0n
+
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return BigInt(parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0'))
 	}
