@@ -268,13 +268,10 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		return info
 	}
 
-	let remainingLives: RemainingLives | undefined = undefined
-	const lastMinted: LastMinted | undefined = getLastMinted(mints)
-	try {
-		remainingLives = await getRemainingLives()
-	} catch (err) {
-		console.error('Failed to get remainingLives/lastMinted', err)
-	}
+	const [lastMinted, remainingLives] = await Promise.all([
+		getLastMinted(mints, phase === 'auctionCooldown'),
+		getRemainingLives(),
+	])
 
 	if (pushing) {
 		const [price, distanceCurrent, distanceDone] = await Promise.all([
@@ -447,44 +444,62 @@ async function getDistanceToDeath(
 	return 33 - distanceDone - distanceCurrent
 }
 
-async function getRemainingLives(): Promise<RemainingLives> {
-	const remainingLivesRaw =
-		(await contract.getAllAssetsRemainingLives()) as RemainingLivesRaw
-	const remainingLives = remainingLivesRaw.reduce<RemainingLives>(
-		(acc, current, i) => {
-			if (i % 2 !== 0) {
+async function getRemainingLives(): Promise<RemainingLives | undefined> {
+	try {
+		const remainingLivesRaw =
+			(await contract.getAllAssetsRemainingLives()) as RemainingLivesRaw
+		const remainingLives = remainingLivesRaw.reduce<RemainingLives>(
+			(acc, current, i) => {
+				if (i % 2 !== 0) {
+					return acc
+				}
+
+				current.forEach((emojiName, j) => {
+					const emoji = getEmoji(emojiName as string)
+					acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
+				})
+
 				return acc
-			}
-
-			current.forEach((emojiName, j) => {
-				const emoji = getEmoji(emojiName as string)
-				acc.set(emoji, Number(remainingLivesRaw[i + 1][j]))
-			})
-
-			return acc
-		},
-		new Map<string, number>()
-	)
-	return remainingLives
+			},
+			new Map<string, number>()
+		)
+		return remainingLives
+	} catch (err) {
+		console.error('Failed to get remainingLives', err)
+		return undefined
+	}
 }
 
-function getLastMinted(mints: Row[]): LastMinted | undefined {
-	const lastMintedRow = mints
-		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
-		.findLast((row) => row.jobState === 'done')
+async function getLastMinted(
+	mints: Row[],
+	isCooldown: boolean
+): Promise<LastMinted | undefined> {
+	try {
+		if (!isCooldown) {
+			const isPenalty = (await contract.isPenatlyCooldown()) as boolean
+			if (isPenalty) return undefined
+		}
 
-	if (!lastMintedRow) return undefined
+		const lastMintedRow = mints
+			.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? -1 : 1))
+			.findLast((row) => row.jobState === 'done')
 
-	return {
-		mintPrice: lastMintedRow.mintprice ?? 0n,
-		fullName: '1_clown_hospital_chair',
-		mintDate: new Date(lastMintedRow.mintdate),
-		buyerAddress: lastMintedRow.buyerAddress ?? '',
-		openSea: lastMintedRow.openSea ?? '',
-		fallDistance: lastMintedRow.fallDistance ?? '',
-		obstacle: lastMintedRow.obstacle ?? '',
-		surface: lastMintedRow.surface ?? '',
-		figure: lastMintedRow.figure ?? '',
+		if (!lastMintedRow) return undefined
+
+		return {
+			mintPrice: lastMintedRow.mintprice ?? 0n,
+			fullName: '1_clown_hospital_chair',
+			mintDate: new Date(lastMintedRow.mintdate),
+			buyerAddress: lastMintedRow.buyerAddress ?? '',
+			openSea: lastMintedRow.openSea ?? '',
+			fallDistance: lastMintedRow.fallDistance ?? '',
+			obstacle: lastMintedRow.obstacle ?? '',
+			surface: lastMintedRow.surface ?? '',
+			figure: lastMintedRow.figure ?? '',
+		}
+	} catch (err) {
+		console.error('Failed to get last minted.', err)
+		return undefined
 	}
 }
 
