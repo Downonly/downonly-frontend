@@ -65,17 +65,14 @@ export default function Graveyard(props: {
 		>
 			<div className="do-fall do-fall-3 container flex flex-col items-center text-center grayscale">
 				<p className="text-display text-4xl text-silver dark:text-iron">
-					<span className="inline-flex -rotate-12">✝</span>&nbsp;
-					<span className="inline-flex -translate-y-1 -rotate-6">✝</span>
-					&nbsp;
-					<span className="inline-flex -translate-y-2 rotate-45">✝</span>
-					<span className="inline-flex -translate-y-2 rotate-12">✝</span>
-					&nbsp;
-					<span className="inline-flex -translate-y-3 rotate-6">✝</span>
-					&nbsp;
-					<span className="inline-flex -translate-y-1">✝</span>
-					<span className="inline-flex -rotate-45">✝</span>&nbsp;
-					<span className="inline-flex rotate-12">✝</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
+					<span className="inline-flex ">+</span>
 				</p>
 
 				<div className="flex max-w-prose flex-wrap justify-center gap-2 text-xl">
