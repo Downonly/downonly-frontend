@@ -4,7 +4,6 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { ReactNode } from 'react'
 import { formatUnits } from 'ethers'
-// import useStore from '@/hooks/useStore'
 import Countdown from '@/components/countdown/countdown'
 import Loading from '@/components/loading/loading'
 import Eth from '@/components/eth/eth'
@@ -18,8 +17,6 @@ export default function MintCTA(props: {
 	currentTake: Take | undefined
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('playerCTA')
-
-	// const { getStoreState } = useStore()
 
 	if (!props.takes) {
 		return null
@@ -53,49 +50,48 @@ export default function MintCTA(props: {
 								{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 							</p>
 						)}
-					<p className="my-3 font-display">---</p>
-					{/*{getStoreState().selectedEmoji}*/}
-					{auctionInfo.lastMinted?.fallDistance && (
-						<p className="font-display">
-							↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
-						</p>
-					)}
-					<br />
 
 					{auctionInfo.lastMinted && (
-						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
-							<p>
-								<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
-								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+						<>
+							<p className="my-3 font-display">---</p>
+							<p className="font-display">
+								↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
 							</p>
-							<p>{auctionInfo.lastMinted.fullName}</p>
-							<p
-								className="truncate"
-								title={auctionInfo.lastMinted.buyerAddress}
-							>
-								{auctionInfo.lastMinted.buyerAddress}
-							</p>
-							<p>
-								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
-									'en-US',
-									{
-										hour: '2-digit',
-										minute: '2-digit',
-										second: '2-digit',
-									}
-								)}
-							</p>
-							<p>
-								<a
-									href={auctionInfo.lastMinted.openSea}
-									target="_blank"
-									className="link"
-									rel="noreferrer noopener"
+							<br />
+							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+								<p>
+									<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
+									{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+								</p>
+								<p>{auctionInfo.lastMinted.fullName}</p>
+								<p
+									className="truncate"
+									title={auctionInfo.lastMinted.buyerAddress}
 								>
-									Open Sea
-								</a>
-							</p>
-						</div>
+									{auctionInfo.lastMinted.buyerAddress}
+								</p>
+								<p>
+									{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
+										'en-US',
+										{
+											hour: '2-digit',
+											minute: '2-digit',
+											second: '2-digit',
+										}
+									)}
+								</p>
+								<p>
+									<a
+										href={auctionInfo.lastMinted.openSea}
+										target="_blank"
+										className="link"
+										rel="noreferrer noopener"
+									>
+										Open Sea
+									</a>
+								</p>
+							</div>
+						</>
 					)}
 				</>
 			) : auctionInfo?.stage === 'inbetween-mint-play' ||
