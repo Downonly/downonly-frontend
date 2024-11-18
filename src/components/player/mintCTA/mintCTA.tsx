@@ -101,16 +101,11 @@ export default function MintCTA(props: {
 			) : auctionInfo?.stage === 'inbetween-mint-play' ||
 			  auctionInfo?.stage === 'inbetween-mint-push' ? (
 				<>
-					<p className="font-display uppercase">Push</p>
-					{auctionInfo.distanceToDeath !== undefined &&
-						auctionInfo.distanceCurrent !== undefined && (
-							<>
-								{auctionInfo?.stage === 'inbetween-mint-play' ? (
-									<p className="font-display">
-										{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
-										{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
-									</p>
-								) : (
+					{auctionInfo?.stage === 'inbetween-mint-push' ? (
+						<>
+							<p className="font-display uppercase">Push</p>
+							{auctionInfo.distanceToDeath !== undefined &&
+								auctionInfo.distanceCurrent !== undefined && (
 									<p className="font-display">
 										{Number(
 											(
@@ -122,8 +117,17 @@ export default function MintCTA(props: {
 										🖥 {Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
 									</p>
 								)}
-							</>
-						)}
+						</>
+					) : (
+						auctionInfo.distanceToDeath !== undefined &&
+						auctionInfo.distanceCurrent !== undefined && (
+							<p className="font-display">
+								{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+								{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
+							</p>
+						)
+					)}
+
 					<p className="my-3 font-display">---</p>
 					{getStoreState().selectedEmoji}
 					{auctionInfo.lastMinted?.fallDistance && (

@@ -156,8 +156,7 @@ export default function Player(props: {
 			>
 				<div className="do-fall do-fall-1 h-full">
 					{auctionInfo?.stage === 'premint' ||
-					auctionInfo?.stage === 'inbetween-mint-push' ||
-					auctionInfo?.stage === 'inbetween-mint-play' ? (
+					auctionInfo?.stage === 'inbetween-mint-push' ? (
 						<Tube
 							src={
 								auctionInfo?.stage === 'premint'
