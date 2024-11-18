@@ -465,7 +465,7 @@ async function getLastMinted(
 	isCooldown: boolean
 ): Promise<LastMinted | undefined> {
 	try {
-		if (!isCooldown) {
+		if (isCooldown) {
 			const isPenalty = (await contract.isPenatlyCooldown()) as boolean
 			if (isPenalty) return undefined
 		}
