@@ -116,6 +116,7 @@ export default function MintCTA(props: {
 						</>
 					) : (
 						<>
+							<p className="font-display uppercase">Next auction in:</p>
 							<p className="font-display">
 								<Countdown seconds={auctionInfo.countdown} />
 							</p>
