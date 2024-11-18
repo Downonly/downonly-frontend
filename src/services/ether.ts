@@ -279,10 +279,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			getDistanceCurrent(),
 			getDistanceDone(),
 		])
-		const distanceToDeath = await getDistanceToDeath(
-			distanceCurrent,
-			distanceDone
-		)
+		const distanceToDeath = await getDistanceToDeath(distanceDone)
 
 		const info: AuctionInfoInbetweenMintPush = {
 			stage: 'inbetween-mint-push',
@@ -419,29 +416,22 @@ async function getDistanceDone(): Promise<number | undefined> {
 	return distanceDone
 }
 
-async function getDistanceToDeath(
-	current?: number,
-	done?: number
-): Promise<number | undefined> {
+async function getDistanceToDeath(done?: number): Promise<number | undefined> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return 28
 	}
 
 	let distanceDone: number
-	let distanceCurrent: number
 	try {
 		distanceDone =
 			done ??
 			Number(formatUnits((await contract.motorPushedByCM()) as bigint, 'ether'))
-		distanceCurrent =
-			current ??
-			Number(formatUnits((await contract.getToPush()) as bigint, 'ether'))
 	} catch (err) {
 		console.info('Failed to get distance done.', err)
 		return undefined
 	}
 
-	return 33 - distanceDone - distanceCurrent
+	return 33 - distanceDone
 }
 
 async function getRemainingLives(): Promise<RemainingLives | undefined> {
