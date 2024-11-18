@@ -478,7 +478,7 @@ async function getLastMinted(
 
 		return {
 			mintPrice: lastMintedRow.mintprice ?? 0n,
-			fullName: '1_clown_hospital_chair',
+			fullName: lastMintedRow.fullname,
 			mintDate: new Date(lastMintedRow.mintdate),
 			buyerAddress: lastMintedRow.buyerAddress ?? '',
 			openSea: lastMintedRow.openSea ?? '',
