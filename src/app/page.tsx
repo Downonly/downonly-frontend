@@ -7,8 +7,6 @@ import Tutorial from '@/components/tutorial/tutorial'
 import Concept from '@/components/concept/concept'
 import Emergency from '@/components/emergency/emergency'
 
-// TODO: Use pro plan on vercel?
-
 export default function Home() {
 	return (
 		<>
