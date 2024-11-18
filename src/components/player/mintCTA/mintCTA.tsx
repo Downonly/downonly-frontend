@@ -133,49 +133,59 @@ export default function MintCTA(props: {
 						</>
 					)}
 
-					<p className="my-3 font-display">---</p>
-					{getStoreState().selectedEmoji}
-					{auctionInfo.lastMinted?.fallDistance && (
-						<p className="font-display">
-							↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
-						</p>
-					)}
-					<br />
-
 					{auctionInfo.lastMinted && (
-						<div className="text-xs leading-relaxed text-carbon dark:text-iron">
-							<p>
-								<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
-								{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+						<>
+							<p className="my-3 font-display">---</p>
+							<p className="my-3">
+								{getEmoji(auctionInfo.lastMinted.surface)}{' '}
+								{getEmoji(auctionInfo.lastMinted.figure)}{' '}
+								{getEmoji(auctionInfo.lastMinted.obstacle)}
 							</p>
-							<p>{auctionInfo.lastMinted.fullName}</p>
-							<p
-								className="truncate"
-								title={auctionInfo.lastMinted.buyerAddress}
-							>
-								{auctionInfo.lastMinted.buyerAddress}
+							{auctionInfo.lastMinted?.fallDistance && (
+								<p className="font-display">
+									↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
+								</p>
+							)}
+							<p className="my-3 font-display uppercase">
+								{auctionInfo.lastMinted.surface}-{auctionInfo.lastMinted.figure}
+								-{auctionInfo.lastMinted.obstacle}
 							</p>
-							<p>
-								{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
-									'en-US',
-									{
-										hour: '2-digit',
-										minute: '2-digit',
-										second: '2-digit',
-									}
-								)}
-							</p>
-							<p>
-								<a
-									href={auctionInfo.lastMinted.openSea}
-									target="_blank"
-									className="link"
-									rel="noreferrer noopener"
+							<br />
+
+							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+								<p>
+									<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
+									{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+								</p>
+								<p>{auctionInfo.lastMinted.fullName}</p>
+								<p
+									className="truncate"
+									title={auctionInfo.lastMinted.buyerAddress}
 								>
-									Open Sea
-								</a>
-							</p>
-						</div>
+									{auctionInfo.lastMinted.buyerAddress}
+								</p>
+								<p>
+									{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
+										'en-US',
+										{
+											hour: '2-digit',
+											minute: '2-digit',
+											second: '2-digit',
+										}
+									)}
+								</p>
+								<p>
+									<a
+										href={auctionInfo.lastMinted.openSea}
+										target="_blank"
+										className="link"
+										rel="noreferrer noopener"
+									>
+										Open Sea
+									</a>
+								</p>
+							</div>
+						</>
 					)}
 				</>
 			) : auctionInfo?.stage === 'postmint' ? (

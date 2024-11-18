@@ -53,6 +53,9 @@ interface LastMinted {
 	buyerAddress: string
 	openSea: string
 	fallDistance: string
+	surface: string
+	obstacle: string
+	figure: string
 }
 
 interface AuctionInfoWithPrice extends AuctionInfoBase {
@@ -172,6 +175,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
 						openSea: 'https://testnets.opensea.io/assets/...',
 						fallDistance: '23.4',
+						surface: 'castle',
+						obstacle: 'horse',
+						figure: 'clown',
 					},
 				} satisfies AuctionInfoInbetweenMintPush
 			case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
@@ -188,6 +194,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
 						openSea: 'https://testnets.opensea.io/assets/...',
 						fallDistance: '23.4',
+						surface: 'castle',
+						obstacle: 'horse',
+						figure: 'clown',
 					},
 				} satisfies AuctionInfoInbetweenMintPlay
 			case 'postmint': // auctionsEnded
@@ -260,15 +269,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	let remainingLives: RemainingLives | undefined = undefined
-	let lastMinted: LastMinted | undefined = undefined
+	const lastMinted: LastMinted | undefined = getLastMinted(mints)
 	try {
-		const [remainingLivesResult, lastMintedResult] = await Promise.all([
-			getRemainingLives(),
-			getLastMinted(mints),
-		])
-
-		remainingLives = remainingLivesResult
-		lastMinted = lastMintedResult
+		remainingLives = await getRemainingLives()
 	} catch (err) {
 		console.error('Failed to get remainingLives/lastMinted', err)
 	}
@@ -290,6 +293,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			price,
 			distanceCurrent,
 			distanceToDeath,
+			lastMinted,
 			mints,
 		}
 		return info
@@ -321,6 +325,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			countdown,
 			distanceCurrent: await getDistanceCurrent(),
 			distanceToDeath,
+			lastMinted,
 			mints,
 		}
 		return info
@@ -477,6 +482,9 @@ function getLastMinted(mints: Row[]): LastMinted | undefined {
 		buyerAddress: lastMintedRow.buyerAddress ?? '',
 		openSea: lastMintedRow.openSea ?? '',
 		fallDistance: lastMintedRow.fallDistance ?? '',
+		obstacle: lastMintedRow.obstacle ?? '',
+		surface: lastMintedRow.surface ?? '',
+		figure: lastMintedRow.figure ?? '',
 	}
 }
 
