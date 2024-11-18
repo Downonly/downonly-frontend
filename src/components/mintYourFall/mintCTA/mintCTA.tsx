@@ -108,10 +108,7 @@ const MintCTA: FC<{
 				<Button
 					onClick={handleMintFall}
 					disabled={
-						!auctionInfo ||
-						!('price' in auctionInfo) ||
-						!auctionInfo.price ||
-						auctionInfo?.stage === 'inbetween-mint-play'
+						!auctionInfo || !('price' in auctionInfo) || !auctionInfo.price
 					}
 					loading={isMinting || auctionInfo?.stage === 'inbetween-mint-play'}
 					className="relative z-10"
