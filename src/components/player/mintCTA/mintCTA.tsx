@@ -4,7 +4,7 @@ import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
 import { ReactNode } from 'react'
 import { formatUnits } from 'ethers'
-import useStore from '@/hooks/useStore'
+// import useStore from '@/hooks/useStore'
 import Countdown from '@/components/countdown/countdown'
 import Loading from '@/components/loading/loading'
 import Eth from '@/components/eth/eth'
@@ -19,7 +19,7 @@ export default function MintCTA(props: {
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('playerCTA')
 
-	const { getStoreState } = useStore()
+	// const { getStoreState } = useStore()
 
 	if (!props.takes) {
 		return null
@@ -54,7 +54,7 @@ export default function MintCTA(props: {
 							</p>
 						)}
 					<p className="my-3 font-display">---</p>
-					{getStoreState().selectedEmoji}
+					{/*{getStoreState().selectedEmoji}*/}
 					{auctionInfo.lastMinted?.fallDistance && (
 						<p className="font-display">
 							↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
