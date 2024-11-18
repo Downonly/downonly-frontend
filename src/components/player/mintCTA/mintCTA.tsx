@@ -119,13 +119,18 @@ export default function MintCTA(props: {
 								)}
 						</>
 					) : (
-						auctionInfo.distanceToDeath !== undefined &&
-						auctionInfo.distanceCurrent !== undefined && (
+						<>
 							<p className="font-display">
-								{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
-								{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
+								<Countdown seconds={auctionInfo.countdown} />
 							</p>
-						)
+							{auctionInfo.distanceToDeath !== undefined &&
+								auctionInfo.distanceCurrent !== undefined && (
+									<p className="font-display">
+										{Number(auctionInfo.distanceCurrent.toFixed(1))} cm ↦ 🖥{' '}
+										{Number(auctionInfo.distanceToDeath.toFixed(1))} cm ↦ ☠️
+									</p>
+								)}
+						</>
 					)}
 
 					<p className="my-3 font-display">---</p>

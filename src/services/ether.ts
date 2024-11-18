@@ -317,13 +317,11 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			return info
 		}
 
-		const distanceCurrent = Number(formatUnits(price, 'ether'))
-
 		const info: AuctionInfoInbetweenMintPlay = {
 			stage: 'inbetween-mint-play',
 			countdown,
 			price,
-			distanceCurrent,
+			distanceCurrent: await getDistanceCurrent(),
 			distanceToDeath,
 			mints,
 		}
