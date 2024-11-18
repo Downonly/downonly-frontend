@@ -258,23 +258,29 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	let remainingLives: RemainingLives | undefined = undefined
-	try {
-		remainingLives = await getRemainingLives()
-	} catch (err) {
-		console.error('Failed to get remaining lives', err)
-	}
-
 	let lastMinted: LastMinted | undefined = undefined
 	try {
-		lastMinted = getLastMinted(mints)
+		const [remainingLivesResult, lastMintedResult] = await Promise.all([
+			getRemainingLives(),
+			getLastMinted(mints),
+		])
+
+		remainingLives = remainingLivesResult
+		lastMinted = lastMintedResult
 	} catch (err) {
-		console.error('Failed to get last minted', err)
+		console.error('Failed to get remainingLives/lastMinted', err)
 	}
 
 	if (pushing) {
-		const price = await getCurrentPrice()
-		const distanceCurrent = await getDistanceCurrent()
-		const distanceToDeath = await getDistanceToDeath(distanceCurrent)
+		const [price, distanceCurrent, distanceDone] = await Promise.all([
+			getCurrentPrice(),
+			getDistanceCurrent(),
+			getDistanceDone(),
+		])
+		const distanceToDeath = await getDistanceToDeath(
+			distanceCurrent,
+			distanceDone
+		)
 
 		const info: AuctionInfoInbetweenMintPush = {
 			stage: 'inbetween-mint-push',
@@ -306,8 +312,10 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			return info
 		}
 
-		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath()
+		const [price, distanceToDeath] = await Promise.all([
+			getCurrentPrice(),
+			getDistanceToDeath(),
+		])
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 		const info: AuctionInfoInbetweenMintPlay = {
@@ -330,9 +338,11 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 	}
 
 	if (phase === 'auctionActive') {
-		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath()
-		const countdown = await getCountdown()
+		const [price, distanceToDeath, countdown] = await Promise.all([
+			getCurrentPrice(),
+			getDistanceToDeath(),
+			getCountdown(),
+		])
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 		const info: AuctionInfoMint = {
 			stage: 'mint',
@@ -374,7 +384,7 @@ async function getCurrentPrice(): Promise<bigint> {
 
 async function getDistanceCurrent(): Promise<number | undefined> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return 28
+		return 1
 	}
 
 	let distanceCurrent: number
@@ -390,8 +400,27 @@ async function getDistanceCurrent(): Promise<number | undefined> {
 	return distanceCurrent
 }
 
+async function getDistanceDone(): Promise<number | undefined> {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return 28
+	}
+
+	let distanceDone: number
+	try {
+		distanceDone = Number(
+			formatUnits((await contract.motorPushedByCM()) as bigint, 'ether')
+		)
+	} catch (err) {
+		console.info('Failed to get distance done.', err)
+		return undefined
+	}
+
+	return distanceDone
+}
+
 async function getDistanceToDeath(
-	current?: number
+	current?: number,
+	done?: number
 ): Promise<number | undefined> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return 28
@@ -400,9 +429,9 @@ async function getDistanceToDeath(
 	let distanceDone: number
 	let distanceCurrent: number
 	try {
-		distanceDone = Number(
-			formatUnits((await contract.motorPushedByCM()) as bigint, 'ether')
-		)
+		distanceDone =
+			done ??
+			Number(formatUnits((await contract.motorPushedByCM()) as bigint, 'ether'))
 		distanceCurrent =
 			current ??
 			Number(formatUnits((await contract.getToPush()) as bigint, 'ether'))
