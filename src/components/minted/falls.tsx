@@ -24,9 +24,9 @@ export default function Falls(props: {
 			return []
 		}
 
-		return props.auctionInfo.mints.filter(
-			(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
-		)
+		return props.auctionInfo.mints
+			.filter((mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice)
+			.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? 1 : -1))
 	}, [props.auctionInfo])
 
 	const slicedMints = useMemo(() => {
@@ -62,6 +62,11 @@ export default function Falls(props: {
 								</p>
 								<p className="truncate" title={mint.buyerAddress}>
 									{mint.buyerAddress}
+								</p>
+								<p>
+									{new Date(mint.mintdate).toLocaleDateString()}
+									{' - '}
+									{new Date(mint.mintdate).toLocaleTimeString()}
 								</p>
 								<p>
 									<a
