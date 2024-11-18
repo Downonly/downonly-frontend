@@ -57,8 +57,8 @@ interface LastMinted {
 
 interface AuctionInfoWithPrice extends AuctionInfoBase {
 	price: bigint
-	distanceCurrent: number
-	distanceToDeath: number
+	distanceCurrent?: number
+	distanceToDeath?: number
 	lastMinted?: LastMinted
 }
 
@@ -273,8 +273,8 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 
 	if (pushing) {
 		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath(price)
-		const distanceCurrent = Number(formatUnits(price, 'ether'))
+		const distanceCurrent = await getDistanceCurrent()
+		const distanceToDeath = await getDistanceToDeath(distanceCurrent)
 
 		const info: AuctionInfoInbetweenMintPush = {
 			stage: 'inbetween-mint-push',
@@ -307,7 +307,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		}
 
 		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath(price)
+		const distanceToDeath = await getDistanceToDeath()
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 		const info: AuctionInfoInbetweenMintPlay = {
@@ -331,7 +331,7 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 
 	if (phase === 'auctionActive') {
 		const price = await getCurrentPrice()
-		const distanceToDeath = await getDistanceToDeath(price)
+		const distanceToDeath = await getDistanceToDeath()
 		const countdown = await getCountdown()
 		const distanceCurrent = Number(formatUnits(price, 'ether'))
 		const info: AuctionInfoMint = {
@@ -372,22 +372,44 @@ async function getCurrentPrice(): Promise<bigint> {
 	return currentPrice
 }
 
-async function getDistanceToDeath(price: bigint): Promise<number> {
+async function getDistanceCurrent(): Promise<number | undefined> {
+	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+		return 28
+	}
+
+	let distanceCurrent: number
+	try {
+		distanceCurrent = Number(
+			formatUnits((await contract.getToPush()) as bigint, 'ether')
+		)
+	} catch (err) {
+		console.info('Failed to get current distance.', err)
+		return undefined
+	}
+
+	return distanceCurrent
+}
+
+async function getDistanceToDeath(
+	current?: number
+): Promise<number | undefined> {
 	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
 		return 28
 	}
 
 	let distanceDone: number
+	let distanceCurrent: number
 	try {
 		distanceDone = Number(
-			formatUnits((await contract.motoPushedByCM()) as bigint, 'ether')
+			formatUnits((await contract.motorPushedByCM()) as bigint, 'ether')
 		)
+		distanceCurrent =
+			current ??
+			Number(formatUnits((await contract.getToPush()) as bigint, 'ether'))
 	} catch (err) {
 		console.info('Failed to get distance done.', err)
-		distanceDone = 0
+		return undefined
 	}
-
-	const distanceCurrent = Number(formatUnits(price, 'ether'))
 
 	return 33 - distanceDone - distanceCurrent
 }
