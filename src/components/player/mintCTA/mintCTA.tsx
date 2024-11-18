@@ -139,7 +139,11 @@ export default function MintCTA(props: {
 							</p>
 							{auctionInfo.lastMinted?.fallDistance && (
 								<p className="font-display">
-									↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
+									↓{' '}
+									{Math.abs(
+										Number(auctionInfo.lastMinted.fallDistance)
+									).toFixed(2)}{' '}
+									m
 								</p>
 							)}
 							<p className="my-3 font-display uppercase">
@@ -196,7 +200,8 @@ export default function MintCTA(props: {
 								{getEmoji(props.currentTake.obstacle)}
 							</p>
 							<p className="font-display">
-								↓ {Number(props.currentTake.fallDistance).toFixed(2)} m
+								↓ {Math.abs(Number(props.currentTake.fallDistance)).toFixed(2)}{' '}
+								m
 							</p>
 							<p className="my-3 font-display uppercase">
 								{props.currentTake.surface}-{props.currentTake.figure}-
