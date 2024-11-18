@@ -196,21 +196,6 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		}
 	}
 
-	let mints: Row[] = []
-	let pushing = false
-	let res: Response | undefined = undefined
-	try {
-		res = await fetch(`${process.env.NEXT_PUBLIC_BASE}api/mints`)
-		const json = (await res.json()) as {
-			mints: Row[]
-			pushing: boolean
-		}
-		mints = json.mints
-		pushing = json.pushing
-	} catch (err) {
-		console.error('Failed to fetch mints from db.', err)
-	}
-
 	try {
 		await initContract()
 
@@ -247,6 +232,21 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			stage: 'emergency',
 		}
 		return info
+	}
+
+	let mints: Row[] = []
+	let pushing = false
+	let res: Response | undefined = undefined
+	try {
+		res = await fetch(`${process.env.NEXT_PUBLIC_BASE}api/mints`)
+		const json = (await res.json()) as {
+			mints: Row[]
+			pushing: boolean
+		}
+		mints = json.mints
+		pushing = json.pushing
+	} catch (err) {
+		console.error('Failed to fetch mints from db.', err)
 	}
 
 	if (phase === 'auctionsEnded') {
