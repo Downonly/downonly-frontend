@@ -64,8 +64,11 @@ export default function MintCTA(props: {
 							<br />
 							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
 								<p>
-									<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
-									{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+									<Eth eth={auctionInfo.lastMinted.mintPrice} /> /{' '}
+									{Number(
+										formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')
+									).toFixed(1)}{' '}
+									cm
 								</p>
 								<p>{auctionInfo.lastMinted.fullName}</p>
 								<p
@@ -159,8 +162,11 @@ export default function MintCTA(props: {
 
 							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
 								<p>
-									<Eth eth={auctionInfo.lastMinted.mintPrice} /> / -
-									{formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')} cm
+									<Eth eth={auctionInfo.lastMinted.mintPrice} /> /{' '}
+									{Number(
+										formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')
+									).toFixed(1)}{' '}
+									cm
 								</p>
 								<p>{auctionInfo.lastMinted.fullName}</p>
 								<p
@@ -216,8 +222,11 @@ export default function MintCTA(props: {
 								<p>
 									{props.currentTake.mintprice && (
 										<>
-											<Eth eth={props.currentTake.mintprice} /> / -{' '}
-											{formatUnits(props.currentTake.mintprice, 'ether')} cm
+											<Eth eth={props.currentTake.mintprice} /> /{' '}
+											{Number(
+												formatUnits(props.currentTake.mintprice, 'ether')
+											).toFixed(1)}{' '}
+											cm
 										</>
 									)}
 								</p>
