@@ -27,7 +27,7 @@ export default function Tutorial(props: {
 					<figure>
 						<div className="aspect-video">
 							<Tube
-								src={process.env.NEXT_PUBLIC_TUBE_CONCEPT_SRC}
+								src={process.env.NEXT_PUBLIC_TUBE_HOW_SRC}
 								className="bg-silver"
 							/>
 						</div>

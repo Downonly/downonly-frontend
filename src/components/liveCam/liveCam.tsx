@@ -27,7 +27,7 @@ export default function LiveCam(props: {
 				</header>
 
 				<Tube
-					src={process.env.NEXT_PUBLIC_TUBE_HOW_SRC}
+					src={process.env.NEXT_PUBLIC_TUBE_STREAM_SRC}
 					className="do-fall do-fall-0 mb-12 aspect-video bg-silver"
 				/>
 			</div>
