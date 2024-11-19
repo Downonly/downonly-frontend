@@ -55,7 +55,11 @@ export default function MintCTA(props: {
 						<>
 							<p className="my-3 font-display">---</p>
 							<p className="font-display">
-								↓ {Number(auctionInfo.lastMinted.fallDistance).toFixed(2)} m
+								↓{' '}
+								{Math.abs(Number(auctionInfo.lastMinted.fallDistance)).toFixed(
+									2
+								)}{' '}
+								m
 							</p>
 							<br />
 							<div className="text-xs leading-relaxed text-carbon dark:text-iron">

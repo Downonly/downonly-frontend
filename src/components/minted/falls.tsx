@@ -1,7 +1,6 @@
 import Polaroid from '@/components/polaroid/polaroid'
 import { ReactNode, useMemo } from 'react'
 import { getEmoji } from '@/utils/emoji'
-import { formatUnits } from 'ethers'
 import Video from '@/components/minted/video'
 import { AuctionInfo } from '@/services/ether'
 import Link from '@/components/link/link'
@@ -57,8 +56,8 @@ export default function Falls(props: {
 						description={
 							<>
 								<p>
-									<Eth eth={mint.mintprice!} /> / -
-									{formatUnits(mint.mintprice!, 'ether')} cm
+									<Eth eth={mint.mintprice!} /> / ↓{' '}
+									{Math.abs(Number(mint.fallDistance)).toFixed(2)} m
 								</p>
 								<p className="truncate" title={mint.buyerAddress}>
 									{mint.buyerAddress}
