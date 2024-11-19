@@ -33,8 +33,6 @@ export default function Graveyard(props: {
 			})
 		}
 
-		console.info('auctionInfo.remainingLives', auctionInfo.remainingLives)
-
 		return (
 			auctionInfo.remainingLives
 				? Array.from(auctionInfo.remainingLives.entries()).filter(
