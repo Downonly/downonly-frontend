@@ -42,9 +42,9 @@ export default function Concept(props: {
 							target="_blank"
 							href="https://coleccionsolo.com/artist-nikita-diakur-explores-unpredictability-and-control-in-a-24-hour-performance-installation/"
 						>
-							Espacio SOLO in Madrid
-						</Link>
-						.
+							Espacio SOLO
+						</Link>{' '}
+						in Madrid.
 					</p>
 				</div>
 			</div>

@@ -32,8 +32,15 @@ export default function Mints() {
 								className="do-fall do-fall-2"
 								summary="Where and when can I visit Downonly in person?"
 							>
-								The interactive phase of Downonly is hosted at Espacio SOLO in
-								Madrid on November 20 and 21. The non-interactive phase will
+								The interactive phase of Downonly is hosted at{' '}
+								<Link
+									className="underline"
+									target="_blank"
+									href="https://coleccionsolo.com/artist-nikita-diakur-explores-unpredictability-and-control-in-a-24-hour-performance-installation/"
+								>
+									Espacio SOLO
+								</Link>{' '}
+								in Madrid on November 20 and 21. The non-interactive phase will
 								remain on display for the following month. You are welcome to
 								visit and experience the installation in person during this
 								period.
@@ -289,17 +296,6 @@ export default function Mints() {
 								the contract follows established Ethereum development best
 								practices to ensure that all transactions are secure, and the
 								data integrity is upheld.
-							</Details>
-
-							<Details
-								className="do-fall do-fall-2"
-								summary="Where and when can I visit Downonly in person?"
-							>
-								The interactive phase of Downonly is hosted at Espacio SOLO in
-								Madrid on November 20 and 21. The non-interactive phase will
-								remain on display for the following month. You are welcome to
-								visit and experience the installation in person during this
-								period.
 							</Details>
 
 							<Details
