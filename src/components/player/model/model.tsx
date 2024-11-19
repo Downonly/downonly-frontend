@@ -101,7 +101,11 @@ export default function Model(props: {
 			snd.seek(mx.time)
 		})
 		soundRef.current = snd
-		if (isSoundingRef.current) snd.play()
+		if (isSoundingRef.current) {
+			setTimeout(() => {
+				snd?.play()
+			}, 200)
+		}
 
 		scene?.traverse((child) => {
 			if (child.name.includes('_hip_01')) {
