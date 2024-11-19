@@ -268,6 +268,14 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 		return info
 	}
 
+	if (phase === 'auctionNotStarted') {
+		const info: AuctionInfoPremint = {
+			stage: 'premint',
+			mints,
+		}
+		return info
+	}
+
 	const [lastMinted, remainingLives] = await Promise.all([
 		getLastMinted(mints, phase === 'auctionCooldown'),
 		getRemainingLives(),
@@ -319,15 +327,8 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 			countdown,
 			distanceCurrent: await getDistanceCurrent(),
 			distanceToDeath,
+			remainingLives,
 			lastMinted,
-			mints,
-		}
-		return info
-	}
-
-	if (phase === 'auctionNotStarted') {
-		const info: AuctionInfoPremint = {
-			stage: 'premint',
 			mints,
 		}
 		return info
