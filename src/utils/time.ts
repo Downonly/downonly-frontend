@@ -7,12 +7,12 @@ export const formatDuration = (seconds: number): string => {
 	seconds %= 60
 
 	return days > 0
-		? `${days}D ${hours}H ${minutes}M ${seconds.toString().padStart(2, '0')}S`
+		? `${days} d ${hours} h ${minutes} min ${seconds.toString().padStart(2, '0')} s`
 		: hours > 0
-			? `${hours}H ${minutes}M ${seconds.toString().padStart(2, '0')}S`
+			? `${hours} h ${minutes} min ${seconds.toString().padStart(2, '0')} s`
 			: minutes > 0
-				? `${minutes}M ${seconds.toString().padStart(2, '0')}S`
+				? `${minutes} min ${seconds.toString().padStart(2, '0')} s`
 				: seconds > 0
-					? `${seconds.toString().padStart(2, '0')}S`
+					? `${seconds.toString().padStart(2, '0')} s`
 					: '...'
 }

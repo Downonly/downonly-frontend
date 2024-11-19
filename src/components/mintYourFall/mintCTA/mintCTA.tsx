@@ -69,7 +69,7 @@ const MintCTA: FC<{
 				<div className="text-sm">
 					{auctionInfo?.stage === 'premint' && (
 						<>
-							<div className="my-3">{selectedEmoji}</div>X ↦ 🖥 33 CM ↦ ☠️
+							<div className="my-3">{selectedEmoji}</div>X ↦ 🖥 33 cm ↦ ☠️
 						</>
 					)}
 

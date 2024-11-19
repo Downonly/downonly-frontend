@@ -33,7 +33,7 @@ export default function MintCTA(props: {
 							<Countdown seconds={auctionInfo.countdown} />
 						</p>
 					)}
-					<p className="font-display">X ↦ 🖥 33 CM ↦ ☠️</p>
+					<p className="font-display">X ↦ 🖥 33 cm ↦ ☠️</p>
 					<p className="my-3 font-display">---</p>
 				</>
 			) : auctionInfo?.stage === 'mint' ? (
