@@ -11,11 +11,7 @@ import {
 	TransactionResponse,
 } from 'ethers'
 import abi from './abi/dutchauction.json'
-import {
-	AlreadyProcessingError,
-	InsufficientFundsError,
-	NoWalletError,
-} from '@/errors/errorEther'
+import { InsufficientFundsError, NoWalletError } from '@/errors/errorEther'
 import { Row } from '@/components/player/types'
 import { getEmoji } from '@/utils/emoji'
 
@@ -568,9 +564,6 @@ export async function buy(
 		await depositTx.wait()
 	} catch (err) {
 		if (err instanceof Error) {
-			if (err.message.includes('Already processing')) {
-				throw new AlreadyProcessingError('Deposit failed.', { cause: err })
-			}
 			if (err.message.includes('User denied transaction')) {
 				return
 			}

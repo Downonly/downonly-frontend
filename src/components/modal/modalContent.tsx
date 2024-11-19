@@ -2,7 +2,7 @@ import { type FC, type PropsWithChildren } from 'react'
 import Button from '@/components/button/button'
 
 interface ModalContentProps {
-	modalSubject?: 'insufficient-funds' | 'already-processing'
+	modalSubject?: 'insufficient-funds'
 	onClose: () => void
 }
 
@@ -19,25 +19,19 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 						<br />
 						don&apos;t have sufficient funds
 					</>
-				) : modalSubject === 'already-processing' ? (
-					<>
-						Your wallet is already
-						<br />
-						processing something
-					</>
 				) : (
 					<>
 						Looks like you
 						<br />
 						don&apos;t have a wallet
+						<br />
+						or it&apos;s not connected
 					</>
 				)}
 			</strong>
 			<p className="mb-4 leading-relaxed">
 				{modalSubject === 'insufficient-funds' ? (
 					<>The funds in you wallet do not suffice to make a purchase.</>
-				) : modalSubject === 'already-processing' ? (
-					<>Please check your wallet. You may need to reconnect.</>
 				) : (
 					<>
 						In order to perform transactions on the Ethereum network safely, you
@@ -60,6 +54,8 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 							Trust Wallet
 						</a>{' '}
 						(for mobile).
+						<br />
+						If you have a wallet, please check its status.
 					</>
 				)}
 			</p>

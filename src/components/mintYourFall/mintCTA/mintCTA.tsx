@@ -4,11 +4,7 @@ import Button from '@/components/button/button'
 import Modal from '@/components/modal/modal'
 import { FC, ReactElement, useState } from 'react'
 import { buy } from '@/services/ether'
-import {
-	AlreadyProcessingError,
-	InsufficientFundsError,
-	NoWalletError,
-} from '@/errors/errorEther'
+import { InsufficientFundsError, NoWalletError } from '@/errors/errorEther'
 import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { nameEmojiMap } from '@/utils/emoji'
 import Countdown from '@/components/countdown/countdown'
@@ -22,7 +18,7 @@ const MintCTA: FC<{
 
 	const [modalOpen, setModalOpen] = useState(false)
 	const [modalSubject, setModalSubject] = useState<
-		'insufficient-funds' | 'already-processing' | undefined
+		'insufficient-funds' | undefined
 	>()
 	const handleDismiss = () => {
 		setModalOpen(false)
@@ -58,10 +54,6 @@ const MintCTA: FC<{
 			} else if (err instanceof InsufficientFundsError) {
 				console.warn(err)
 				setModalSubject('insufficient-funds')
-				setModalOpen(true)
-			} else if (err instanceof AlreadyProcessingError) {
-				console.warn(err)
-				setModalSubject('already-processing')
 				setModalOpen(true)
 			} else {
 				console.error(err)
