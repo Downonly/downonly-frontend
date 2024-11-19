@@ -115,7 +115,7 @@ let contract: MyContract
 const avgBlockTime = Number(process.env.NEXT_PUBLIC_AVG_BLOCK_TIME)
 
 async function initContract() {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) return
 
 	if (contract) return
 
@@ -135,77 +135,77 @@ async function initContract() {
 }
 
 export async function getAuctionInfo(): Promise<AuctionInfo> {
-	const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
-		| AuctionStage
-		| undefined
-	if (mockedAuctionStage) {
-		if (mockedAuctionStage === 'emergency') {
-			return { stage: 'emergency' } satisfies AuctionInfoEmergency
-		}
-
-		const mints = (await import('./mockData')).getMockData()
-
-		switch (mockedAuctionStage) {
-			case 'premint': // auctionNotStarted
-				return {
-					stage: mockedAuctionStage,
-					countdown: 123,
-					mints,
-				} satisfies AuctionInfoPremint
-			case 'mint': // auctionActive
-				return {
-					stage: mockedAuctionStage,
-					mints,
-					countdown: 123,
-					price: 123n,
-					distanceCurrent: 0.123,
-					distanceToDeath: 23,
-				} satisfies AuctionInfoMint
-			case 'inbetween-mint-push':
-				return {
-					stage: mockedAuctionStage,
-					mints,
-					price: 123n,
-					distanceCurrent: 0.123,
-					distanceToDeath: 23,
-					lastMinted: {
-						mintPrice: 123n,
-						fullName: 'Yolo',
-						mintDate: new Date(),
-						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
-						openSea: 'https://testnets.opensea.io/assets/...',
-						fallDistance: '23.4',
-						surface: 'castle',
-						obstacle: 'horse',
-						figure: 'clown',
-					},
-				} satisfies AuctionInfoInbetweenMintPush
-			case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
-				return {
-					stage: mockedAuctionStage,
-					mints,
-					countdown: 123,
-					distanceCurrent: 0.123,
-					distanceToDeath: 23,
-					lastMinted: {
-						mintPrice: 123n,
-						fullName: 'Yolo',
-						mintDate: new Date(),
-						buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
-						openSea: 'https://testnets.opensea.io/assets/...',
-						fallDistance: '23.4',
-						surface: 'castle',
-						obstacle: 'horse',
-						figure: 'clown',
-					},
-				} satisfies AuctionInfoInbetweenMintPlay
-			case 'postmint': // auctionsEnded
-				return {
-					stage: mockedAuctionStage,
-					mints,
-				} satisfies AuctionInfoPostmint
-		}
-	}
+	// const mockedAuctionStage = process.env.NEXT_PUBLIC_MOCK_AUCTION_STAGE as
+	// 	| AuctionStage
+	// 	| undefined
+	// if (mockedAuctionStage) {
+	// 	if (mockedAuctionStage === 'emergency') {
+	// 		return { stage: 'emergency' } satisfies AuctionInfoEmergency
+	// 	}
+	//
+	// 	const mints = (await import('./mockData')).getMockData()
+	//
+	// 	switch (mockedAuctionStage) {
+	// 		case 'premint': // auctionNotStarted
+	// 			return {
+	// 				stage: mockedAuctionStage,
+	// 				countdown: 123,
+	// 				mints,
+	// 			} satisfies AuctionInfoPremint
+	// 		case 'mint': // auctionActive
+	// 			return {
+	// 				stage: mockedAuctionStage,
+	// 				mints,
+	// 				countdown: 123,
+	// 				price: 123n,
+	// 				distanceCurrent: 0.123,
+	// 				distanceToDeath: 23,
+	// 			} satisfies AuctionInfoMint
+	// 		case 'inbetween-mint-push':
+	// 			return {
+	// 				stage: mockedAuctionStage,
+	// 				mints,
+	// 				price: 123n,
+	// 				distanceCurrent: 0.123,
+	// 				distanceToDeath: 23,
+	// 				lastMinted: {
+	// 					mintPrice: 123n,
+	// 					fullName: 'Yolo',
+	// 					mintDate: new Date(),
+	// 					buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
+	// 					openSea: 'https://testnets.opensea.io/assets/...',
+	// 					fallDistance: '23.4',
+	// 					surface: 'castle',
+	// 					obstacle: 'horse',
+	// 					figure: 'clown',
+	// 				},
+	// 			} satisfies AuctionInfoInbetweenMintPush
+	// 		case 'inbetween-mint-play': // getPhase ist cooldown und 1min vorbei
+	// 			return {
+	// 				stage: mockedAuctionStage,
+	// 				mints,
+	// 				countdown: 123,
+	// 				distanceCurrent: 0.123,
+	// 				distanceToDeath: 23,
+	// 				lastMinted: {
+	// 					mintPrice: 123n,
+	// 					fullName: 'Yolo',
+	// 					mintDate: new Date(),
+	// 					buyerAddress: '0x6F49498A063d4AB25106aD49c1f050088633268f',
+	// 					openSea: 'https://testnets.opensea.io/assets/...',
+	// 					fallDistance: '23.4',
+	// 					surface: 'castle',
+	// 					obstacle: 'horse',
+	// 					figure: 'clown',
+	// 				},
+	// 			} satisfies AuctionInfoInbetweenMintPlay
+	// 		case 'postmint': // auctionsEnded
+	// 			return {
+	// 				stage: mockedAuctionStage,
+	// 				mints,
+	// 			} satisfies AuctionInfoPostmint
+	// 	}
+	// }
 
 	try {
 		await initContract()
@@ -363,9 +363,9 @@ export async function getAuctionInfo(): Promise<AuctionInfo> {
 async function getCurrentPrice(phase?: Phase): Promise<bigint> {
 	if (phase === 'auctionCooldown') return 0n
 
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return BigInt(parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0'))
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return BigInt(parseFloat(process.env.NEXT_PUBLIC_MOCK_ETHER_PRICE ?? '0'))
+	// }
 
 	await initContract()
 
@@ -381,9 +381,9 @@ async function getCurrentPrice(phase?: Phase): Promise<bigint> {
 }
 
 async function getDistanceCurrent(): Promise<number | undefined> {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return 1
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return 1
+	// }
 
 	let distanceCurrent: number
 	try {
@@ -399,9 +399,9 @@ async function getDistanceCurrent(): Promise<number | undefined> {
 }
 
 async function getDistanceDone(): Promise<number | undefined> {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return 28
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return 28
+	// }
 
 	let distanceDone: number
 	try {
@@ -417,9 +417,9 @@ async function getDistanceDone(): Promise<number | undefined> {
 }
 
 async function getDistanceToDeath(done?: number): Promise<number | undefined> {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return 28
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return 28
+	// }
 
 	let distanceDone: number
 	try {
@@ -494,9 +494,9 @@ async function getLastMinted(
 }
 
 async function getCountdown(): Promise<number> {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return 123
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return 123
+	// }
 
 	let countdown = 0
 	try {
@@ -510,21 +510,21 @@ async function getCountdown(): Promise<number> {
 }
 
 export async function getIsPaused() {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return Boolean(process.env.NEXT_PUBLIC_MOCK_ETHER_IS_PAUSED)
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return Boolean(process.env.NEXT_PUBLIC_MOCK_ETHER_IS_PAUSED)
+	// }
 
 	await initContract()
 	return (await contract.isPaused()) as boolean
 }
 
 export async function getTimeUntilAuctionEnds() {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		return parseInt(
-			process.env.NEXT_PUBLIC_MOCK_ETHER_TIME_UNTIL_AUCTION_ENDS ?? '0',
-			10
-		)
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	return parseInt(
+	// 		process.env.NEXT_PUBLIC_MOCK_ETHER_TIME_UNTIL_AUCTION_ENDS ?? '0',
+	// 		10
+	// 	)
+	// }
 
 	await initContract()
 	return parseInt((await contract.remainingTimeUntilPriceReset()) as string, 10)
@@ -538,9 +538,9 @@ export async function buy(
 		obstacle: string
 	}
 ) {
-	if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
-		throw new DepositError('Deposit failed.')
-	}
+	// if (process.env.NEXT_PUBLIC_MOCK_ETHER) {
+	// 	throw new DepositError('Deposit failed.')
+	// }
 
 	await initContract()
 
