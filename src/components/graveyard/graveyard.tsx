@@ -63,19 +63,10 @@ export default function Graveyard(props: {
 			className={`${props.className ?? ''} mb-24`}
 			style={props.style}
 		>
-			<div className="do-fall do-fall-3 container flex flex-col items-center text-center grayscale">
-				<p className="text-display text-4xl text-silver dark:text-iron">
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-					<span className="inline-flex ">+</span>
-				</p>
+			<div className="do-fall do-fall-3 container flex flex-col items-center text-center">
+				<p className="text-display text-4xl">++++++++</p>
 
-				<div className="flex max-w-prose flex-wrap justify-center gap-2 text-xl">
+				<div className="flex max-w-prose flex-wrap justify-center gap-2 text-xl grayscale">
 					{deadEmoji.map((emoji) => (
 						<div key={emoji.key}>{emoji.emoji}</div>
 					))}
