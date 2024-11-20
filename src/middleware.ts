@@ -1,12 +1,12 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const [AUTH_USER, AUTH_PASS] = (process.env.BASIC_AUTH ?? ':').split(':')
-
 export function middleware(req: NextRequest) {
 	if (process.env.NODE_ENV !== 'production' || !process.env.BASIC_AUTH) {
 		return NextResponse.next()
 	}
+
+	const [authUser, authPass] = process.env.BASIC_AUTH.split(':')
 
 	const authHeader = req.headers.get('authorization')
 
@@ -23,7 +23,7 @@ export function middleware(req: NextRequest) {
 	const decoded = Buffer.from(encoded, 'base64').toString()
 	const [user, pass] = decoded.split(':')
 
-	if (user === AUTH_USER && pass === AUTH_PASS) {
+	if (user === authUser && pass === authPass) {
 		return NextResponse.next()
 	}
 
