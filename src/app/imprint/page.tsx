@@ -22,7 +22,6 @@ export default function Imprint() {
 					Deutschland
 					<br />
 					<br />
-					Telefon: +49 341 338 396 8<br />
 					E-Mail: info@downonly.xyz
 				</address>
 
@@ -123,7 +122,6 @@ export default function Imprint() {
 					Deutschland
 					<br />
 					<br />
-					Telefon: +49 341 338 396 8<br />
 					E-Mail: info@downonly.xyz
 				</address>
 

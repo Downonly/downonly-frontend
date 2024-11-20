@@ -55,14 +55,14 @@ export default function Tutorial(props: {
 								<b className="text-display">Fall Simulation:</b> A computer
 								simulates falls involving a character, an object, and an
 								environment. The falls form a continuous sequence. This is the
-								core digital aspect of the game. Computer
+								core digital aspect of the game.
 							</p>
 							<p>
-								<b className="text-display">Destined to Fall:</b> This is the
-								central physical component of the game. Standing on top of a
-								staircase, the simulation computer moves forward every round and
-								eventually falls downstairs, ending the game. It is being pushed
-								by a motorized broom.
+								<b className="text-display">Computer Destined to Fall:</b> This
+								is the central physical component of the game. Standing on top
+								of a staircase, the simulation computer moves forward every
+								round and eventually falls downstairs, ending the game. It is
+								being pushed by a motorized broom.
 							</p>
 							<p>
 								<b className="text-display">
