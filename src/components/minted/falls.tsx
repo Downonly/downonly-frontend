@@ -52,7 +52,7 @@ export default function Falls(props: {
 						className="do-fall do-fall-3 min-w-0"
 						salt={mint.fullname}
 						emoji={`${getEmoji(mint.surface)} ${getEmoji(mint.figure)} ${getEmoji(mint.obstacle)}`}
-						label="Label"
+						label={mint.fullname}
 						description={
 							<>
 								<p>
