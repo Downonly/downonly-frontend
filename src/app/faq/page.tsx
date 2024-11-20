@@ -32,7 +32,7 @@ export default function Mints() {
 								className="do-fall do-fall-2"
 								summary="Where and when can I visit Downonly in person?"
 							>
-								The interactive phase of Downonly is hosted at{' '}
+								The physical Installation of Downonly is on display at{' '}
 								<Link
 									className="underline"
 									target="_blank"
@@ -40,10 +40,46 @@ export default function Mints() {
 								>
 									Espacio SOLO
 								</Link>{' '}
-								in Madrid on November 20 and 21. The non-interactive phase will
-								remain on display for the following month. You are welcome to
-								visit and experience the installation in person during this
-								period.
+								in Madrid. It’s interactive phase, during which the broom pushes
+								the computer until it falls, can be experienced live at the
+								space from Wednesday 20th of November 7 pm (CET) on. The fall of
+								the computer will happen, depending on the level of
+								participation in the online-auction, 16,5 - 24,2 hours later
+								(between Thursday, 11:30 am and 7:40 pm). Be aware that access
+								to{' '}
+								<Link
+									className="underline"
+									target="_blank"
+									href="https://coleccionsolo.com/artist-nikita-diakur-explores-unpredictability-and-control-in-a-24-hour-performance-installation/"
+								>
+									Espacio SOLO
+								</Link>{' '}
+								is limited. For the 20th and 21st you can book a slot{' '}
+								<Link
+									className="underline"
+									target="_blank"
+									href="https://coleccionsolo.com/downonly-performance/"
+								>
+									here
+								</Link>
+								. For visiting{' '}
+								<Link
+									className="underline"
+									target="_blank"
+									href="https://coleccionsolo.com/artist-nikita-diakur-explores-unpredictability-and-control-in-a-24-hour-performance-installation/"
+								>
+									Espacio SOLO
+								</Link>{' '}
+								after the performance and see the whole collection including the
+								remaining Downonly-installation, you can book a slot{' '}
+								<Link
+									className="underline"
+									target="_blank"
+									href="https://coleccionsolo.com/downonly-performance/"
+								>
+									here
+								</Link>
+								.
 							</Details>
 
 							<Details
@@ -58,27 +94,6 @@ export default function Mints() {
 								of downonly.xyz. You can observe the computer&apos;s position on
 								the staircase in real-time, as well as the ongoing falls being
 								simulated.
-							</Details>
-
-							<Details
-								className="do-fall do-fall-4"
-								summary="How does the auction work?"
-							>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat.
-							</Details>
-
-							<Details
-								className="do-fall do-fall-1"
-								summary="Discord & Contracts?"
-								last
-							>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat.
 							</Details>
 						</div>
 					</div>
@@ -95,17 +110,17 @@ export default function Mints() {
 								To participate, you&apos;ll need to connect your Ethereum wallet
 								to the Downonly smart contract through our website. Once
 								connected, you can join the Dutch auctions to bid on and mint
-								your preferred fall combinations. The NFT will arrive at the
-								wallet that you used to pay shortly after.
+								your preferred fall combination.
 							</Details>
 
 							<Details
 								className="do-fall do-fall-2"
 								summary="Can I choose any combination of character, object, and environment?"
 							>
-								Yes, as long as each component is available within the limits of
-								three uses, you are free to select any combination of character,
-								object, and environment during your turn in the auction.
+								Yes, you are free to select any combination of character, object
+								and environment for the creation of your digital artwork. But be
+								aware, that each character, object and environment is only
+								available 3 times. So your options become fewer over time.
 							</Details>
 
 							<Details
@@ -114,10 +129,11 @@ export default function Mints() {
 							>
 								A Dutch auction is a type of auction where the price starts high
 								and decreases over time until a participant accepts the current
-								price. In Downonly, each auction starts with a maximum price of
-								1.1 Ethereum for the first bidder, decreasing to a minimum of
-								0.1 Ethereum where it stays for 1 minute. Your bid determines
-								how far the computer moves on the slider for that round.
+								price and thereby ends the auction. In Downonly each round of
+								auction starts with a maximum price of 1.1 Ethereum and
+								decreases after every minute by 0.1 Ethereum until the minimum
+								price of 0.1 Ethereum is reached. Your bid determines how far
+								the computer is moved to the edge by the broom for that round.
 							</Details>
 
 							<Details
@@ -158,9 +174,10 @@ export default function Mints() {
 								summary="How long does the interactive performance last?"
 							>
 								The minimum runtime of the performance is approximately 16.5
-								hours for 30 falls if all rounds are at maximum bids, and the
-								maximum runtime is 24.2 hours for 33 falls if all rounds receive
-								minimum bids or all assets are minted 3 times.
+								hours for 30 falls if all rounds end immediately after a
+								participant has bid on the highest price. The maximum runtime
+								possible is 24.2 hours for 33 falls if all are ended by minimum
+								bids at the very end of each auction period.
 							</Details>
 
 							<Details
@@ -171,22 +188,22 @@ export default function Mints() {
 								The auction process in Downonly is governed by a smart contract
 								on the Ethereum blockchain, which guarantees fairness and
 								transparency. However, it&apos;s important to note that the
-								dynamics of bidding allow for immediate auction closures with
-								higher bids. Participants with the financial capability to make
-								higher bids can influence which characters, objects, and
+								dynamics of bidding allow for immediate closures of an auction
+								round by higher bids. Participants with the financial capability
+								to make higher bids can influence which characters, objects, and
 								environments fall next, introducing a hierarchy within the
 								experience. This mechanism ensures that while the auction
 								process itself is fair in terms of transparency and opportunity
 								for participation, the influence on the sequence of events can
 								be significantly swayed by those willing to spend more. Higher
 								payments accelerate the movement of the computer towards the
-								edge, shortening the duration of the installation and reducing
-								the amount of overall simulations to be minted. Conversely,
-								lower bids slow this progression, but any lack of bids results
-								in a penalty that moves the computer the maximum price amount.
-								Thus, the computer&apos;s inevitable approach towards the edge
-								is continuous and unavoidable, with the pace variably controlled
-								by participant engagement.
+								edge, shortening the duration of the installation. Conversely,
+								lower bids slow this progression down, but any lack of bids
+								during one round results in a penalty push that moves the
+								computer the same distance of 1,1 cm a bid for the maximum price
+								does. Thus, the computer&apos;s inevitable approach towards the
+								edge is continuous and unavoidable, with the pace variably
+								controlled by participant engagement.
 							</Details>
 						</div>
 					</div>
@@ -211,10 +228,10 @@ export default function Mints() {
 							>
 								Each fall sequence is uniquely recorded as a GLB and an mp4. The
 								data is stored on the blockchain and displayed on the website.
-								This includes also details about the character, object, and
-								environment combinations, the current fall distance based on the
-								overall sequence. All assets are tied to the minter&apos;s
-								address.
+								This includes also details about the
+								character-object-environment-combinations, and the distance
+								based on the overall sequence. All assets are tied to the
+								minter’s address.
 							</Details>
 
 							<Details
@@ -240,9 +257,7 @@ export default function Mints() {
 								summary="How long does it take for my minted fall to be visible on the website and on IPFS?"
 							>
 								Once you mint a fall in Downonly, it typically takes a few
-								minutes for the transaction to be confirmed on the blockchain as
-								a backend needs to communicate with the rendering machine,
-								upload the files to IPFS and mint the NFT to your wallet.
+								minutes for the transaction to be confirmed on the blockchain.
 								However, during times of high network congestion, there may be
 								delays. Downonly has a built-in grace period to wait for network
 								congestion to decrease and transaction costs to lower. This
@@ -286,6 +301,17 @@ export default function Mints() {
 						</h3>
 						<div className="lg:px-20">
 							<Details
+								className="do-fall do-fall-1"
+								summary="Are there any problems with certain wallet and browser combinations?"
+							>
+								Yes, we have noticed issues when using MetaMask with Firefox,
+								where users may encounter difficulties connecting their wallets
+								or seeing correct website content. To avoid these problems, we
+								recommend using MetaMask with browsers like Google Chrome, Edge
+								or Vivaldi.
+							</Details>
+
+							<Details
 								className="do-fall do-fall-5"
 								summary="How is the security of Downonly ensured, and where can I review the smart contract?"
 							>
@@ -305,7 +331,7 @@ export default function Mints() {
 								Downonly has been carefully tested to minimize bugs and software
 								errors. However, the system is still an experiment, so things
 								can go wrong. In the event of an error or {'hack'} during the
-								auction, our team can halt the process temporarily, providing a
+								auction, our team can halt and restart the process, providing a
 								temporarily layer of security to protect the integrity of the
 								platform and its participants. Should there be any unexpected
 								technical issues during a live simulation, our team is able to
@@ -334,14 +360,13 @@ export default function Mints() {
 
 							<Details
 								className="do-fall do-fall-8"
-								summary="What happens if all assets are minted 3 times but the computer still hasn’t passed 33cm to reach the edge?"
+								summary="What happens if all assets have been used for minting, but the computer still hasn’t passed the 33cm to the edge?"
 								last
 							>
-								If all available assets are minted three times each and the
-								computer has not yet reached the edge of the staircase, the
-								system will automatically activate a force-push. This ensures
-								that the computer is pushed to complete the 33 cm distance to
-								the edge and fall, concluding the performance.
+								In this case the system will automatically activate the
+								force-push. This ensures that the computer is pushed to complete
+								the 33 cm distance to the edge and falls down the stairs,
+								concluding the performance.
 							</Details>
 						</div>
 					</div>
@@ -387,24 +412,30 @@ export default function Mints() {
 							<Details
 								className="do-fall do-fall-3"
 								summary="What if two participants place a bid at the same price?"
-								last
 							>
 								In Downonly, if two participants place a bid at the same price,
 								the bid that is registered first on the blockchain is given
-								priority and the other transaction will revert. This is due to
-								the nature of blockchain technology, where transactions are
-								processed sequentially. Participants are encouraged to place
-								their bids as early as possible within the auction time frame to
-								secure their desired bid level.
+								priority and the later bid will revert. This is due to the
+								nature of blockchain technology, where transactions are
+								timestamped as they are added to the blockchain and processed
+								sequentially. Participants are encouraged to place their bids as
+								early as possible within the auction time frame to secure their
+								desired bid level.
 							</Details>
-						</div>
-					</div>
 
-					<div>
-						<h3 className="text-display do-fall do-fall-6 mb-8">
-							Contingency and Support:
-						</h3>
-						<div className="lg:px-20">
+							<Details
+								className="do-fall do-fall-2"
+								summary="Does the smart contract include royalties?"
+							>
+								Yes, the smart contract for Downonly includes provisions for
+								royalties on secondary sales of the NFTs. However, whether these
+								royalties are enforced depends on the specific NFT marketplace
+								where the resale occurs. Some marketplaces honor the royalty
+								mechanisms defined in the smart contract, while others do not.
+								Participants should verify the policies of the marketplace they
+								intend to use for secondary sales. 6. Contingency and Support.
+							</Details>
+
 							<Details
 								className="do-fall do-fall-7"
 								summary="What is the contingency plan for electricity or Wi-Fi outages?"
@@ -417,18 +448,19 @@ export default function Mints() {
 							</Details>
 
 							<Details
-								className="do-fall do-fall-4"
+								className="do-fall do-fall-1"
 								summary="Are there backup systems in place in case of hardware failure?"
+								last
 							>
 								In Downonly, the simulation computer is a unique and
 								irreplaceable component of the installation. While there are no
 								backups that can replace it, we have conducted multiple tests to
 								ensure its stability and reliability throughout the performance.
-								Should an unforeseen system failure occur, a mechanism is
-								triggered to push the computer down the stairs, ensuring that
-								the installation reaches its planned conclusion. This measure is
-								part of our commitment to maintaining the integrity of the
-								performance.
+								Should an unforeseen system failure occur, an automated
+								mechanism is triggered to push the computer down the stairs,
+								ensuring that the installation reaches its planned conclusion.
+								This measure is part of our commitment to maintaining the
+								integrity of the performance.
 							</Details>
 
 							<Details
