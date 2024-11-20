@@ -1,8 +1,14 @@
 'use client'
 
 import useAuctionInfo from '@/hooks/useAuctionInfo'
-import { ReactNode, useMemo } from 'react'
+import { ReactNode, useCallback, useMemo } from 'react'
 import { emojiNameMap } from '@/utils/emoji'
+import { randBetweenDeterm } from '@/utils/random'
+
+interface EmojiEntry {
+	key: string
+	emoji: string
+}
 
 export default function Graveyard(props: {
 	className?: string
@@ -10,6 +16,12 @@ export default function Graveyard(props: {
 	id?: string
 }): ReactNode {
 	const auctionInfo = useAuctionInfo('graveyard')
+
+	const sortFn = useCallback((a: EmojiEntry, b: EmojiEntry) => {
+		const randomA = randBetweenDeterm(0, 10, a.key)
+		const randomB = randBetweenDeterm(0, 10, b.key)
+		return randomA < randomB ? -1 : 1
+	}, [])
 
 	const deadEmoji = useMemo(() => {
 		if (
@@ -21,16 +33,18 @@ export default function Graveyard(props: {
 		}
 
 		if (auctionInfo.stage === 'postmint') {
-			return Array.from(emojiNameMap.values()).flatMap((emoji, i) => {
-				const dead: { key: string; emoji: string }[] = []
-				for (let j = 3; j--; ) {
-					dead.push({
-						key: `${i}-${j}`,
-						emoji,
-					})
-				}
-				return dead
-			})
+			return Array.from(emojiNameMap.values())
+				.flatMap((emoji, i) => {
+					const dead: { key: string; emoji: string }[] = []
+					for (let j = 3; j--; ) {
+						dead.push({
+							key: `${i}-${j}`,
+							emoji,
+						})
+					}
+					return dead
+				})
+				.sort(sortFn)
 		}
 
 		return (
@@ -41,17 +55,19 @@ export default function Graveyard(props: {
 						}
 					)
 				: []
-		).flatMap(([emoji, lives], i) => {
-			const dead: { key: string; emoji: string }[] = []
-			for (let j = 3 - lives; j--; ) {
-				dead.push({
-					key: `${i}-${j}`,
-					emoji,
-				})
-			}
-			return dead
-		})
-	}, [auctionInfo])
+		)
+			.flatMap(([emoji, lives], i) => {
+				const dead: { key: string; emoji: string }[] = []
+				for (let j = 3 - lives; j--; ) {
+					dead.push({
+						key: `${i}-${j}`,
+						emoji,
+					})
+				}
+				return dead
+			})
+			.sort(sortFn)
+	}, [auctionInfo, sortFn])
 
 	if (auctionInfo?.stage === 'emergency' || !deadEmoji.length) {
 		return null

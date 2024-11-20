@@ -45,25 +45,28 @@ export default function Footer(props: {
 					<p className="text-display mb-12">Social</p>
 					<ul className="list-none">
 						<li>
-							<Link className="interactive" href="#">
-								Twitter
+							<Link
+								className="interactive"
+								href="https://x.com/nikitadiakur/"
+								target="_blank"
+							>
+								X
 							</Link>
 						</li>
 						<li>
-							<Link className="interactive" href="#">
-								Discord
-							</Link>
-						</li>
-						<li>
-							<Link className="interactive" href="#">
+							<Link
+								className="interactive"
+								href="https://www.instagram.com/nikitadiakur/"
+								target="_blank"
+							>
 								Instagram
 							</Link>
 						</li>
-						<li>
-							<Link className="interactive" href="#">
-								GitHub
-							</Link>
-						</li>
+						{/*<li>*/}
+						{/*	<Link className="interactive" href="#" target="_blank">*/}
+						{/*		GitHub*/}
+						{/*	</Link>*/}
+						{/*</li>*/}
 					</ul>
 				</div>
 				<div className="mb-12">
