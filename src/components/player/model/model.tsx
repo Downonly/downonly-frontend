@@ -103,7 +103,9 @@ export default function Model(props: {
 		soundRef.current = snd
 		if (isSoundingRef.current) {
 			setTimeout(() => {
-				snd?.play()
+				if (!mx || !snd) return
+				snd.seek(mx.time)
+				snd.play()
 			}, 200)
 		}
 
