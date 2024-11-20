@@ -10,6 +10,7 @@ import Emergency from '@/components/emergency/emergency'
 export default function Home() {
 	return (
 		<>
+			<h1 className="sr-only">Downonly</h1>
 			<Emergency className="mb-24" />
 			<Player className="mb-24" />
 			<MintYourFall className="mb-24" />

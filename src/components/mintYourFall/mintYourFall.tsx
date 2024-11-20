@@ -138,7 +138,7 @@ export default function MintYourFall(props: {
 			tag="section"
 		>
 			<header className="text-display mb-12 text-4xl">
-				<h1>Choose your fall</h1>
+				<h2>Choose your fall</h2>
 			</header>
 
 			<div className="gap-x grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
