@@ -136,6 +136,13 @@ export default function Model(props: {
 	}, [props.isPlaying])
 
 	useEffect(() => {
+		if (props.isSounding && soundRef.current && mixerRef.current) {
+			soundRef.current.seek(mixerRef.current.time)
+			soundRef.current.play()
+		}
+	}, [props.isSounding])
+
+	useEffect(() => {
 		const r = raf.current
 		return () => {
 			if (r !== undefined) {
