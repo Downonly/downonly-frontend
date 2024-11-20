@@ -62,11 +62,15 @@ export default function Footer(props: {
 								Instagram
 							</Link>
 						</li>
-						{/*<li>*/}
-						{/*	<Link className="interactive" href="#" target="_blank">*/}
-						{/*		GitHub*/}
-						{/*	</Link>*/}
-						{/*</li>*/}
+						<li>
+							<Link
+								className="interactive"
+								href="https://github.com/Downonly"
+								target="_blank"
+							>
+								GitHub
+							</Link>
+						</li>
 					</ul>
 				</div>
 				<div className="mb-12">
