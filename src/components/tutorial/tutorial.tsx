@@ -130,7 +130,7 @@ export default function Tutorial(props: {
 							</p>
 							<p>
 								<b className="text-display">Break Duration:</b> 33 minutes. The
-								pause between each successful auction round.
+								break between each auction round.
 							</p>
 							<p>
 								<b className="text-display">Total Duration of Each Round:</b> 33
