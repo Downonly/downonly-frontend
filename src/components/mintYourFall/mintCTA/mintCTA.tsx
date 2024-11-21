@@ -44,6 +44,9 @@ const MintCTA: FC<{
 				character: nameEmojiMap.get(character)!,
 				obstacle: nameEmojiMap.get(obstacle)!,
 			}
+			if (config.obstacle === 'shoppingCart') {
+				config.obstacle = 'shoppingcart'
+			}
 
 			await buy(auctionInfo.price, config)
 		} catch (err) {
