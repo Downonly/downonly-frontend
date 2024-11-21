@@ -34,27 +34,31 @@ export default function Player(props: {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
 	const auctionInfo = useAuctionInfo('player')
-	const takes = useMemo(
-		() =>
+	const takes: Take[] = useMemo(() => {
+		if (
 			!!process.env.NEXT_PUBLIC_PLAYER_DISABLED ||
 			auctionInfo?.stage === 'emergency' ||
 			!auctionInfo?.mints?.length
-				? []
-				: auctionInfo?.mints
-						.filter((row) => row.ipfsGLB && row.ipfsMP3)
-						.map<Take>((row) => {
-							const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+		) {
+			return []
+		}
 
-							return {
-								modelURL: ipfsGLB!,
-								soundURL: ipfsMP3!,
-								mintDate: new Date(mintdate),
-								mintprice,
-								...rest,
-							}
-						}),
-		[auctionInfo]
-	)
+		const mints = auctionInfo?.mints
+			.filter((row) => row.ipfsGLB && row.ipfsMP3)
+			.map<Take>((row) => {
+				const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+
+				return {
+					modelURL: ipfsGLB!,
+					soundURL: ipfsMP3!,
+					mintDate: new Date(mintdate),
+					mintprice,
+					...rest,
+				}
+			})
+
+		return [mints.at(-1)!, ...mints.slice(0, mints.length - 1)]
+	}, [auctionInfo])
 
 	isDebug()
 		? // eslint-disable-next-line react-hooks/rules-of-hooks
