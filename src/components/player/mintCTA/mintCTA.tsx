@@ -137,67 +137,131 @@ export default function MintCTA(props: {
 						</>
 					)}
 
-					{auctionInfo.lastMinted && (
-						<>
-							<p className="my-3 font-display">---</p>
-							<p className="my-3">
-								{getEmoji(auctionInfo.lastMinted.surface)}{' '}
-								{getEmoji(auctionInfo.lastMinted.figure)}{' '}
-								{getEmoji(auctionInfo.lastMinted.obstacle)}
-							</p>
-							{auctionInfo.lastMinted?.fallDistance && (
-								<p className="font-display">
-									↓{' '}
-									{Math.abs(
-										Number(auctionInfo.lastMinted.fallDistance)
-									).toFixed(2)}{' '}
-									m
-								</p>
-							)}
-							<p className="my-3 font-display uppercase">
-								{auctionInfo.lastMinted.surface}-{auctionInfo.lastMinted.figure}
-								-{auctionInfo.lastMinted.obstacle}
-							</p>
-							<br />
-
-							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
-								<p>
-									<Eth eth={auctionInfo.lastMinted.mintPrice} /> /{' '}
-									{Number(
-										formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')
-									).toFixed(1)}{' '}
-									cm
-								</p>
-								<p>{auctionInfo.lastMinted.fullName}</p>
-								<p
-									className="truncate"
-									title={auctionInfo.lastMinted.buyerAddress}
-								>
-									{auctionInfo.lastMinted.buyerAddress}
-								</p>
-								<p>
-									{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
-										'en-US',
-										{
-											hour: '2-digit',
-											minute: '2-digit',
-											second: '2-digit',
-										}
+					{auctionInfo?.stage === 'inbetween-mint-play'
+						? props.currentTake && (
+								<>
+									<p className="my-3 font-display">---</p>
+									<p className="my-3">
+										{getEmoji(props.currentTake.surface)}{' '}
+										{getEmoji(props.currentTake.figure)}{' '}
+										{getEmoji(props.currentTake.obstacle)}
+									</p>
+									{props.currentTake?.fallDistance && (
+										<p className="font-display">
+											↓{' '}
+											{Math.abs(Number(props.currentTake.fallDistance)).toFixed(
+												2
+											)}{' '}
+											m
+										</p>
 									)}
-								</p>
-								<p>
-									<a
-										href={auctionInfo.lastMinted.openSea}
-										target="_blank"
-										className="link"
-										rel="noreferrer noopener"
-									>
-										Open Sea
-									</a>
-								</p>
-							</div>
-						</>
-					)}
+									<p className="my-3 font-display uppercase">
+										{props.currentTake.surface}-{props.currentTake.figure}-
+										{props.currentTake.obstacle}
+									</p>
+									<br />
+
+									<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+										{props.currentTake.mintprice && (
+											<p>
+												<Eth eth={props.currentTake.mintprice} /> /{' '}
+												{Number(
+													formatUnits(props.currentTake.mintprice, 'ether')
+												).toFixed(1)}{' '}
+												cm
+											</p>
+										)}
+										<p>{props.currentTake.fullname}</p>
+										<p
+											className="truncate"
+											title={props.currentTake.buyerAddress}
+										>
+											{props.currentTake.buyerAddress}
+										</p>
+										<p>
+											{new Date(props.currentTake.mintDate).toLocaleDateString(
+												'en-US',
+												{
+													hour: '2-digit',
+													minute: '2-digit',
+													second: '2-digit',
+												}
+											)}
+										</p>
+										<p>
+											<a
+												href={props.currentTake.openSea}
+												target="_blank"
+												className="link"
+												rel="noreferrer noopener"
+											>
+												Open Sea
+											</a>
+										</p>
+									</div>
+								</>
+							)
+						: auctionInfo.lastMinted && (
+								<>
+									<p className="my-3 font-display">---</p>
+									<p className="my-3">
+										{getEmoji(auctionInfo.lastMinted.surface)}{' '}
+										{getEmoji(auctionInfo.lastMinted.figure)}{' '}
+										{getEmoji(auctionInfo.lastMinted.obstacle)}
+									</p>
+									{auctionInfo.lastMinted?.fallDistance && (
+										<p className="font-display">
+											↓{' '}
+											{Math.abs(
+												Number(auctionInfo.lastMinted.fallDistance)
+											).toFixed(2)}{' '}
+											m
+										</p>
+									)}
+									<p className="my-3 font-display uppercase">
+										{auctionInfo.lastMinted.surface}-
+										{auctionInfo.lastMinted.figure}-
+										{auctionInfo.lastMinted.obstacle}
+									</p>
+									<br />
+
+									<div className="text-xs leading-relaxed text-carbon dark:text-iron">
+										<p>
+											<Eth eth={auctionInfo.lastMinted.mintPrice} /> /{' '}
+											{Number(
+												formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')
+											).toFixed(1)}{' '}
+											cm
+										</p>
+										<p>{auctionInfo.lastMinted.fullName}</p>
+										<p
+											className="truncate"
+											title={auctionInfo.lastMinted.buyerAddress}
+										>
+											{auctionInfo.lastMinted.buyerAddress}
+										</p>
+										<p>
+											{new Date(
+												auctionInfo.lastMinted.mintDate
+											).toLocaleDateString('en-US', {
+												hour: '2-digit',
+												minute: '2-digit',
+												second: '2-digit',
+											})}
+										</p>
+										<p>
+											<a
+												href={auctionInfo.lastMinted.openSea}
+												target="_blank"
+												className="link"
+												rel="noreferrer noopener"
+											>
+												Open Sea
+											</a>
+										</p>
+									</div>
+								</>
+							)}
 				</>
 			) : auctionInfo?.stage === 'postmint' ? (
 				<>
