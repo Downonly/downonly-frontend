@@ -5,9 +5,9 @@ const pollInterval = Number(process.env.NEXT_PUBLIC_POLL_INTERVALL ?? 10_000)
 
 const subscribers = new Map<string, (info: AuctionInfo) => void>()
 
-const fetchAuctionInfo = async () => {
+const fetchAuctionInfo = () => {
 	try {
-		const info: AuctionInfo = await getAuctionInfo()
+		const info: AuctionInfo = getAuctionInfo()
 		Array.from(subscribers.keys()).forEach((key) => {
 			subscribers.get(key)?.(info)
 		})
@@ -17,7 +17,7 @@ const fetchAuctionInfo = async () => {
 		setTimeout(() => void fetchAuctionInfo(), pollInterval)
 	}
 }
-void fetchAuctionInfo()
+fetchAuctionInfo()
 
 export default function useAuctionInfo(key: string) {
 	const [auctionInfo, setAuctionInfo] = useState<AuctionInfo>()

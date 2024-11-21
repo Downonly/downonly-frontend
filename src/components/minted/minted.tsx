@@ -1,6 +1,3 @@
-'use client'
-
-import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { ReactNode } from 'react'
 import Falls from '@/components/minted/falls'
 
@@ -9,20 +6,6 @@ export default function Minted(props: {
 	style?: React.CSSProperties
 	id?: string
 }): ReactNode {
-	const auctionInfo = useAuctionInfo('minted')
-
-	if (auctionInfo?.stage === 'premint' || auctionInfo?.stage === 'emergency') {
-		return null
-	}
-
-	if (
-		!auctionInfo?.mints.filter(
-			(mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice
-		).length
-	) {
-		return null
-	}
-
 	return (
 		<section
 			id={props.id}
@@ -33,7 +16,7 @@ export default function Minted(props: {
 				Minted
 			</h2>
 
-			<Falls auctionInfo={auctionInfo} max={6} />
+			<Falls max={6} />
 		</section>
 	)
 }

@@ -1,16 +1,11 @@
-'use client'
-
 import Tube from '@/components/player/tube/tube'
 import Link from '@/components/link/link'
-import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 export default function Concept(props: {
 	className?: string
 	style?: React.CSSProperties
 	id?: string
 }): JSX.Element {
-	const auctionInfo = useAuctionInfo('concept')
-
 	return (
 		<section
 			id={props.id}
@@ -54,12 +49,10 @@ export default function Concept(props: {
 						</p>
 					</div>
 
-					{auctionInfo !== undefined && auctionInfo.stage !== 'premint' && (
-						<Tube
-							src={process.env.NEXT_PUBLIC_TUBE_PREMINT_SRC}
-							className="do-fall do-fall-0 mx-auto mt-12 aspect-[9/16] max-w-96 shrink-0 bg-silver md:mt-0"
-						/>
-					)}
+					<Tube
+						src={process.env.NEXT_PUBLIC_TUBE_PREMINT_SRC}
+						className="do-fall do-fall-0 mx-auto mt-12 aspect-[9/16] max-w-96 shrink-0 bg-silver md:mt-0"
+					/>
 				</div>
 			</div>
 		</section>

@@ -2,10 +2,9 @@
 
 import MintCTA from '@/components/player/mintCTA/mintCTA'
 import Canvas from '@/components/player/canvas/canvas'
-import Tube from '@/components/player/tube/tube'
 import Scene from '@/components/player/scene/scene'
 import Model from '@/components/player/model/model'
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Controls from '@/components/player/controls/controls'
 import gsap from 'gsap'
@@ -15,13 +14,26 @@ import { Howl } from 'howler'
 import { usePreloading } from '@/components/player/hooks/usePreloading'
 import { useNextTakes } from '@/components/player/hooks/useNextTakes'
 import { useLoaded } from '@/components/player/hooks/useLoaded'
-import useAuctionInfo from '@/hooks/useAuctionInfo'
 import { Take } from '@/components/player/types'
-import { useControls } from 'leva'
-import { isDebug } from '@/utils/debug'
-// import { useChanged } from '@/hooks/useChanged'
+import { getDBDump } from '@/services/dbDump'
 
 const BUFFER_SIZE = 4
+
+const mints = getDBDump()
+	.filter((row) => row.ipfsGLB && row.ipfsMP3)
+	.map<Take>((row) => {
+		const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
+
+		return {
+			modelURL: ipfsGLB!,
+			soundURL: ipfsMP3!,
+			mintDate: new Date(mintdate),
+			mintprice,
+			...rest,
+		}
+	})
+
+const takes: Take[] = [mints.at(-1)!, ...mints.slice(0, mints.length - 1)]
 
 export default function Player(props: {
 	className?: string
@@ -32,44 +44,6 @@ export default function Player(props: {
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [isSounding, setIsSounding] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
-
-	const auctionInfo = useAuctionInfo('player')
-	const takes: Take[] = useMemo(() => {
-		if (
-			!!process.env.NEXT_PUBLIC_PLAYER_DISABLED ||
-			auctionInfo?.stage === 'emergency' ||
-			!auctionInfo?.mints?.length
-		) {
-			return []
-		}
-
-		const mints = auctionInfo?.mints
-			.filter((row) => row.ipfsGLB && row.ipfsMP3)
-			.map<Take>((row) => {
-				const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
-
-				return {
-					modelURL: ipfsGLB!,
-					soundURL: ipfsMP3!,
-					mintDate: new Date(mintdate),
-					mintprice,
-					...rest,
-				}
-			})
-
-		return [mints.at(-1)!, ...mints.slice(0, mints.length - 1)]
-	}, [auctionInfo])
-
-	isDebug()
-		? // eslint-disable-next-line react-hooks/rules-of-hooks
-			useControls({
-				contract: { value: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '' },
-			})
-		: undefined
-
-	// useChanged(auctionInfo, () => {
-	// 	console.info('Phase', auctionInfo?.stage)
-	// })
 
 	const getNextTakes = useNextTakes(currentIndex, takes, BUFFER_SIZE)
 
@@ -140,11 +114,7 @@ export default function Player(props: {
 				setCurrentSound(sound)
 			}
 		}
-	}, [currentGLTF, currentIndex, loaded, takes])
-
-	if (auctionInfo?.stage === 'emergency') {
-		return null
-	}
+	}, [currentGLTF, currentIndex, loaded])
 
 	return (
 		<section
@@ -159,71 +129,52 @@ export default function Player(props: {
 				className="relative ms-[calc(-1*(50vw-min(35rem,45vw)))] flex w-screen flex-col justify-self-end bg-snow transition-colors dark:bg-cole lg:w-[50vw] lg:max-w-[40rem]"
 			>
 				<div className="do-fall do-fall-1 h-full">
-					{auctionInfo?.stage === 'premint' ||
-					auctionInfo?.stage === 'inbetween-mint-push' ||
-					takes?.length === 0 ? (
-						<Tube
-							src={
-								auctionInfo?.stage === 'premint'
-									? process.env.NEXT_PUBLIC_TUBE_PREMINT_SRC
-									: process.env.NEXT_PUBLIC_TUBE_STREAM_SRC
-							}
-							className="aspect-4/3 bg-silver sm:aspect-video lg:aspect-square"
-						/>
-					) : (
+					{
 						<>
 							{isPreloading && (
 								<Loading className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-2" />
 							)}
-							{takes?.length > 0 && (
-								<Canvas
-									id="canvas"
-									className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
-								>
-									<Scene ocRef={ocRef}>
-										{takes?.length && (
-											<group>
-												<Model
-													gltf={currentGLTF}
-													isPlaying={!isPreloading && isPlaying}
-													isSingle={takes?.length === 1}
-													isSounding={isSounding}
-													onFinished={handleFinished}
-													sound={currentSound}
-												/>
-											</group>
-										)}
-									</Scene>
-								</Canvas>
-							)}
-							{takes?.length > 0 && (
-								<div className="do-fall do-fall-0">
-									<Controls
-										bufferSize={BUFFER_SIZE}
-										currentIndex={currentIndex}
-										isPlaying={isPlaying}
-										isSounding={isSounding}
-										loaded={new Set(loaded.keys())}
-										onNext={handleNext}
-										onPause={handlePause}
-										onPlay={handlePlay}
-										onPrev={handlePrev}
-										onSeek={handleSeek}
-										onSound={handleSound}
-										takes={takes}
-									/>
-								</div>
-							)}
+							<Canvas
+								id="canvas"
+								className="aspect-4/3 cursor-grab bg-silver sm:aspect-video lg:aspect-square"
+							>
+								<Scene ocRef={ocRef}>
+									{takes?.length && (
+										<group>
+											<Model
+												gltf={currentGLTF}
+												isPlaying={!isPreloading && isPlaying}
+												isSingle={takes?.length === 1}
+												isSounding={isSounding}
+												onFinished={handleFinished}
+												sound={currentSound}
+											/>
+										</group>
+									)}
+								</Scene>
+							</Canvas>
+							<div className="do-fall do-fall-0">
+								<Controls
+									bufferSize={BUFFER_SIZE}
+									currentIndex={currentIndex}
+									isPlaying={isPlaying}
+									isSounding={isSounding}
+									loaded={new Set(loaded.keys())}
+									onNext={handleNext}
+									onPause={handlePause}
+									onPlay={handlePlay}
+									onPrev={handlePrev}
+									onSeek={handleSeek}
+									onSound={handleSound}
+									takes={takes}
+								/>
+							</div>
 						</>
-					)}
+					}
 				</div>
 			</div>
 			<div className="do-fall do-fall-3 mt-16 flex items-center justify-center p-6 text-center lg:mt-0">
-				<MintCTA
-					key={`${auctionInfo?.stage}`}
-					takes={takes}
-					currentTake={takes?.[currentIndex]}
-				/>
+				<MintCTA takes={takes} currentTake={takes[currentIndex]} />
 			</div>
 		</section>
 	)

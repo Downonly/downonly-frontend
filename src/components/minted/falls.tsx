@@ -1,43 +1,25 @@
 import Polaroid from '@/components/polaroid/polaroid'
-import { ReactNode, useMemo } from 'react'
+import { ReactNode } from 'react'
 import { getEmoji } from '@/utils/emoji'
 import Video from '@/components/minted/video'
-import { AuctionInfo } from '@/services/ether'
 import Link from '@/components/link/link'
 import Button from '@/components/button/button'
 import Eth from '@/components/eth/eth'
+import { getDBDump } from '@/services/dbDump'
 
 export default function Falls(props: {
 	className?: string
 	max?: number
 	style?: React.CSSProperties
 	id?: string
-	auctionInfo?: AuctionInfo
 }): ReactNode {
-	const filteredMints = useMemo(() => {
-		if (
-			!props.auctionInfo ||
-			props.auctionInfo.stage === 'premint' ||
-			props.auctionInfo.stage === 'emergency'
-		) {
-			return []
-		}
+	const mints = getDBDump()
 
-		return props.auctionInfo.mints
-			.filter((mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice)
-			.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? 1 : -1))
-	}, [props.auctionInfo])
+	const filteredMints = mints
+		.filter((mint) => !!mint.ipfsJPEG && !!mint.ipfsMP4 && !!mint.mintprice)
+		.sort((a, b) => (new Date(a.mintdate) < new Date(b.mintdate) ? 1 : -1))
 
-	const slicedMints = useMemo(() => {
-		return filteredMints.slice(0, props.max)
-	}, [filteredMints, props.max])
-
-	if (
-		props.auctionInfo?.stage === 'premint' ||
-		props.auctionInfo?.stage === 'emergency'
-	) {
-		return null
-	}
+	const slicedMints = filteredMints.slice(0, props.max)
 
 	return (
 		<>

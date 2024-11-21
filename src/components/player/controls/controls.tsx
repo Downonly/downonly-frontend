@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { isTouchDevice } from '@/utils/device'
 import Progress from './progress'
 import { Take } from '@/components/player/types'
-import useAuctionInfo from '@/hooks/useAuctionInfo'
 
 let timeoutToHide: NodeJS.Timeout
 
@@ -30,9 +29,6 @@ export default function Controls(props: {
 	const [mouseOverControls, setMouseOverControls] = useState(false)
 	const [controlsHidden, setControlsHidden] = useState(false)
 	const [canFullscreen, setCanFullscreen] = useState(false)
-
-	const auctionInfo = useAuctionInfo('playerControls')
-	const hideGoToControls = auctionInfo?.stage === 'premint'
 
 	const onFullScreenChange = () => {
 		setIsFullScreen(document.fullscreenElement !== null)
@@ -123,7 +119,7 @@ export default function Controls(props: {
 			style={props.style}
 		>
 			<Progress
-				className={`mb-3 ${hideGoToControls ? 'hidden' : ''}`}
+				className="mb-3"
 				bufferSize={props.bufferSize}
 				currentIndex={props.currentIndex}
 				loaded={props.loaded}
@@ -133,7 +129,7 @@ export default function Controls(props: {
 
 			<div className="flex gap-2">
 				<button
-					className={`interactive ${hideGoToControls ? 'hidden' : ''}`}
+					className="interactive"
 					disabled={props.currentIndex === 0}
 					onClick={props.onPrev}
 				>
@@ -156,7 +152,7 @@ export default function Controls(props: {
 				</button>
 
 				<button
-					className={`interactive ${hideGoToControls ? 'hidden' : ''}`}
+					className="interactive"
 					disabled={props.currentIndex === total - 1}
 					onClick={props.onNext}
 				>
