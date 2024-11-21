@@ -12,7 +12,6 @@ const Video: FC<VideoProps> = (props) => {
 	return (
 		<video
 			onPlaying={(ev) => {
-				console.info('playing')
 				document.querySelectorAll('video').forEach((v) => {
 					if (v !== ev.target) v.pause()
 				})
