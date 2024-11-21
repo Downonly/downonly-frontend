@@ -51,34 +51,30 @@ export default function MintCTA(props: {
 							</p>
 						)}
 
-					{auctionInfo.lastMinted && (
+					{props.currentTake && (
 						<>
 							<p className="my-3 font-display">---</p>
 							<p className="font-display">
-								↓{' '}
-								{Math.abs(Number(auctionInfo.lastMinted.fallDistance)).toFixed(
-									2
-								)}{' '}
+								↓ {Math.abs(Number(props.currentTake.fallDistance)).toFixed(2)}{' '}
 								m
 							</p>
 							<br />
 							<div className="text-xs leading-relaxed text-carbon dark:text-iron">
-								<p>
-									<Eth eth={auctionInfo.lastMinted.mintPrice} /> /{' '}
-									{Number(
-										formatUnits(auctionInfo.lastMinted.mintPrice, 'ether')
-									).toFixed(1)}{' '}
-									cm
+								{props.currentTake.mintprice && (
+									<p>
+										<Eth eth={props.currentTake.mintprice} /> /{' '}
+										{Number(
+											formatUnits(props.currentTake.mintprice, 'ether')
+										).toFixed(1)}{' '}
+										cm
+									</p>
+								)}
+								<p>{props.currentTake.fullname}</p>
+								<p className="truncate" title={props.currentTake.buyerAddress}>
+									{props.currentTake.buyerAddress}
 								</p>
-								<p>{auctionInfo.lastMinted.fullName}</p>
-								<p
-									className="truncate"
-									title={auctionInfo.lastMinted.buyerAddress}
-								>
-									{auctionInfo.lastMinted.buyerAddress}
-								</p>
 								<p>
-									{new Date(auctionInfo.lastMinted.mintDate).toLocaleDateString(
+									{new Date(props.currentTake.mintDate).toLocaleDateString(
 										'en-US',
 										{
 											hour: '2-digit',
@@ -89,7 +85,7 @@ export default function MintCTA(props: {
 								</p>
 								<p>
 									<a
-										href={auctionInfo.lastMinted.openSea}
+										href={props.currentTake.openSea}
 										target="_blank"
 										className="link"
 										rel="noreferrer noopener"
