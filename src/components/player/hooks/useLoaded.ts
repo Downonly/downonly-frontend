@@ -17,7 +17,7 @@ const loadingManager = new LoadingManager()
 
 const dracoLoader = new DRACOLoader()
 dracoLoader.setDecoderPath(
-	`${location.host === 'downonly.github.io' ? '/downonly-frontend' : ''}/draco/`
+	`${typeof location !== 'undefined' && location.host === 'downonly.github.io' ? '/downonly-frontend' : ''}/draco/`
 )
 
 const gltfLoader = new GLTFLoader(loadingManager)
