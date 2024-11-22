@@ -9,6 +9,7 @@
     "dev": "next dev",
     "graphql": "open http://localhost:3000/api/graphql",
     "lint": "next lint",
+    "preview": "serve dist/",
     "compress": "npx ts-node -O '{\"module\":\"commonjs\"}' scripts/compress.ts",
     "compress:cli": "gltf-pipeline -i ./public/bf_toWeb_Exports/bf01/bf01.gltf -o ./public/bf_toWeb_Exports/bf01/bf01.draco.glb -b -d --draco.quantizeTexcoordBits 0",
     "start": "next start"
@@ -61,6 +62,7 @@
     "postcss-preset-env": "^9.6.0",
     "prettier": "^3.3.3",
     "prisma": "^5.21.1",
+    "serve": "^14.2.4",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "tailwindcss": "^3.4.14",
