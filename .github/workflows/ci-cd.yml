@@ -45,7 +45,7 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
-          MODE: 'gh_pages'
+          NEXT_PUBLIC_MODE: 'gh_pages'
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

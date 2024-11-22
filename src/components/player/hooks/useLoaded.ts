@@ -12,12 +12,13 @@ import {
 	MeshStandardMaterial,
 	NearestFilter,
 } from 'three'
-import config from '../../../../next.config'
 
 const loadingManager = new LoadingManager()
 
 const dracoLoader = new DRACOLoader()
-dracoLoader.setDecoderPath(`${config.basePath}/draco/`)
+dracoLoader.setDecoderPath(
+	`${process.env.NEXT_PUBLIC_MODE === 'gh_pages' ? '/downonly-frontend' : ''}/draco/`
+)
 
 const gltfLoader = new GLTFLoader(loadingManager)
 gltfLoader.setDRACOLoader(dracoLoader)
