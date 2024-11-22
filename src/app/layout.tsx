@@ -44,7 +44,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 					sizes="180x180"
 					href="/apple-touch-icon.png"
 				/>
-				<link rel="manifest" href="/site.webmanifest" />
+				<link rel="manifest" href="/site.webmanifest.json" />
 			</head>
 			<body className="grid grid-rows-[auto_1fr_auto] bg-snow font-body text-carbon transition-colors dark:bg-cole dark:text-snow">
 				<Nav className="container relative z-10 my-10 w-full" />
