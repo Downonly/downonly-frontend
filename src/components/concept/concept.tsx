@@ -50,7 +50,7 @@ export default function Concept(props: {
 					</div>
 
 					<Tube
-						src={process.env.NEXT_PUBLIC_TUBE_PREMINT_SRC}
+						src="https://www.youtube-nocookie.com/embed/6boTDMDromE?si=fNXLQU1R-Lqe1oYm"
 						className="do-fall do-fall-0 mx-auto mt-12 aspect-[9/16] max-w-96 shrink-0 bg-silver md:mt-0"
 					/>
 				</div>

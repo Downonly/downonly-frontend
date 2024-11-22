@@ -27,7 +27,7 @@ export default function Tutorial(props: {
 					<figure>
 						<div className="aspect-video">
 							<Tube
-								src={process.env.NEXT_PUBLIC_TUBE_HOW_SRC}
+								src="https://www.youtube-nocookie.com/embed/V9JNHi69mMQ?si=YGH5XlI7GpRGYtIK"
 								className="bg-silver"
 							/>
 						</div>
