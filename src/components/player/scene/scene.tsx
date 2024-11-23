@@ -1,7 +1,5 @@
 'use client'
 
-import { isPerf } from '@/utils/debug'
-import { Perf } from 'r3f-perf'
 import { MutableRefObject } from 'react'
 import { type OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitControls'
 import Orbit from './orbit'
@@ -12,7 +10,6 @@ export default function Scene(props: {
 }): JSX.Element {
 	return (
 		<>
-			{isPerf() && <Perf position="top-left" />}
 			<Orbit ocRef={props.ocRef as unknown as MutableRefObject<null>} />
 
 			<ambientLight />

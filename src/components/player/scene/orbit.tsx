@@ -4,8 +4,6 @@ import type { OrbitControls as OCs } from 'three/examples/jsm/controls/OrbitCont
 import { OrbitControls } from '@react-three/drei'
 import { MutableRefObject, useCallback, useEffect, useState } from 'react'
 import gsap from 'gsap'
-import { useControls } from 'leva'
-import { isDebug } from '@/utils/debug'
 
 const INITIAL_DISTANCE = 7
 const MAX_DISTANCE = 20
@@ -22,40 +20,12 @@ export default function Orbit(props: {
 
 	const [isFullScreen, setIsFullScreen] = useState(false)
 
-	const { minDistance, maxDistance, enableZoom, enablePan } = isDebug()
-		? // eslint-disable-next-line react-hooks/rules-of-hooks
-			useControls(
-				'Orbit Controls',
-				{
-					minDistance: {
-						value: MIN_DISTANCE,
-						min: 0,
-						max: 50,
-						step: 0.01,
-					},
-					maxDistance: {
-						value: MAX_DISTANCE,
-						min: 0,
-						max: 50,
-						step: 0.01,
-					},
-					enableZoom: {
-						value: false,
-					},
-					enablePan: {
-						value: false,
-					},
-				},
-				{
-					collapsed: true,
-				}
-			)
-		: {
-				minDistance: MIN_DISTANCE,
-				maxDistance: MAX_DISTANCE,
-				enableZoom: false,
-				enablePan: false,
-			}
+	const { minDistance, maxDistance, enableZoom, enablePan } = {
+		minDistance: MIN_DISTANCE,
+		maxDistance: MAX_DISTANCE,
+		enableZoom: false,
+		enablePan: false,
+	}
 
 	const onFullScreenChange = useCallback(() => {
 		const isFS = document.fullscreenElement !== null
