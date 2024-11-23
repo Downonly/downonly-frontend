@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function ThemeToggle(props: {
 	className?: string
@@ -8,48 +8,44 @@ export default function ThemeToggle(props: {
 	id?: string
 	children?: React.ReactNode
 }): JSX.Element {
-	const updateBodyClass = (isDark: boolean) => {
+	const [isDark, setIsDark] = useState<boolean>()
+
+	const updateBodyClass = useCallback(() => {
 		const toggle = document.getElementById('dark-light-toggle')
+		console.info('!!toggle', !!toggle)
 		if (isDark) {
-			if (toggle) toggle.ariaChecked = 'true'
 			document.documentElement.classList.add('dark')
 			document.documentElement.style.colorScheme = 'dark'
 		} else {
-			if (toggle) toggle.ariaChecked = 'false'
 			document.documentElement.classList.remove('dark')
 			document.documentElement.style.colorScheme = 'auto'
 		}
-	}
+	}, [isDark])
 
-	const getPref = () => {
-		if (typeof window === 'undefined') return true
-
+	const getPref = useCallback(() => {
 		let isDark: boolean
 		const storedPref = window.localStorage.getItem('dark-light')
+		console.info('storedPref', storedPref)
 		if (storedPref) {
-			isDark = storedPref === 'dark' ? true : false
+			isDark = storedPref === 'dark'
 		} else {
-			if (
-				window.matchMedia &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches
-			) {
-				isDark = true
-			} else {
-				isDark = false
-			}
+			isDark = !!window.matchMedia?.('(prefers-color-scheme: dark)').matches
+			console.info('prefers-color-scheme: dark', isDark)
 		}
-		updateBodyClass(isDark)
 		return isDark
-	}
-
-	const [isDark, setIsDark] = useState(getPref())
+	}, [])
 
 	const handleChange = () => {
 		const updated = !isDark
 		setIsDark(updated)
 		window.localStorage.setItem('dark-light', updated ? 'dark' : 'light')
-		updateBodyClass(updated)
+		updateBodyClass()
 	}
+
+	useEffect(() => {
+		setIsDark(getPref())
+		updateBodyClass()
+	}, [getPref, updateBodyClass])
 
 	return (
 		<label
