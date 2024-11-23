@@ -11,8 +11,6 @@ export default function ThemeToggle(props: {
 	const [isDark, setIsDark] = useState<boolean>()
 
 	const updateBodyClass = useCallback(() => {
-		const toggle = document.getElementById('dark-light-toggle')
-		console.info('!!toggle', !!toggle)
 		if (isDark) {
 			document.documentElement.classList.add('dark')
 			document.documentElement.style.colorScheme = 'dark'
@@ -25,12 +23,10 @@ export default function ThemeToggle(props: {
 	const getPref = useCallback(() => {
 		let isDark: boolean
 		const storedPref = window.localStorage.getItem('dark-light')
-		console.info('storedPref', storedPref)
 		if (storedPref) {
 			isDark = storedPref === 'dark'
 		} else {
 			isDark = !!window.matchMedia?.('(prefers-color-scheme: dark)').matches
-			console.info('prefers-color-scheme: dark', isDark)
 		}
 		return isDark
 	}, [])
