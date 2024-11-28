@@ -19,7 +19,7 @@ import { getDBDump } from '@/services/dbDump'
 
 const BUFFER_SIZE = 4
 
-const mints = getDBDump()
+const takes: Take[] = getDBDump()
 	.filter((row) => row.ipfsGLB && row.ipfsMP3)
 	.map<Take>((row) => {
 		const { ipfsGLB, ipfsMP3, mintdate, mintprice, ...rest } = row
@@ -32,8 +32,6 @@ const mints = getDBDump()
 			...rest,
 		}
 	})
-
-const takes: Take[] = [mints.at(-1)!, ...mints.slice(0, mints.length - 1)]
 
 export default function Player(props: {
 	className?: string

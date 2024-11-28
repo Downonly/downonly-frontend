@@ -17,7 +17,7 @@ export default function LiveCam(props: {
 			<div className="container">
 				<header className="flex items-start justify-between">
 					<h2 className="text-display do-fall do-fall-2 mb-12 px-6 text-4xl">
-						Live cam
+						<s>Live</s> cam <span className="text-2xl">recording</span>
 					</h2>
 					<Circle size="lg" className="mr-6 text-snow dark:text-cole">
 						<div id="📹" className="-rotate-12">
