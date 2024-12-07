@@ -10,13 +10,24 @@ export default function Imprint() {
 				<div className="flex max-w-[84ch] flex-col gap-4">
 					<p>
 						<b className="text-display">Falls:</b>
-						<br /> Nikita Diakur
+						<br /> Nikita Diakur (
+						<a
+							className="link"
+							href="https://nikitadiakur.com/"
+							target="_blank"
+						>
+							nikitadiakur.com
+						</a>
+						)
 					</p>
 
 					<p>
 						<b className="text-display">Producers:</b>
-						<br /> Miyu Productions – Emmanuel-Alain Raynal & Pierre Baussaron;
-						Nikita Diakur
+						<br /> Miyu Productions – Emmanuel-Alain Raynal & Pierre Baussaron (
+						<a className="link" href="https://www.miyu.fr/" target="_blank">
+							miyu.fr
+						</a>
+						); Nikita Diakur
 					</p>
 
 					<p>
@@ -36,12 +47,24 @@ export default function Imprint() {
 
 					<p>
 						<b className="text-display">Broom Rigging:</b>
-						<br /> Gerhard Funk
+						<br /> Gerhard Funk (
+						<a className="link" href="https://gerhardfunk.net/" target="_blank">
+							gerhardfunk.net
+						</a>
+						)
 					</p>
 
 					<p>
 						<b className="text-display">Sound:</b>
-						<br /> David Kamp
+						<br /> David Kamp (
+						<a
+							className="link"
+							href="https://www.studiokamp.com/"
+							target="_blank"
+						>
+							studiokamp.com
+						</a>
+						)
 					</p>
 
 					<p>
@@ -65,7 +88,15 @@ export default function Imprint() {
 
 					<p>
 						<b className="text-display">Web Design:</b>
-						<br /> Patrick Molnar
+						<br /> Patrick Molnar (
+						<a
+							className="link"
+							href="https://patrickmolnar.de/"
+							target="_blank"
+						>
+							patrickmolnar.de
+						</a>
+						)
 					</p>
 
 					<p>
@@ -75,13 +106,15 @@ export default function Imprint() {
 
 					<p>
 						<b className="text-display">Curation:</b>
-						<br /> Colección SOLO – Elena Carbajal, María Castillo, Oscar
-						Hormigos, Milena Fernández
-					</p>
-
-					<p>
-						<b className="text-display">Funding:</b>
-						<br /> FFA Filmförderungsanstalt, CNC, FRAC Picardie, Procirep-Angoa
+						<br /> Colección SOLO (
+						<a
+							className="link"
+							href="https://coleccionsolo.com"
+							target="_blank"
+						>
+							coleccionsolo.com
+						</a>
+						) – Elena Carbajal, María Castillo, Oscar Hormigos, Milena Fernández
 					</p>
 				</div>
 			</div>
