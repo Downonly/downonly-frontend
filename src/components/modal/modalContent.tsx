@@ -36,21 +36,11 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 					<>
 						In order to perform transactions on the Ethereum network safely, you
 						need a wallet, such as{' '}
-						<a
-							className="link"
-							href="https://metamask.io/"
-							target="_blank"
-							rel="noreferrer noopener"
-						>
+						<a className="link" href="https://metamask.io/" target="_blank">
 							MetaMask
 						</a>{' '}
 						or{' '}
-						<a
-							className="link"
-							href="https://trustwallet.com/"
-							target="_blank"
-							rel="noreferrer noopener"
-						>
+						<a className="link" href="https://trustwallet.com/" target="_blank">
 							Trust Wallet
 						</a>{' '}
 						(for mobile).

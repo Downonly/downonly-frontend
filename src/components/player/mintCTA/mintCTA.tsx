@@ -53,12 +53,7 @@ export default function MintCTA(props: {
 					})}
 				</p>
 				<p>
-					<a
-						href={props.currentTake.openSea}
-						target="_blank"
-						className="link"
-						rel="noreferrer noopener"
-					>
+					<a href={props.currentTake.openSea} target="_blank" className="link">
 						Open Sea
 					</a>
 				</p>

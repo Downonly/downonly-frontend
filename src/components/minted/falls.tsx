@@ -50,12 +50,7 @@ export default function Falls(props: {
 									{new Date(mint.mintdate).toLocaleTimeString()}
 								</p>
 								<p>
-									<a
-										href={mint.openSea}
-										target="_blank"
-										className="link"
-										rel="noreferrer noopener"
-									>
+									<a href={mint.openSea} target="_blank" className="link">
 										Open Sea
 									</a>
 								</p>

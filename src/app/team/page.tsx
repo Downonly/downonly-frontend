@@ -20,8 +20,12 @@ export default function Imprint() {
 					</p>
 
 					<p>
-						<b className="text-display">Code, Unity3D:</b>
-						<br /> Antonio Fernández Alonso (Xanto)
+						<b className="text-display">Unity3D Code and Tooling:</b>
+						<br /> Xanto (
+						<a className="link" href="https://xantomen.com/" target="_blank">
+							xantomen.com
+						</a>
+						)
 					</p>
 
 					<p>
@@ -47,7 +51,11 @@ export default function Imprint() {
 
 					<p>
 						<b className="text-display">Frontend:</b>
-						<br /> Boris Diakur
+						<br /> Boris Diakur (
+						<a className="link" href="https://borisdiakur.de/" target="_blank">
+							borisdiakur.de
+						</a>
+						)
 					</p>
 
 					<p>
